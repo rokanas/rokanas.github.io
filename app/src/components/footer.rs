@@ -1,30 +1,6 @@
 // components/footer.rs
 use yew::prelude::*;
 
-// #[function_component(Footer)]
-// pub fn footer() -> Html {
-//     html! {
-//         <footer class="bg-gray-800 text-white text-center p-4 fixed bottom-0 left-0 right-0 w-full">
-//             <div class="container mx-auto">
-//                 <p class="text-sm">{ "© 2025 K. Rokanas. All rights reserved." }</p>
-//             </div>
-//         </footer>
-//     }
-// }
-
-// #[function_component(Footer)]
-// pub fn footer() -> Html {
-//     html! {
-//         <footer class="fixed bottom-0 left-0 right-0 w-full">
-//             <img 
-//                 src="/static/footer.jpg" 
-//                 alt="Footer" 
-//                 class="w-full h-auto"
-//             />
-//         </footer>
-//     }
-// }
-
 #[derive(Properties, PartialEq)]
 pub struct HudSectionProps {
     pub children: Children,
@@ -55,7 +31,6 @@ pub fn hud_section(props: &HudSectionProps) -> Html {
                  background-size: 100% 100%; \
                  image-rendering: pixelated; \
                  height: 10vw; {};",
-                 // height: clamp(60px, 15vw, 150px); {};", // min 60px, pref 15% viewport, max 150px
                 props.background_image,
                 flex_style
             )}
@@ -67,20 +42,8 @@ pub fn hud_section(props: &HudSectionProps) -> Html {
     }
 }
 
-#[derive(Properties, PartialEq)]
-pub struct FooterProps {
-    #[prop_or_default]
-    pub ammo_count: i32,
-    #[prop_or_default] 
-    pub health_percent: i32,
-    #[prop_or_default]
-    pub armor_percent: i32,
-    #[prop_or_default]
-    pub weapon_slots: Vec<i32>,
-}
-
 #[function_component(Footer)]
-pub fn footer(props: &FooterProps) -> Html {
+pub fn footer() -> Html {
 
     let button_click = Callback::from(|_| {
         // do something
@@ -152,12 +115,12 @@ pub fn footer(props: &FooterProps) -> Html {
                         class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
                         <img 
                             src="/static/ABOUT1.png" 
-                            alt="Home"
+                            alt="About"
                             class="w-4/5 h-auto block transition-opacity duration-0 ease-in-out group-hover:opacity-0"
                         />
                         <img 
                             src="/static/ABOUT2.png" 
-                            alt="Home Hover"
+                            alt="About"
                             class="w-4/5 h-auto block absolute opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
                         />
                     </button>
@@ -171,10 +134,20 @@ pub fn footer(props: &FooterProps) -> Html {
                     text_color="text-white"
                     width_class="flex-1"
                     border_style="border-r-2 border-gray-600">
-                    <div class="w-12 h-12 bg-gray-600 border border-gray-500 flex items-center justify-center">
-                        // placeholder for character portrait
-                        <span class="text-xs">{"FACE"}</span>
-                    </div>
+                    <button 
+                        onclick={button_click.clone()} 
+                        class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
+                        <img 
+                            src="/static/AVATAR_1.png" 
+                            alt="Avatar"
+                            class="w-4/5 block absolute transition-opacity duration-0 ease-in-out group-hover:opacity-0"
+                        />
+                        <img 
+                            src="/static/AVATAR_2.png" 
+                            alt="Avatar"
+                            class="w-4/5 block absolute opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
+                        />
+                    </button>
                 </HudSection>
 
                 // doom projects
@@ -190,12 +163,12 @@ pub fn footer(props: &FooterProps) -> Html {
                         class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
                         <img 
                             src="/static/DOOM_PROJECTS1.png" 
-                            alt="Default"
+                            alt="Doom Projects"
                             class="w-4/5 h-auto block transition-opacity duration-0 ease-in-out group-hover:opacity-0"
                         />
                         <img 
                             src="/static/DOOM_PROJECTS2.png" 
-                            alt="Hover"
+                            alt="Doom Projects"
                             class="w-4/5 h-auto block absolute opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
                         />
                     </button>
@@ -210,7 +183,7 @@ pub fn footer(props: &FooterProps) -> Html {
                     width_class="flex-1"
                     border_style="border-r-2 border-gray-600">
                     <div class="flex flex-col">
-                        <span class="text-2xl font-bold">{format!("{}%", props.armor_percent)}</span>
+                        <span class="text-2xl font-bold">{format!("0%")}</span>
                         <span class="text-xs">{"KEYS"}</span>
                     </div>
                 </HudSection>
@@ -240,17 +213,5 @@ pub fn footer(props: &FooterProps) -> Html {
                 </HudSection>
             </div>
         </footer>
-    }
-}
-
-// Usage example with default values
-impl Default for FooterProps {
-    fn default() -> Self {
-        Self {
-            ammo_count: 145,
-            health_percent: 40,
-            armor_percent: 107,
-            weapon_slots: vec![2, 3, 4, 5, 6, 7],
-        }
     }
 }
