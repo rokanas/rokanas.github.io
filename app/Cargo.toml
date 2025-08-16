@@ -16,3 +16,4 @@ tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["fmt"] }
 tracing-web = "0.1"
 yew-router = "0.18.0"
+log = "0.4.27"
