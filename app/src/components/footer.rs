@@ -89,7 +89,7 @@ pub fn footer(props: &FooterProps) -> Html {
 
     html! {
         <footer class="fixed bottom-0 left-0 right-0 w-full z-50">
-            <div class="flex w-full bg-gray-800 border-t-4 border-gray-600">
+            <div class="flex w-full">
                 
                 // home
                 <HudSection 
@@ -98,26 +98,24 @@ pub fn footer(props: &FooterProps) -> Html {
                     background_height=32
                     text_color="text-red-400"
                     width_class="flex-1"
-                    border_style="border-r-2 border-gray-600"
-                >
+                    border_style="border-r-2 border-gray-600">
                     <button 
                         onclick={button_click.clone()} 
-                        class="w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none"
-                    >
+                        class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
                         <img 
                             src="/static/HOME1.png" 
                             alt="Home"
-                            class="block transition-opacity duration-200 ease-in-out hover:opacity-0"
+                            class="block transition-opacity duration-200 ease-in-out group-hover:opacity-0"
                         />
                         <img 
                             src="/static/HOME2.png" 
                             alt="Home Hover"
-                            class="block absolute opacity-0 transition-opacity duration-200 ease-in-out hover:opacity-100"
+                            class="block absolute opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100"
                         />
                     </button>
                 </HudSection>
 
-                // Health Section  
+                // projects
                 <HudSection
                     background_image="/static/STBAR2.png"
                     background_width=58
@@ -125,13 +123,23 @@ pub fn footer(props: &FooterProps) -> Html {
                     text_color="text-red-400"
                     width_class="flex-1"
                     border_style="border-r-2 border-gray-600">
-                    <div class="flex flex-col">
-                        <span class="text-2xl font-bold">{format!("{}%", props.health_percent)}</span>
-                        <span class="text-xs">{"HEALTH"}</span>
-                    </div>
+                    <button 
+                        onclick={button_click.clone()} 
+                        class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
+                        <img 
+                            src="/static/PROJECTS1.png" 
+                            alt="Home"
+                            class="w-4/5 h-auto block transition-opacity duration-0 ease-in-out group-hover:opacity-0"
+                        />
+                        <img 
+                            src="/static/PROJECTS2.png" 
+                            alt="Home Hover"
+                            class="w-4/5 h-auto block absolute opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
+                        />
+                    </button>
                 </HudSection>
 
-                // Weapon Slots Section
+                // about
                 <HudSection
                     background_image="/static/STBAR3.png"
                     background_width=36
@@ -139,21 +147,23 @@ pub fn footer(props: &FooterProps) -> Html {
                     text_color="text-yellow-400"
                     width_class="flex-1"
                     border_style="border-r-2 border-gray-600">
-                    <div class="grid grid-cols-3 gap-1 text-xs font-bold">
-                        {
-                            (1..=9).map(|i| {
-                                let has_weapon = props.weapon_slots.contains(&i);
-                                html! {
-                                    <span class={if has_weapon { "text-yellow-400" } else { "text-gray-500" }}>
-                                        {i}
-                                    </span>
-                                }
-                            }).collect::<Html>()
-                        }
-                    </div>
+                    <button 
+                        onclick={button_click.clone()} 
+                        class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
+                        <img 
+                            src="/static/ABOUT1.png" 
+                            alt="Home"
+                            class="w-4/5 h-auto block transition-opacity duration-0 ease-in-out group-hover:opacity-0"
+                        />
+                        <img 
+                            src="/static/ABOUT2.png" 
+                            alt="Home Hover"
+                            class="w-4/5 h-auto block absolute opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
+                        />
+                    </button>
                 </HudSection>
 
-                // Character Portrait Section
+                // avatar
                 <HudSection
                     background_image="/static/STBAR4.png"
                     background_width=37
@@ -167,7 +177,7 @@ pub fn footer(props: &FooterProps) -> Html {
                     </div>
                 </HudSection>
 
-                // Armor Section
+                // doom projects
                 <HudSection
                     background_image="/static/STBAR5.png"
                     background_width=57
@@ -175,10 +185,20 @@ pub fn footer(props: &FooterProps) -> Html {
                     text_color="text-red-400"
                     width_class="flex-1"
                     border_style="border-r-2 border-gray-600">
-                    <div class="flex flex-col">
-                        <span class="text-2xl font-bold">{format!("{}%", props.armor_percent)}</span>
-                        <span class="text-xs">{"ARMOR"}</span>
-                    </div>
+                    <button 
+                        onclick={button_click.clone()} 
+                        class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
+                        <img 
+                            src="/static/DOOM_PROJECTS1.png" 
+                            alt="Default"
+                            class="w-4/5 h-auto block transition-opacity duration-0 ease-in-out group-hover:opacity-0"
+                        />
+                        <img 
+                            src="/static/DOOM_PROJECTS2.png" 
+                            alt="Hover"
+                            class="w-4/5 h-auto block absolute opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
+                        />
+                    </button>
                 </HudSection>
 
                 // keys section
@@ -195,7 +215,7 @@ pub fn footer(props: &FooterProps) -> Html {
                     </div>
                 </HudSection>
 
-                // Stats Section (expandable)
+                // contact
                 <HudSection
                     background_image="/static/STBAR7.png"
                     background_width=71
@@ -203,24 +223,20 @@ pub fn footer(props: &FooterProps) -> Html {
                     text_color="text-blue-400"
                     width_class="flex-1"
                     border_style="border-r-2 border-gray-600">
-                    <div class="grid grid-cols-2 gap-4 text-sm">
-                        <div class="flex justify-between">
-                            <span class="text-blue-400">{"BULL"}</span>
-                            <span class="text-yellow-400">{"195"}</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-blue-400">{"SHEL"}</span>
-                            <span class="text-yellow-400">{"51"}</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-blue-400">{"ROKT"}</span>
-                            <span class="text-yellow-400">{"51"}</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-blue-400">{"CELL"}</span>
-                            <span class="text-yellow-400">{"340"}</span>
-                        </div>
-                    </div>
+                    <button 
+                        onclick={button_click.clone()} 
+                        class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
+                        <img 
+                            src="/static/CONTACT1.png" 
+                            alt="Home"
+                            class="block transition-opacity duration-0 ease-in-out group-hover:opacity-0"
+                        />
+                        <img 
+                            src="/static/CONTACT2.png" 
+                            alt="Home Hover"
+                            class="block absolute opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
+                        />
+                    </button>
                 </HudSection>
             </div>
         </footer>
