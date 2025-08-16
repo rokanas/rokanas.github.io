@@ -2,3 +2,6 @@
 stage = "pre_build"
 command = "npx"
 command_arguments = ["@tailwindcss/cli", "-i", "./styles/main.css", "-o", "./styles/output.css"]
+
+[package.metadata.trunk.assets]
+dist = "static"
