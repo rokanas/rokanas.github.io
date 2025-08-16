@@ -81,23 +81,40 @@ pub struct FooterProps {
 
 #[function_component(Footer)]
 pub fn footer(props: &FooterProps) -> Html {
+
+    let button_click = Callback::from(|_| {
+        // do something
+        log::info!("Button clicked");
+    });
+
     html! {
         <footer class="fixed bottom-0 left-0 right-0 w-full z-50">
             <div class="flex w-full bg-gray-800 border-t-4 border-gray-600">
                 
-                // Ammo Section
+                // home
                 <HudSection 
                     background_image="/static/STBAR1.png"
                     background_width=48
                     background_height=32
                     text_color="text-red-400"
-                    // width_class="w-32"    <-- this is static width
                     width_class="flex-1"
-                    border_style="border-r-2 border-gray-600">
-                    <div class="flex flex-col">
-                        <span class="text-2xl font-bold">{props.ammo_count}</span>
-                        <span class="text-xs">{"AMMO"}</span>
-                    </div>
+                    border_style="border-r-2 border-gray-600"
+                >
+                    <button 
+                        onclick={button_click.clone()} 
+                        class="w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none"
+                    >
+                        <img 
+                            src="/static/HOME1.png" 
+                            alt="Home"
+                            class="block transition-opacity duration-200 ease-in-out hover:opacity-0"
+                        />
+                        <img 
+                            src="/static/HOME2.png" 
+                            alt="Home Hover"
+                            class="block absolute opacity-0 transition-opacity duration-200 ease-in-out hover:opacity-100"
+                        />
+                    </button>
                 </HudSection>
 
                 // Health Section  
