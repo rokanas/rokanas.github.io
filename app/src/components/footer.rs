@@ -125,12 +125,12 @@ pub fn footer() -> Html {
                         onclick={button_click.clone()} 
                         class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
                         <img 
-                            src="/static/PROJECTS1.png" 
+                            src="/static/PROJECTS_1.png" 
                             alt="Projects"
                             class="w-4/5 h-auto block transition-opacity duration-0 ease-in-out group-hover:opacity-0"
                         />
                         <img 
-                            src="/static/PROJECTS2.png" 
+                            src="/static/PROJECTS_2.png" 
                             alt="Projects Hover"
                             class="w-4/5 h-auto block absolute opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
                         />
