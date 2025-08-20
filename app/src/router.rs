@@ -4,6 +4,8 @@ use yew_router::prelude::*;
 pub enum Route {
     #[at("/")]        // default page
     Home,
+    #[at("/projects")]
+    Projects,
     #[not_found]
     #[at("/404")]
     NotFound

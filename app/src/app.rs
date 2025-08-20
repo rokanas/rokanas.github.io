@@ -2,10 +2,12 @@ use yew::prelude::*;
 use yew_router::prelude::*; 
 use crate::router::Route;
 use crate::pages::home::Home;
+use crate::pages::projects::Projects;
 
 fn switch(routes: Route) -> Html {
     match routes {
         Route::Home => html! { <Home /> },
+        Route::Projects => html! { <Projects /> },
         Route::NotFound => html! { <div>{"404 - Page not found"}</div> },
     }
 }
