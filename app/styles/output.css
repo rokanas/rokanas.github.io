@@ -211,6 +211,9 @@
   .flex {
     display: flex;
   }
+  .grid {
+    display: grid;
+  }
   .h-auto {
     height: auto;
   }

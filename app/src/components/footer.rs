@@ -1,12 +1,15 @@
 // components/footer.rs
 use yew::prelude::*;
+use web_sys::{window};
+use gloo_events::EventListener;
+use wasm_bindgen::JsCast;
 
 #[derive(Properties, PartialEq)]
 pub struct HudSectionProps {
     pub children: Children,
-    pub background_image: String,     // path to hud section png
-    pub background_width: u32,        // pixel width of hud section
-    pub background_height: u32,       // pixel height of hud section
+    pub background_image: String,
+    pub background_width: u32,
+    pub background_height: u32,
     pub text_color: String,
     #[prop_or_default]
     pub border_style: Option<String>,
@@ -16,7 +19,6 @@ pub struct HudSectionProps {
 
 #[function_component(HudSection)]
 pub fn hud_section(props: &HudSectionProps) -> Html {
-    // flex width ratio based on hud section images
     let flex_style = format!("flex: {};", props.background_width);
 
     html! {
@@ -42,11 +44,86 @@ pub fn hud_section(props: &HudSectionProps) -> Html {
     }
 }
 
+// hook to track mouse position and convert to grid position
+#[hook]
+fn use_mouse_grid() -> (i32, i32) {
+    let grid_pos = use_state(|| (2, 1)); // start at center-left (default)
+    
+    {
+        let grid_pos = grid_pos.clone();
+        use_effect_with((), move |_| {
+            let window = window().unwrap();
+            let document = window.document().unwrap();
+            let body = document.body().unwrap();
+            
+            let listener = EventListener::new(&body, "mousemove", move |event| {
+                // use event target to get mouse coords
+                if let Some(mouse_event) = event.dyn_ref::<web_sys::MouseEvent>() {
+                    let x = mouse_event.client_x() as f64;
+                    let y = mouse_event.client_y() as f64;
+                    
+                    // get viewport dimensions
+                    if let (Ok(viewport_width), Ok(viewport_height)) = (
+                        window.inner_width(),
+                        window.inner_height()
+                    ) {
+                        let viewport_width = viewport_width.as_f64().unwrap_or(1920.0);
+                        let viewport_height = viewport_height.as_f64().unwrap_or(1080.0);
+                        
+                        // calculate grid position (5 columns, 2 rows)
+                        let col = ((x / viewport_width) * 5.0).floor() as i32;
+                        let row = ((y / viewport_height) * 2.0).floor() as i32;
+                        
+                        // clamp values to valid ranges
+                        let col = col.clamp(0, 4);
+                        let row = row.clamp(0, 1);
+                        
+                        grid_pos.set((col, row));
+                    }
+                }
+            });
+            
+            // return cleanup function
+            move || drop(listener)
+        });
+    }
+    
+    (*grid_pos).clone()
+}
+
+// get avatar image based on grid position
+fn get_avatar_image(col: i32, row: i32, is_hover: bool) -> String {
+    if is_hover {
+        // single hover image regardless of grid position
+        return "/static/AVATAR_2.png".to_string();
+    }
+    
+    // map grid positions to corresponding avatar image
+    match (col, row) {
+        // top row (row 0)
+        (0, 0) => "/static/AVATAR_TOP_LEFT.png".to_string(),
+        (1, 0) => "/static/AVATAR_TOP_CENTER_LEFT.png".to_string(),
+        (2, 0) => "/static/AVATAR_TOP_CENTER.png".to_string(),
+        (3, 0) => "/static/AVATAR_TOP_CENTER_RIGHT.png".to_string(),
+        (4, 0) => "/static/AVATAR_TOP_RIGHT.png".to_string(),
+        
+        // bottom row (row 1)
+        (0, 1) => "/static/AVATAR_BOTTOM_LEFT.png".to_string(),
+        (1, 1) => "/static/AVATAR_BOTTOM_CENTER_LEFT.png".to_string(),
+        (2, 1) => "/static/AVATAR_BOTTOM_CENTER.png".to_string(),
+        (3, 1) => "/static/AVATAR_BOTTOM_CENTER_RIGHT.png".to_string(),
+        (4, 1) => "/static/AVATAR_BOTTOM_RIGHT.png".to_string(),
+        
+        // fallback
+        _ => "/static/AVATAR_1.png".to_string(),
+    }
+}
+
 #[function_component(Footer)]
 pub fn footer() -> Html {
-
+    let (mouse_col, mouse_row) = use_mouse_grid();
+    
     let button_click = Callback::from(|_| {
-        // do something
         log::info!("Button clicked");
     });
 
@@ -91,12 +168,12 @@ pub fn footer() -> Html {
                         class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
                         <img 
                             src="/static/PROJECTS1.png" 
-                            alt="Home"
+                            alt="Projects"
                             class="w-4/5 h-auto block transition-opacity duration-0 ease-in-out group-hover:opacity-0"
                         />
                         <img 
                             src="/static/PROJECTS2.png" 
-                            alt="Home Hover"
+                            alt="Projects Hover"
                             class="w-4/5 h-auto block absolute opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
                         />
                     </button>
@@ -120,13 +197,13 @@ pub fn footer() -> Html {
                         />
                         <img 
                             src="/static/ABOUT2.png" 
-                            alt="About"
+                            alt="About Hover"
                             class="w-4/5 h-auto block absolute opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
                         />
                     </button>
                 </HudSection>
 
-                // avatar
+                // avatar (now mouse-following)
                 <HudSection
                     background_image="/static/STBAR4.png"
                     background_width=37
@@ -138,14 +215,14 @@ pub fn footer() -> Html {
                         onclick={button_click.clone()} 
                         class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
                         <img 
-                            src="/static/AVATAR_1.png" 
+                            src={get_avatar_image(mouse_col, mouse_row, false)}
                             alt="Avatar"
-                            class="w-4/5 block absolute transition-opacity duration-0 ease-in-out group-hover:opacity-0"
+                            class="w-4/5 block absolute transition-opacity duration-200 ease-in-out group-hover:opacity-0"
                         />
                         <img 
-                            src="/static/AVATAR_2.png" 
-                            alt="Avatar"
-                            class="w-4/5 block absolute opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
+                            src={get_avatar_image(mouse_col, mouse_row, true)}
+                            alt="Avatar Hover"
+                            class="w-4/5 block absolute opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100"
                         />
                     </button>
                 </HudSection>
@@ -168,7 +245,7 @@ pub fn footer() -> Html {
                         />
                         <img 
                             src="/static/DOOM_PROJECTS2.png" 
-                            alt="Doom Projects"
+                            alt="Doom Projects Hover"
                             class="w-4/5 h-auto block absolute opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
                         />
                     </button>
@@ -201,12 +278,12 @@ pub fn footer() -> Html {
                         class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
                         <img 
                             src="/static/CONTACT1.png" 
-                            alt="Home"
+                            alt="Contact"
                             class="block transition-opacity duration-0 ease-in-out group-hover:opacity-0"
                         />
                         <img 
                             src="/static/CONTACT2.png" 
-                            alt="Home Hover"
+                            alt="Contact Hover"
                             class="block absolute opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
                         />
                     </button>
