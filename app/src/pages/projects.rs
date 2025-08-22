@@ -50,7 +50,7 @@ pub fn projects() -> Html {
                 "RESTful API with comprehensive documentation".to_string(),
                 "Containerized deployment with Docker".to_string(),
             ],
-            wiki_url: None,
+            wiki_url: Some("https://github.com/rokanas/skinscan/wiki".to_string()),
         },
         Project {
             title: "Dentago".to_string(),
@@ -79,7 +79,7 @@ pub fn projects() -> Html {
                 "Load balancing for high availability".to_string(),
                 "Multi-clinic support with centralized management".to_string(),
             ],
-            wiki_url: None,
+            wiki_url: Some("https://github.com/rokanas/dentago/wiki".to_string()),
 
         },
         Project {
@@ -109,7 +109,7 @@ pub fn projects() -> Html {
                 "Automatic alert system for critical conditions".to_string(),
                 "Data logging and historical tracking".to_string(),
             ],
-            wiki_url: None,
+            wiki_url: Some("https://github.com/rokanas/terminarium/wiki".to_string()),
         },
         Project {
             title: "Zulubot".to_string(),
