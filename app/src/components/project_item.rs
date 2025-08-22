@@ -149,8 +149,7 @@
                                 <h2 class="text-2xl font-bold text-red-600 font-mono">{&props.title}</h2>
                                 <button 
                                     onclick={close_modal}
-                                    class="text-gray-400 hover:text-red-400 text-2xl font-bold transition-colors duration-200"
-                                >
+                                    class="text-gray-400 hover:text-red-400 text-2xl font-bold transition-colors duration-200 cursor-pointer">
                                     {"×"}
                                 </button>
                             </div>
@@ -207,14 +206,14 @@
                                 <div class="flex gap-4 pt-4 border-t border-gray-700">
                                     <button 
                                         onclick={github_click.clone()}
-                                        class="flex-1 bg-gray-800 hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-3 px-6 rounded transition-all duration-200 font-mono"
+                                        class="flex-1 bg-gray-800 hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-3 px-6 rounded cursor-pointer transition-all duration-200 font-mono"
                                     >
                                         {"GITHUB REPO"}
                                     </button>
                                     if props.wiki_url.is_some() {
                                         <button 
                                             onclick={wiki_click}
-                                            class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded transition-all duration-200 font-mono"
+                                            class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded cursor-pointer transition-all duration-200 font-mono"
                                         >
                                             {"PROJECT WIKI"}
                                         </button>
