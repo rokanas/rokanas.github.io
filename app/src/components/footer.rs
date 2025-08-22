@@ -167,7 +167,7 @@ pub fn footer() -> Html {
                     </button>
                 </HudSection>
 
-                // avatar (now mouse-following)
+                // avatar
                 <HudSection
                     background_image="/static/STBAR4.png"
                     background_width=37
