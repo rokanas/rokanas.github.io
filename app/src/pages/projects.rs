@@ -45,7 +45,7 @@ pub fn projects() -> Html {
                 Tag { name: "C++".to_string(), color: "bg-pink-500".to_string(), text_color: None },
                 Tag { name: "Javascript".to_string(), color: "bg-yellow-500".to_string(), text_color: None },
             ],
-            description: "A monitoring system for terrariums using the Wio Terminal, made for DIT043 Object-Oriented Programming course. Link: https://terminarium.netlify.app/".to_string(),
+            description: "A monitoring system for terrariums using the Wio Terminal, made for DIT043 Object-Oriented Programming course.".to_string(),
             image_src: "/static/projects/terminarium_logo.png".to_string(),
             github_url: "https://github.com/rokanas/terminarium".to_string(),
             image_alt: Some("Terminarium logo".to_string()),
