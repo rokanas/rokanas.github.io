@@ -98,7 +98,7 @@ pub fn footer() -> Html {
     let navigate = use_navigation();            // get navigation callback from hook
 
     html! { // macro to create html structure                       // start html block
-        <footer class="fixed bottom-0 left-0 right-0 w-full z-50">  // fixed position at bottom with high z-index (so it appears above other content)
+        <footer class="fixed bottom-0 left-0 right-0 w-full z-40">  // fixed position at bottom with high z-index (so it appears above other content)
             <div class="flex w-full">                               // flex container div taking full horizontal width
                 
                 // home
