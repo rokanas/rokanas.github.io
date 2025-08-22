@@ -8,6 +8,10 @@ fn switch(routes: Route) -> Html {
     match routes {
         Route::Home => html! { <Home /> },
         Route::Projects => html! { <Projects /> },
+        //Route::About => html! { <About /> },
+        //Route::Avatar => html! { <Avatar /> },
+        //Route::DoomProjects => html! { <DoomProjects /> },
+        //Route::Contact => html! { <Contact /> },
         Route::NotFound => html! { <div>{"404 - Page not found"}</div> },
     }
 }
