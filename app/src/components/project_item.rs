@@ -126,8 +126,8 @@
                             </button>
                             // github
                             <button 
-                                class="group w-full bg-gray-800 hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-2 px-4 rounded transition-all duration-200 cursor-pointer font-mono text-sm"
-                            >
+                                onclick={github_click.clone()}
+                                class="group w-full bg-gray-800 hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-2 px-4 rounded transition-all duration-200 cursor-pointer font-mono text-sm">
                                 <div class="flex items-center justify-center gap-2">    
                                     <span>{"GITHUB"}</span>
                                     <span class="text-xs group-hover:translate-x-1 transition-transform duration-200">{"→"}</span>
@@ -144,7 +144,7 @@
                             class="bg-gray-900 border-2 border-red-600 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto"
                             onclick={Callback::from(|e: MouseEvent| e.stop_propagation())}
                         >
-                            // Modal header
+                            // modal header
                             <div class="flex justify-between items-center p-6 border-b border-gray-700">
                                 <h2 class="text-2xl font-bold text-red-600 font-mono">{&props.title}</h2>
                                 <button 
@@ -206,7 +206,7 @@
                                 // links / buttons
                                 <div class="flex gap-4 pt-4 border-t border-gray-700">
                                     <button 
-                                        onclick={github_click}
+                                        onclick={github_click.clone()}
                                         class="flex-1 bg-gray-800 hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-3 px-6 rounded transition-all duration-200 font-mono"
                                     >
                                         {"GITHUB REPO"}
