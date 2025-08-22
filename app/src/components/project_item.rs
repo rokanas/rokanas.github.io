@@ -29,7 +29,7 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
 
     html! {
         <div class="bg-gray-900 border-2 border-gray-700 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 max-w-sm">
-            // Project Image
+            // project image
             <div class="aspect-video bg-gray-800 overflow-hidden">
                 <img 
                     src={props.image_src.clone()}
@@ -39,24 +39,24 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
                 />
             </div>
             
-            // Project Content
+            // project content
             <div class="p-6">
-                // Title
-                <h3 class="text-xl font-bold text-red-400 mb-3 font-mono">
+                // title
+                <h3 class="text-xl font-bold text-red-600 mb-3 font-mono">
                     {&props.title}
                 </h3>
                 
-                // Description
+                // description
                 <p class="text-gray-300 mb-4 text-sm leading-relaxed">
                     {&props.description}
                 </p>
                 
-                // GitHub Button
+                // github button
                 <button 
                     onclick={github_click}
-                    class="group w-full bg-gray-800 hover:bg-red-600 border-2 border-red-400 hover:border-red-300 text-red-400 hover:text-white font-bold py-2 px-4 rounded transition-all duration-200 cursor-pointer font-mono text-sm"
+                    class="group w-full bg-gray-800 hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-2 px-4 rounded transition-all duration-200 cursor-pointer font-mono text-sm"
                 >
-                    <div class="flex items-center justify-center gap-2">
+                    <div class="flex items-center justify-center gap-2">    
                         <span>{"VIEW ON GITHUB"}</span>
                         <span class="text-xs group-hover:translate-x-1 transition-transform duration-200">{"→"}</span>
                     </div>
