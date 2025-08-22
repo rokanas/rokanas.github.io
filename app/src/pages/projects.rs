@@ -3,7 +3,7 @@ use yew::prelude::*;
 use crate::components::project_item::{ProjectItem, Tag};
 use crate::components::footer::Footer;
 
-// Struct to hold project data
+// struct to hold project data
 #[derive(Clone, PartialEq)]
 pub struct Project {
     pub title: String,
@@ -16,7 +16,7 @@ pub struct Project {
 
 #[function_component(Projects)]
 pub fn projects() -> Html {
-    // Define your projects data here
+    // project item definitions (temporarily hardcoded, can be moved to db later)
     let projects = vec![
         Project {
             title: "Skinscan".to_string(),
@@ -93,7 +93,7 @@ pub fn projects() -> Html {
                     </p>
                 </div>
 
-                // Projects Grid
+                // projects grid
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
                     { for projects.iter().map(|project| html! {
                         <ProjectItem
@@ -107,12 +107,12 @@ pub fn projects() -> Html {
                     })}
                 </div>
 
-                // Footer Note
+                // footer note
                 <div class="text-center mt-16 text-gray-500">
                     <p class="font-mono text-sm">
                         {"More projects available on my "} 
                         <a 
-                            href="https://github.com/yourusername" 
+                            href="https://github.com/rokanas" 
                             target="_blank" 
                             class="text-red-400 hover:text-red-300 underline transition-colors duration-200"
                         >
