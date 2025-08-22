@@ -1,16 +1,17 @@
 // pages/projects.rs
 use yew::prelude::*;
-use crate::components::project_item::ProjectItem;
+use crate::components::project_item::{ProjectItem, Tag};
 use crate::components::footer::Footer;
 
 // Struct to hold project data
 #[derive(Clone, PartialEq)]
 pub struct Project {
     pub title: String,
+    pub tags: Vec<Tag>,
     pub description: String,
     pub image_src: String,
-    pub github_url: String,
     pub image_alt: Option<String>,
+    pub github_url: String,
 }
 
 #[function_component(Projects)]
@@ -19,13 +20,20 @@ pub fn projects() -> Html {
     let projects = vec![
         Project {
             title: "Skinscan".to_string(),
+            tags: vec![
+                Tag { name: "Python".to_string(), color: "bg-blue-500".to_string(), text_color: None },
+                Tag { name: "Typescript".to_string(), color: "bg-blue-800".to_string(), text_color: None },
+            ],
             description: "A web app for classifying skin lesions using AI, made for DIT826 Software Engineering for Data-Intensive AI Applications course.".to_string(),
             image_src: "/static/projects/skinscan_logo.png".to_string(),
-            github_url: "https://github.com/rokanas/skinscan".to_string(),
             image_alt: Some("Skinscan logo".to_string()),
+            github_url: "https://github.com/rokanas/skinscan".to_string(),
         },
         Project {
             title: "Dentago".to_string(),
+            tags: vec![
+                Tag { name: "Javascript".to_string(), color: "bg-yellow-500".to_string(), text_color: None },
+            ],
             description: "A distributed system for booking dentist appointments, made for DIT356 Distributed Systems Development course.".to_string(),
             image_src: "/static/projects/dentago_component_diagram.png".to_string(),
             github_url: "https://github.com/rokanas/dentago".to_string(),
@@ -33,6 +41,10 @@ pub fn projects() -> Html {
         },
         Project {
             title: "Terminarium".to_string(),
+            tags: vec![
+                Tag { name: "C++".to_string(), color: "bg-pink-500".to_string(), text_color: None },
+                Tag { name: "Javascript".to_string(), color: "bg-yellow-500".to_string(), text_color: None },
+            ],
             description: "A monitoring system for terrariums using the Wio Terminal, made for DIT043 Object-Oriented Programming course. Link: https://terminarium.netlify.app/".to_string(),
             image_src: "/static/projects/terminarium_logo.png".to_string(),
             github_url: "https://github.com/rokanas/terminarium".to_string(),
@@ -40,6 +52,9 @@ pub fn projects() -> Html {
         },
         Project {
             title: "Zulubot".to_string(),
+            tags: vec![
+                Tag { name: "Python".to_string(), color: "bg-blue-500".to_string(), text_color: None },
+            ],
             description: "A multi-purpose discord bot made for Zulu Empire server.".to_string(),
             image_src: "/static/projects/zulubot_logo.jpg".to_string(),
             github_url: "https://github.com/rokanas/zulubot".to_string(),
@@ -47,6 +62,9 @@ pub fn projects() -> Html {
         },
         Project {
             title: "Wio Terminal Keyboard".to_string(),
+            tags: vec![
+                Tag { name: "C++".to_string(), color: "bg-pink-500".to_string(), text_color: None },
+            ],
             description: "A fully-functioning onscreen keyboard for the Wio Terminal that registers user input".to_string(),
             image_src: "/static/projects/wio_terminal_keyboard_1.png".to_string(),
             github_url: "https://github.com/rokanas/wio-terminal-keyboard".to_string(),
@@ -80,6 +98,7 @@ pub fn projects() -> Html {
                     { for projects.iter().map(|project| html! {
                         <ProjectItem
                             title={project.title.clone()}
+                            tags={project.tags.clone()}
                             description={project.description.clone()}
                             image_src={project.image_src.clone()}
                             github_url={project.github_url.clone()}
