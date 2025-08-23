@@ -117,7 +117,7 @@ pub fn projects() -> Html {
                 Tag { name: "Python".to_string(), color: "bg-blue-500".to_string(), text_color: None },
             ],
             description: "A multi-purpose discord bot made for Zulu Empire server.".to_string(),
-            image_src: "/static/projects/zulubot_logo.jpg".to_string(),
+            image_src: "/static/projects/zulubot_logo.png".to_string(),
             image_alt: Some("Zulu empire logo".to_string()),
             github_url: "https://github.com/rokanas/zulubot".to_string(),
             detailed_description: Some("Zulubot is a feature-rich Discord bot developed specifically for the Zulu Empire gaming community. Built with Python and the discord.py library, it provides comprehensive server management tools, entertainment features, and community engagement utilities. The bot has been actively serving the community for over a year, handling thousands of daily interactions.".to_string()),
