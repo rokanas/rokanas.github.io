@@ -39,11 +39,13 @@
         let modal_open = use_state(|| false);
         let current_image_index = use_state(|| 0usize);
 
-        // Create combined list of all images (main image + additional images)
-        let all_images = {
-            let mut images = vec![props.image_src.clone()];
-            images.extend(props.additional_images.iter().cloned());
-            images
+        // create combined list of images (based on availability)
+        let all_images = if props.additional_images.is_empty() {
+            // only main image if no additional images
+            vec![props.image_src.clone()]
+        } else {
+            // only additional images if they exist
+            props.additional_images.clone()
         };
 
         let more_info_click = {
