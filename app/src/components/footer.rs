@@ -199,12 +199,12 @@ pub fn footer() -> Html {
                         onclick={navigate.reform(|_| Route::DoomProjects)}
                         class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
                         <img 
-                            src="/static/DOOM_PROJECTS1.png" 
+                            src="/static/DOOM_PROJECTS_1.png" 
                             alt="Doom Projects"
                             class="w-4/5 h-auto block transition-opacity duration-0 ease-in-out group-hover:opacity-0"
                         />
                         <img 
-                            src="/static/DOOM_PROJECTS2.png" 
+                            src="/static/DOOM_PROJECTS_2.png" 
                             alt="Doom Projects Hover"
                             class="w-4/5 h-auto block absolute opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
                         />
