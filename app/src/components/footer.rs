@@ -196,7 +196,7 @@ pub fn footer() -> Html {
                     background_height=32
                     text_color="text-red-400">
                     <button 
-                        //onclick={navigate.reform(|_| Route::DoomProjects)}
+                        onclick={navigate.reform(|_| Route::DoomProjects)}
                         class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
                         <img 
                             src="/static/DOOM_PROJECTS1.png" 
