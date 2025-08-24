@@ -139,7 +139,7 @@
 
                 // modal
                 if *modal_open {
-                    <div class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50" onclick={close_modal.clone()}>
+                    <div class="fixed inset-0 backdrop-blur-lg bg-black/50 bg-opacity-75 flex items-center justify-center p-4 z-50" onclick={close_modal.clone()}>
                         <div 
                             class="bg-gray-900 border-2 border-red-600 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto"
                             onclick={Callback::from(|e: MouseEvent| e.stop_propagation())}
