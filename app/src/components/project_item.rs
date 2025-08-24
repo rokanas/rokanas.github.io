@@ -26,6 +26,8 @@
         pub key_features: Vec<String>,
         #[prop_or_default]
         pub wiki_url: Option<String>,
+        #[prop_or_default]
+        pub additional_images: Vec<String>, 
     }
 
     #[function_component(ProjectItem)]
@@ -35,11 +37,21 @@
             .clone();
 
         let modal_open = use_state(|| false);
+        let current_image_index = use_state(|| 0usize);
+
+        // Create combined list of all images (main image + additional images)
+        let all_images = {
+            let mut images = vec![props.image_src.clone()];
+            images.extend(props.additional_images.iter().cloned());
+            images
+        };
 
         let more_info_click = {
             let modal_open = modal_open.clone();
+            let current_image_index = current_image_index.clone();
             Callback::from(move |_| {
                 modal_open.set(true);
+                current_image_index.set(0); // reset to first image when opening modal
             })
         };
 
@@ -47,6 +59,32 @@
             let modal_open = modal_open.clone();
             Callback::from(move |_| {
                 modal_open.set(false);
+            })
+        };
+
+        let prev_image = {
+            let current_image_index = current_image_index.clone();
+            let total_images = all_images.len();
+            Callback::from(move |e: MouseEvent| {
+                e.stop_propagation(); // prevent modal from closing
+                let current = *current_image_index;
+                let new_index = if current == 0 {
+                    total_images - 1
+                } else {
+                    current - 1
+                };
+                current_image_index.set(new_index);
+            })
+        };
+
+        let next_image = {
+            let current_image_index = current_image_index.clone();
+            let total_images = all_images.len();
+            Callback::from(move |e: MouseEvent| {
+                e.stop_propagation(); // prevent modal from closing
+                let current = *current_image_index;
+                let new_index = (current + 1) % total_images;
+                current_image_index.set(new_index);
             })
         };
 
@@ -69,6 +107,10 @@
                 }
             })
         };
+
+        let current_image_src = all_images.get(*current_image_index)
+            .unwrap_or(&props.image_src)
+            .clone();
 
         html! {
             <>  // fragment to group project item and modal
@@ -156,13 +198,45 @@
 
                             // modal content
                             <div class="p-6 space-y-6">
-                                // project image
-                                <div class="aspect-video bg-gray-800 rounded-lg overflow-hidden">
-                                    <img 
-                                        src={props.image_src.clone()}
-                                        // alt={alt_text.clone()}   // TODO: FIX
-                                        class="w-full h-full object-contain"
-                                    />
+                                // project image with navigation
+                                <div class="relative">
+                                    <div class="aspect-video bg-gray-800 rounded-lg overflow-hidden">
+                                        <img 
+                                            src={current_image_src}
+                                            // alt={alt_text.clone()} TODO: FIX
+                                            class="w-full h-full object-contain"
+                                        />
+                                    </div>
+                                    
+                                    // navigation buttons (only show if there are multiple images)
+                                    if all_images.len() > 1 {
+                                        <>
+                                            // left arrow
+                                            <button
+                                                onclick={prev_image}
+                                                class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white rounded-full p-2 transition-all duration-200 cursor-pointer z-10"
+                                            >
+                                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                                </svg>
+                                            </button>
+                                            
+                                            // right arrow
+                                            <button
+                                                onclick={next_image}
+                                                class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white rounded-full p-2 transition-all duration-200 cursor-pointer z-10"
+                                            >
+                                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                                </svg>
+                                            </button>
+                                            
+                                            // image counter
+                                            <div class="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-mono">
+                                                {format!("{}/{}", *current_image_index + 1, all_images.len())}
+                                            </div>
+                                        </>
+                                    }
                                 </div>
 
                                 // detailed description

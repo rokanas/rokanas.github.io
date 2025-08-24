@@ -16,6 +16,7 @@ pub struct Project {
     pub technologies_used: Vec<String>,
     pub key_features: Vec<String>,
     pub wiki_url: Option<String>,
+    pub additional_images: Vec<String>,
 }
 
 #[function_component(Projects)]
@@ -51,6 +52,10 @@ pub fn projects() -> Html {
                 "Containerized deployment with Docker".to_string(),
             ],
             wiki_url: Some("https://github.com/rokanas/skinscan/wiki".to_string()),
+            additional_images: vec![
+                "/static/projects/skinscan/skinscan_homepage.png".to_string(),
+                "/static/projects/skinscan/skinscan_admin_dashboard.png".to_string(),
+            ],
         },
         Project {
             title: "Dentago".to_string(),
@@ -80,6 +85,9 @@ pub fn projects() -> Html {
                 "Multi-clinic support with centralized management".to_string(),
             ],
             wiki_url: Some("https://github.com/rokanas/dentago/wiki".to_string()),
+            additional_images: vec![
+                "/static/projects/dentago/dentago_component_diagram.png".to_string(),
+            ],
 
         },
         Project {
@@ -110,6 +118,9 @@ pub fn projects() -> Html {
                 "Data logging and historical tracking".to_string(),
             ],
             wiki_url: Some("https://github.com/rokanas/terminarium/wiki".to_string()),
+            additional_images: vec![
+                "/static/projects/terminarium/terminarium_system_design.jpg".to_string(),
+            ],
         },
         Project {
             title: "Zulubot".to_string(),
@@ -138,6 +149,7 @@ pub fn projects() -> Html {
                 "Automated welcome messages and logging".to_string(),
             ],
             wiki_url: None,
+            additional_images: vec![],
             
         },
         Project {
@@ -166,6 +178,7 @@ pub fn projects() -> Html {
                 "Easy integration with other Wio Terminal projects".to_string(),
             ],
             wiki_url: None,
+            additional_images: vec![],
         },
     ];
 
@@ -204,6 +217,7 @@ pub fn projects() -> Html {
                             technologies_used={project.technologies_used.clone()}
                             key_features={project.key_features.clone()}
                             wiki_url={project.wiki_url.clone()}
+                            additional_images={project.additional_images.clone()}
                         />
                     })}
                 </div>
