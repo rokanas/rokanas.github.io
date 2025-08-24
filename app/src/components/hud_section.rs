@@ -25,7 +25,7 @@ pub fn hud_section(props: &HudSectionProps) -> Html {   // signature taking prop
                  background-repeat: no-repeat; \
                  background-size: 100% 100%; \
                  image-rendering: pixelated; \
-                 height: 10vw; {};",        // height is 10% of viewport width
+                 height: 9vw; {};",        // height is 10% of viewport width
                 props.background_image,
                 flex_style
             )}

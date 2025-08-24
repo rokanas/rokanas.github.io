@@ -1,9 +1,11 @@
 // components/footer.rs
 use yew::prelude::*;                    // import everything from yew prelude (html macros, hooks, components, etc)
+use yew_router::prelude::*;             // import everything from yew router prelude (routing macros, hooks, etc)
 use web_sys::{window};                  // import window function from web_sys (browser APIs for web assemnbly)
 use gloo_events::EventListener;         // import for handling DOM effects (e.g. mouse movement)
 use wasm_bindgen::JsCast;               // import trait for convering between Javascript types in web assembly
 
+use crate::router::Route;               // import route enum for page navigation
 use crate::components::hud_section::HudSection;
 
 // hook to track mouse position and convert to grid position
@@ -81,16 +83,22 @@ fn get_avatar_image(col: i32, row: i32, is_hover: bool) -> String { // take grid
     }
 }
 
+#[hook]         // macro for yew hook (reusable stateful logic)
+fn use_navigation() -> Callback<Route> {        // returns callback that takes a Route enum
+    let navigator = use_navigator().unwrap();   // get navigator object from yew router, panics if not available
+    
+    Callback::from(move |route: Route| {        // create callback that takes a route
+        navigator.push(&route);                 // use navigator to push new route
+    })
+}
+
 #[function_component(Footer)]   // declare function as footer component
 pub fn footer() -> Html {
-    let (mouse_col, mouse_row) = use_mouse_grid();      // destructure tuple returned by hook to two variables (column, row)
-    
-    let button_click = Callback::from(|_| { // create callback for button click events
-        log::info!("Button clicked");                             // |_| ignroes event parameters
-    });
+    let (mouse_col, mouse_row) = use_mouse_grid();     // destructure tuple returned by hook to two variables (column, row)
+    let navigate = use_navigation();            // get navigation callback from hook
 
     html! { // macro to create html structure                       // start html block
-        <footer class="fixed bottom-0 left-0 right-0 w-full z-50">  // fixed position at bottom with high z-index (so it appears above other content)
+        <footer class="fixed bottom-0 left-0 right-0 w-full z-40">  // fixed position at bottom with high z-index (so it appears above other content)
             <div class="flex w-full">                               // flex container div taking full horizontal width
                 
                 // home
@@ -100,7 +108,7 @@ pub fn footer() -> Html {
                     background_height=32
                     text_color="text-red-400">
                     <button 
-                        onclick={button_click.clone()} 
+                        onclick={navigate.reform(|_| Route::Home)} 
                         class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none"> // group class allows child elements to react to hover state of parent
                         <img 
                             src="/static/HOME1.png" 
@@ -122,15 +130,15 @@ pub fn footer() -> Html {
                     background_height=32
                     text_color="text-red-400">
                     <button 
-                        onclick={button_click.clone()} 
+                        onclick={navigate.reform(|_| Route::Projects)}
                         class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
                         <img 
-                            src="/static/PROJECTS1.png" 
+                            src="/static/PROJECTS_1.png" 
                             alt="Projects"
                             class="w-4/5 h-auto block transition-opacity duration-0 ease-in-out group-hover:opacity-0"
                         />
                         <img 
-                            src="/static/PROJECTS2.png" 
+                            src="/static/PROJECTS_2.png" 
                             alt="Projects Hover"
                             class="w-4/5 h-auto block absolute opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
                         />
@@ -144,7 +152,7 @@ pub fn footer() -> Html {
                     background_height=32
                     text_color="text-yellow-400">
                     <button 
-                        onclick={button_click.clone()} 
+                        //onclick={navigate.reform(|_| Route::About)}
                         class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
                         <img 
                             src="/static/ABOUT1.png" 
@@ -159,14 +167,14 @@ pub fn footer() -> Html {
                     </button>
                 </HudSection>
 
-                // avatar (now mouse-following)
+                // avatar
                 <HudSection
                     background_image="/static/STBAR4.png"
                     background_width=37
                     background_height=32
                     text_color="text-white">
                     <button 
-                        onclick={button_click.clone()} 
+                        //onclick={navigate.reform(|_| Route::Avatar)}
                         class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
                         <img 
                             src={get_avatar_image(mouse_col, mouse_row, false)}
@@ -188,7 +196,7 @@ pub fn footer() -> Html {
                     background_height=32
                     text_color="text-red-400">
                     <button 
-                        onclick={button_click.clone()} 
+                        //onclick={navigate.reform(|_| Route::DoomProjects)}
                         class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
                         <img 
                             src="/static/DOOM_PROJECTS1.png" 
@@ -222,7 +230,7 @@ pub fn footer() -> Html {
                     background_height=32
                     text_color="text-blue-400">
                     <button 
-                        onclick={button_click.clone()} 
+                        //onclick={navigate.reform(|_| Route::Contact)}
                         class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
                         <img 
                             src="/static/CONTACT1.png" 

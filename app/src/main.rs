@@ -1,6 +1,6 @@
 mod app;
 mod router;
-mod home;
+mod pages;
 mod components;
 
 use app::App;
