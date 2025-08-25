@@ -1,8 +1,8 @@
 // pages/doom_projects.rs
 use yew::prelude::*;
+use web_sys::window;
 use crate::components::doom_project_item::{DoomProjectItem};
 use crate::components::footer::Footer;
-
 // struct to hold project data
 #[derive(Clone, PartialEq)]
 pub struct Project {
@@ -15,7 +15,15 @@ pub struct Project {
 
 // TODO: make smaller thumbnails if page loads slowly (involves refactoring image_src to thumbnail_src)
 #[function_component(DoomProjects)]
-pub fn projects() -> Html {
+pub fn doom_projects() -> Html {
+    use_effect_with((), |_| {
+        // scroll to top when component mounts
+        if let Some(window) = window() {
+            window.scroll_to_with_x_and_y(0.0, 0.0);
+        }
+        || {}
+    });
+
     // project item definitions (temporarily hardcoded, can be moved to db later)
     let projects = vec![
         Project {
