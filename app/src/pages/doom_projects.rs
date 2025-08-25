@@ -70,7 +70,10 @@ pub fn projects() -> Html {
             image_alt: Some("Whispers of Change".to_string()),
             github_url: "https://github.com/rokanas/terminarium".to_string(),
             additional_images: vec![
-
+                "/static/doom_projects/whispers_of_change/whispers_of_change_2.png".to_string(),
+                "/static/doom_projects/whispers_of_change/whispers_of_change_3.png".to_string(),
+                "/static/doom_projects/whispers_of_change/whispers_of_change_4.png".to_string(),
+                "/static/doom_projects/whispers_of_change/whispers_of_change_5.png".to_string(),
             ],
         },
         Project {

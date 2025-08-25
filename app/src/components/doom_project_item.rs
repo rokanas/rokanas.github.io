@@ -151,7 +151,7 @@
                                 onclick={more_info_click}
                                 class="group w-full bg-gray-800 hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-2 px-4 rounded transition-all duration-200 cursor-pointer font-mono text-sm">
                                 <div class="flex items-center justify-center gap-2">    
-                                    <span>{"MORE INFO"}</span>
+                                    <span>{"GALLERY"}</span>
                                     <span class="text-xs group-hover:translate-x-1 transition-transform duration-200">{"→"}</span>
                                 </div>
                             </button>
