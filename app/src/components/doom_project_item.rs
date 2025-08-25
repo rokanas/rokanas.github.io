@@ -107,13 +107,10 @@
                     
                     // project content
                     <div class="p-6">
-                        // title + tags row
-                        <div class="flex justify-between items-start mb-3 gap-3">
-                            // title (left)
-                            <h3 class="text-xl font-bold text-red-600 font-mono flex-shrink-0">
-                                {&props.title}
-                            </h3>
-                        </div>
+                        // title
+                        <h3 class="text-xl font-bold text-red-600 font-mono mb-3">
+                            {&props.title}
+                        </h3>
                         
                         // description
                         <p class="text-gray-300 mb-4 text-sm leading-relaxed">
