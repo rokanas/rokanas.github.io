@@ -26,7 +26,7 @@
             .unwrap_or(&props.title)
             .clone();
 
-        let modal_open = use_state(|| false);
+        let lightbox_open = use_state(|| false);
         let current_image_index = use_state(|| 0usize);
 
         // create combined list of all images (main image + additional images)
@@ -37,18 +37,18 @@
         };
 
         let gallery_click = {
-            let modal_open = modal_open.clone();
+            let lightbox_open = lightbox_open.clone();
             let current_image_index = current_image_index.clone();
             Callback::from(move |_| {
-                modal_open.set(true);
-                current_image_index.set(0); // reset to first image when opening modal
+                lightbox_open.set(true);
+                current_image_index.set(0); // reset to first image when opening lightbox
             })
         };
 
-        let close_modal = {
-            let modal_open = modal_open.clone();
+        let close_lightbox = {
+            let lightbox_open = lightbox_open.clone();
             Callback::from(move |_| {
-                modal_open.set(false);
+                lightbox_open.set(false);
             })
         };
 
@@ -56,7 +56,7 @@
             let current_image_index = current_image_index.clone();
             let total_images = all_images.len();
             Callback::from(move |e: MouseEvent| {
-                e.stop_propagation(); // prevent modal from closing
+                e.stop_propagation(); // prevent lightbox from closing
                 let current = *current_image_index;
                 let new_index = if current == 0 {
                     total_images - 1
@@ -71,7 +71,7 @@
             let current_image_index = current_image_index.clone();
             let total_images = all_images.len();
             Callback::from(move |e: MouseEvent| {
-                e.stop_propagation(); // prevent modal from closing
+                e.stop_propagation(); // prevent lightbox from closing
                 let current = *current_image_index;
                 let new_index = (current + 1) % total_images;
                 current_image_index.set(new_index);
@@ -87,7 +87,7 @@
             .clone();
 
         html! {
-            <>  // fragment to group project item and modal
+            <>  // fragment to group project item and lightbox
                 <div class="bg-gray-900 border-2 border-gray-700 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 max-w-sm">
                     // project image
                     <div class="aspect-video bg-gray-800 overflow-hidden">
@@ -136,30 +136,31 @@
                 </div>
 
                 // lightbox
-                if *modal_open {
+                if *lightbox_open {
                     <div 
                         class="fixed inset-0 backdrop-blur-lg bg-black/75 flex items-center justify-center z-50"
-                        onclick={close_modal.clone()}
+                        onclick={close_lightbox.clone()}
                     >
                         // close button (top-right)
                         <button
-                            onclick={close_modal.clone()}
-                            class="absolute top-4 right-4 text-white hover:text-red-400 text-4xl font-bold transition-colors duration-200 cursor-pointer z-20 bg-black/50 rounded-full w-12 h-12 flex items-center justify-center"
+                            onclick={close_lightbox.clone()}
+                            class="absolute top-4 right-4 text-white hover:text-red-600 text-4xl font-bold transition-colors duration-200 cursor-pointer z-20 bg-black/50 rounded-full w-12 h-12 flex items-center justify-center"
                         >
                             {"×"}
                         </button>
 
                         // image container
                         <div 
-                            class="relative w-full h-full flex items-center justify-center p-4"
-                            onclick={Callback::from(|e: MouseEvent| e.stop_propagation())}
->
+                            class="relative w-full h-full flex items-center justify-center p-4">
+                            
+                            
                             // main image display
                             <img
                                 src={current_image_src}
                                 alt={format!("{} - Image {}", props.title, *current_image_index + 1)}
                                 class="max-w-full max-h-full object-contain"
                                 style="image-rendering: pixelated;"
+                                onclick={Callback::from(|e: MouseEvent| e.stop_propagation())}
                             />
 
                             // navigation buttons (only show if there are multiple images)

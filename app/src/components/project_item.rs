@@ -193,7 +193,7 @@
                                 <h2 class="text-2xl font-bold text-red-600 font-mono">{&props.title}</h2>
                                 <button 
                                     onclick={close_modal}
-                                    class="text-gray-400 hover:text-red-400 text-2xl font-bold transition-colors duration-200 cursor-pointer">
+                                    class="text-gray-400 hover:text-red-600 text-2xl font-bold transition-colors duration-200 cursor-pointer">
                                     {"×"}
                                 </button>
                             </div>

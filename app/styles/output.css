@@ -839,10 +839,10 @@
       }
     }
   }
-  .hover\:text-red-400 {
+  .hover\:text-red-600 {
     &:hover {
       @media (hover: hover) {
-        color: var(--color-red-400);
+        color: var(--color-red-600);
       }
     }
   }
