@@ -1,13 +1,12 @@
 // pages/doom_projects.rs
 use yew::prelude::*;
-use crate::components::doom_project_item::{DoomProjectItem, Tag};
+use crate::components::doom_project_item::{DoomProjectItem};
 use crate::components::footer::Footer;
 
 // struct to hold project data
 #[derive(Clone, PartialEq)]
 pub struct Project {
     pub title: String,
-    pub tags: Vec<Tag>,
     pub description: String,
     pub image_src: String,
     pub image_alt: Option<String>,
@@ -22,9 +21,6 @@ pub fn projects() -> Html {
     let projects = vec![
         Project {
             title: "Cathedral of Charybdis".to_string(),
-            tags: vec![
-                Tag { name: "UDMF".to_string(), color: "bg-blue-500".to_string(), text_color: None },
-            ],
             description: "A dark and atmospheric map. All are swallowed by the shadow of the cathedral. Can you resist the evil cult of Charybdis?".to_string(),
             image_src: "/static/doom_projects/cathedral_of_charybdis/cathedral_of_charybdis_1.png".to_string(),
             image_alt: Some("Cathedral of Charybdis".to_string()),
@@ -44,9 +40,6 @@ pub fn projects() -> Html {
         },
         Project {
             title: "Jammy".to_string(),
-            tags: vec![
-                Tag { name: "UDMF".to_string(), color: "bg-yellow-500".to_string(), text_color: None },
-            ],
             description: "A gimmicky challenge map involving a lot of scripted terrain transformation and light slaughter. Inspired by Doom64 MAP19. Push through and don't stand still!".to_string(),
             image_src: "/static/doom_projects/jammy/jammy_1.png".to_string(),
             image_alt: Some("Jammy".to_string()),
@@ -62,9 +55,6 @@ pub fn projects() -> Html {
         },
         Project {
             title: "Whispers of Change".to_string(),
-            tags: vec![
-                Tag { name: "UDMF".to_string(), color: "bg-pink-500".to_string(), text_color: None },
-            ],
             description: "A short and atmospheric map with story elements and light puzzles. Co-authored by Erik Lindstrand and made in 1 day for Chalmers March GameJam 2024. We were disqualified.".to_string(),
             image_src: "/static/doom_projects/whispers_of_change/whispers_of_change_1.png".to_string(),
             image_alt: Some("Whispers of Change".to_string()),
@@ -78,9 +68,6 @@ pub fn projects() -> Html {
         },
         Project {
             title: "SWEDEN".to_string(),
-            tags: vec![
-                Tag { name: "UDMF".to_string(), color: "bg-blue-500".to_string(), text_color: None },
-            ],
             description: "An adventure map that has nothing to do with Sweden.".to_string(),
             image_src: "/static/doom_projects/sweden/sweden_1.png".to_string(),
             image_alt: Some("SWEDEN".to_string()),
@@ -98,9 +85,6 @@ pub fn projects() -> Html {
         },
         Project {
             title: "ΣΣΑΣ".to_string(),
-            tags: vec![
-                Tag { name: "UDMF".to_string(), color: "bg-pink-500".to_string(), text_color: None },
-            ],
             description: "A map that is definitely not inspired by a real military base.".to_string(),
             image_src: "/static/doom_projects/ssas/ssas_1.png".to_string(),
             image_alt: Some("ΣΣΑΣ".to_string()),
@@ -151,7 +135,6 @@ pub fn projects() -> Html {
                     { for projects.iter().map(|project| html! {
                         <DoomProjectItem
                             title={project.title.clone()}
-                            tags={project.tags.clone()}
                             description={project.description.clone()}
                             image_src={project.image_src.clone()}
                             image_alt={project.image_alt.clone()}
