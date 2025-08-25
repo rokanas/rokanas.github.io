@@ -1,13 +1,11 @@
     // components/doom_project_item.rs
     use yew::prelude::*;
-    use web_sys::window;
 
     #[derive(Properties, PartialEq)]
     pub struct ProjectItemProps {
         pub image_src: String,
         pub title: String,
         pub description: String,
-        pub github_url: String,
         #[prop_or_default]
         pub image_alt: Option<String>,
         #[prop_or_default]
@@ -38,7 +36,7 @@
             images
         };
 
-        let more_info_click = {
+        let gallery_click = {
             let modal_open = modal_open.clone();
             let current_image_index = current_image_index.clone();
             Callback::from(move |_| {
@@ -80,13 +78,8 @@
             })
         };
         
-        let github_click = {
-            let github_url = props.github_url.clone();
-            Callback::from(move |_| {
-                if let Some(window) = window() {
-                    let _ = window.open_with_url_and_target(&github_url, "_blank");
-                }
-            })
+        let _download_click = {
+            // TODO: IMPLEMENT
         };
 
         let current_image_src = all_images.get(*current_image_index)
@@ -121,19 +114,20 @@
                         <div class="flex justify-between items-start mb-3 gap-3">
                             // more info
                             <button 
-                                onclick={more_info_click}
+                                onclick={gallery_click}
                                 class="group w-full bg-gray-800 hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-2 px-4 rounded transition-all duration-200 cursor-pointer font-mono text-sm">
                                 <div class="flex items-center justify-center gap-2">    
                                     <span>{"VIEW GALLERY"}</span>
                                     <span class="text-xs group-hover:translate-x-1 transition-transform duration-200">{"→"}</span>
                                 </div>
                             </button>
-                            // github
+                            // download
                             <button 
-                                onclick={github_click.clone()}
-                                class="group w-full bg-gray-800 hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-2 px-4 rounded transition-all duration-200 cursor-pointer font-mono text-sm">
+                                // onclick={download_click.clone()}
+                                class="group w-full bg-gray-700 hover:bg-gray-600 border-2 border-gray-500 hover:border-gray-400 text-gray-400 hover:text-gray-300 font-bold py-2 px-4 rounded transition-all duration-200 cursor-not-allowed font-mono text-sm">
                                 <div class="flex items-center justify-center gap-2">    
-                                    <span>{"DOWNLOAD"}</span>
+                                    <span class="group-hover:hidden">{"DOWNLOAD"}</span>
+                                    <span class="hidden group-hover:inline">{"COMING SOON"}</span>
                                     <span class="text-xs group-hover:translate-x-1 transition-transform duration-200">{"→"}</span>
                                 </div>
                             </button>
