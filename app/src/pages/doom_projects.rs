@@ -1,4 +1,4 @@
-// pages/projects.rs
+// pages/doom_projects.rs
 use yew::prelude::*;
 use crate::components::doom_project_item::{DoomProjectItem, Tag};
 use crate::components::footer::Footer;
@@ -15,6 +15,7 @@ pub struct Project {
     pub additional_images: Vec<String>,
 }
 
+// TODO: make smaller thumbnails if page loads slowly (involves refactoring image_src to thumbnail_src)
 #[function_component(DoomProjects)]
 pub fn projects() -> Html {
     // project item definitions (temporarily hardcoded, can be moved to db later)
@@ -38,6 +39,7 @@ pub fn projects() -> Html {
                 "/static/doom_projects/cathedral_of_charybdis/cathedral_of_charybdis_8.png".to_string(),
                 "/static/doom_projects/cathedral_of_charybdis/cathedral_of_charybdis_9.png".to_string(),
                 "/static/doom_projects/cathedral_of_charybdis/cathedral_of_charybdis_10.png".to_string(),
+                "/static/doom_projects/cathedral_of_charybdis/cathedral_of_charybdis_11.png".to_string(),
             ],
         },
         Project {
@@ -68,10 +70,7 @@ pub fn projects() -> Html {
             image_alt: Some("Whispers of Change".to_string()),
             github_url: "https://github.com/rokanas/terminarium".to_string(),
             additional_images: vec![
-                "/static/doom_projects/whispers_of_change/whispers_of_change_2.png".to_string(),
-                "/static/doom_projects/whispers_of_change/whispers_of_change_3.png".to_string(),
-                "/static/doom_projects/whispers_of_change/whispers_of_change_4.png".to_string(),
-                "/static/doom_projects/whispers_of_change/whispers_of_change_5.png".to_string(),
+
             ],
         },
         Project {
@@ -157,6 +156,20 @@ pub fn projects() -> Html {
                             additional_images={project.additional_images.clone()}
                         />
                     })}
+                </div>
+
+                // footer note
+                <div class="text-center mt-16 text-gray-500">
+                    <p class="font-mono text-sm">
+                        {"More projects available on my "} 
+                        <a 
+                            href="https://github.com/rokanas" 
+                            target="_blank" 
+                            class="text-red-600 hover:text-red-300 underline transition-colors duration-200"
+                        >
+                            {"GitHub profile"}
+                        </a>
+                    </p>
                 </div>
             </div>
             <Footer />

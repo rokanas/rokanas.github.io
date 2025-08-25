@@ -168,64 +168,64 @@
                     </div>
                 </div>
 
-                // modal
+                // lightbox
                 if *modal_open {
-                    <div class="fixed inset-0 backdrop-blur-lg bg-black/50 bg-opacity-75 flex items-center justify-center p-4 z-50" onclick={close_modal.clone()}>
-                        <div 
-                            class="bg-gray-900 border-2 border-red-600 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-                            onclick={Callback::from(|e: MouseEvent| e.stop_propagation())}
+                    <div 
+                        class="fixed inset-0 backdrop-blur-lg bg-black/75 flex items-center justify-center z-50"
+                        onclick={close_modal.clone()}
+                    >
+                        // close button (top-right)
+                        <button
+                            onclick={close_modal.clone()}
+                            class="absolute top-4 right-4 text-white hover:text-red-400 text-4xl font-bold transition-colors duration-200 cursor-pointer z-20 bg-black/50 rounded-full w-12 h-12 flex items-center justify-center"
                         >
-                            // modal header
-                            <div class="flex justify-between items-center p-6 border-b border-gray-700">
-                                <h2 class="text-2xl font-bold text-red-600 font-mono">{&props.title}</h2>
-                                <button 
-                                    onclick={close_modal}
-                                    class="text-gray-400 hover:text-red-400 text-2xl font-bold transition-colors duration-200 cursor-pointer">
-                                    {"×"}
-                                </button>
-                            </div>
+                            {"×"}
+                        </button>
 
-                            // modal content
-                            <div class="p-6 space-y-6">
-                                // project image with navigation
-                                <div class="relative">
-                                    <div class="aspect-video bg-gray-800 rounded-lg overflow-hidden">
-                                        <img 
-                                            src={current_image_src}
-                                            // alt={alt_text.clone()} TODO: FIX
-                                            class="w-full h-full object-contain"
-                                        />
-                                    </div>
-                                    
-                                    // navigation buttons (only show if there are multiple images)
-                                    if all_images.len() > 1 {
-                                        <>
-                                            // left arrow
-                                            <button
-                                                onclick={prev_image}
-                                                class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white rounded-full p-2 transition-all duration-200 cursor-pointer z-10"
-                                            >
-                                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                                                </svg>
-                                            </button>
-                                            
-                                            // right arrow
-                                            <button
-                                                onclick={next_image}
-                                                class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white rounded-full p-2 transition-all duration-200 cursor-pointer z-10"
-                                            >
-                                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                                </svg>
-                                            </button>
-                                            
-                                            // image counter
-                                            <div class="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-mono">
-                                                {format!("{}/{}", *current_image_index + 1, all_images.len())}
-                                            </div>
-                                        </>
-                                    }
+                        // image container
+                        <div 
+                            class="relative w-full h-full flex items-center justify-center p-4"
+                            onclick={Callback::from(|e: MouseEvent| e.stop_propagation())}
+>
+                            // main image display
+                            <img
+                                src={current_image_src}
+                                alt={format!("{} - Image {}", props.title, *current_image_index + 1)}
+                                class="max-w-full max-h-full object-contain"
+                                style="image-rendering: pixelated;"
+                            />
+
+                            // navigation buttons (only show if there are multiple images)
+                            if all_images.len() > 1 {
+                                <>
+                                    // left arrow
+                                    <button
+                                        onclick={prev_image}
+                                        class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white rounded-full p-3 transition-all duration-200 cursor-pointer z-10"
+                                    >
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                        </svg>
+                                    </button>
+
+                                    // right arrow  
+                                    <button
+                                        onclick={next_image}
+                                        class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white rounded-full p-3 transition-all duration-200 cursor-pointer z-10"
+                                    >
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                    </button>
+
+                                </>
+                            }
+
+                            // image counter and title
+                            <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-lg">
+                                <div class="text-center font-mono">
+                                    <div class="text-lg font-bold text-red-600">{&props.title}</div>
+                                    <div class="text-sm">{format!("{} / {}", *current_image_index + 1, all_images.len())}</div>
                                 </div>
                             </div>
                         </div>

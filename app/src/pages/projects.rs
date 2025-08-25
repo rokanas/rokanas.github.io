@@ -229,7 +229,7 @@ pub fn projects() -> Html {
                         <a 
                             href="https://github.com/rokanas" 
                             target="_blank" 
-                            class="text-red-400 hover:text-red-300 underline transition-colors duration-200"
+                            class="text-red-600 hover:text-red-300 underline transition-colors duration-200"
                         >
                             {"GitHub profile"}
                         </a>
