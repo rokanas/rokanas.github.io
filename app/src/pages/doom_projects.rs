@@ -26,7 +26,7 @@ pub fn projects() -> Html {
             ],
             description: "A dark and atmospheric map. All are swallowed by the shadow of the cathedral. Can you resist the evil cult of Charybdis?".to_string(),
             image_src: "/static/doom_projects/cathedral_of_charybdis/cathedral_of_charybdis_1.png".to_string(),
-            image_alt: Some("Skinscan logo".to_string()),
+            image_alt: Some("Cathedral of Charybdis".to_string()),
             github_url: "https://github.com/rokanas/skinscan".to_string(),
             additional_images: vec![
                 "/static/doom_projects/cathedral_of_charybdis/cathedral_of_charybdis_2.png".to_string(),
@@ -47,7 +47,7 @@ pub fn projects() -> Html {
             ],
             description: "A gimmicky challenge map involving a lot of scripted terrain transformation and light slaughter. Inspired by Doom64 MAP19. Push through and don't stand still!".to_string(),
             image_src: "/static/doom_projects/jammy/jammy_1.png".to_string(),
-            image_alt: Some("Dentago component diagram".to_string()),
+            image_alt: Some("Jammy".to_string()),
             github_url: "https://github.com/rokanas/dentago".to_string(),
             additional_images: vec![
                 "/static/doom_projects/jammy/jammy_2.png".to_string(),
@@ -65,7 +65,7 @@ pub fn projects() -> Html {
             ],
             description: "A short and atmospheric map with story elements and light puzzles. Co-authored by Erik Lindstrand and made in 1 day for Chalmers March GameJam 2024. We were disqualified.".to_string(),
             image_src: "/static/doom_projects/whispers_of_change/whispers_of_change_1.png".to_string(),
-            image_alt: Some("Terminarium logo".to_string()),
+            image_alt: Some("Whispers of Change".to_string()),
             github_url: "https://github.com/rokanas/terminarium".to_string(),
             additional_images: vec![
                 "/static/doom_projects/whispers_of_change/whispers_of_change_2.png".to_string(),
@@ -81,7 +81,7 @@ pub fn projects() -> Html {
             ],
             description: "An adventure map that has nothing to do with Sweden.".to_string(),
             image_src: "/static/doom_projects/sweden/sweden_1.png".to_string(),
-            image_alt: Some("Zulu empire logo".to_string()),
+            image_alt: Some("SWEDEN".to_string()),
             github_url: "https://github.com/rokanas/zulubot".to_string(),
             additional_images: vec![
                 "/static/doom_projects/sweden/sweden_2.png".to_string(),
@@ -101,7 +101,7 @@ pub fn projects() -> Html {
             ],
             description: "A map that is definitely not inspired by a real military base.".to_string(),
             image_src: "/static/doom_projects/ssas/ssas_1.png".to_string(),
-            image_alt: Some("Wio terminal keyboard".to_string()),
+            image_alt: Some("ΣΣΑΣ".to_string()),
             github_url: "https://github.com/rokanas/wio-terminal-keyboard".to_string(),
             additional_images: vec![
                 "/static/doom_projects/ssas/ssas_2.png".to_string(),
@@ -157,20 +157,6 @@ pub fn projects() -> Html {
                             additional_images={project.additional_images.clone()}
                         />
                     })}
-                </div>
-
-                // footer note
-                <div class="text-center mt-16 text-gray-500">
-                    <p class="font-mono text-sm">
-                        {"More projects available on my "} 
-                        <a 
-                            href="https://github.com/rokanas" 
-                            target="_blank" 
-                            class="text-red-400 hover:text-red-300 underline transition-colors duration-200"
-                        >
-                            {"GitHub profile"}
-                        </a>
-                    </p>
                 </div>
             </div>
             <Footer />
