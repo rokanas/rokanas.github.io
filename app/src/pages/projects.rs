@@ -191,7 +191,11 @@ pub fn projects() -> Html {
     ];
 
     html! {
-        <main class="min-h-screen bg-black text-white pt-8 pb-24"> // pb-24 for footer space
+        <main 
+            class="min-h-screen text-white pt-8 pb-10"
+            style="background-image: url('/static/SHAWN_2.png'); background-repeat: repeat; background-size: 300px;" // 
+        >
+
             <div class="container mx-auto px-4 max-w-7xl">
                 
                 // page header
@@ -202,8 +206,8 @@ pub fn projects() -> Html {
                         class="w-auto h-auto mx-auto"
                     />
                     <img 
-                        src="/static/DIVIDER.png" 
-                        alt="Projects"
+                        src="/static/DIVIDER_2.png" 
+                        alt="Divider"
                         class="w-auto h-auto mx-auto mb-4 -mt-6"
                     />
                     <p class="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
@@ -230,7 +234,7 @@ pub fn projects() -> Html {
                     })}
                 </div>
 
-                // footer note
+                // footer note                                       // TODO: add padding so footer doesn't overlap
                 <div class="text-center mt-16 text-gray-500">
                     <p class="font-mono text-sm">
                         {"More projects available on my "} 

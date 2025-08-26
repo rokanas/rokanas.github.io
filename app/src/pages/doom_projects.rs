@@ -135,8 +135,8 @@ pub fn doom_projects() -> Html {
                         class="w-auto h-auto mx-auto"
                     />
                     <img 
-                        src="/static/DIVIDER.png" 
-                        alt="Projects"
+                        src="/static/DIVIDER_2.png" 
+                        alt="Divider"
                         class="w-auto h-auto mx-auto mb-4 -mt-6"
                     />
                     //<p class="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
