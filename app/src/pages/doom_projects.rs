@@ -2,7 +2,6 @@
 use yew::prelude::*;
 use web_sys::window;
 use crate::components::doom_project_item::{DoomProjectItem};
-use crate::components::footer::Footer;
 
 // struct to hold project data
 #[derive(Clone, PartialEq)]
@@ -172,7 +171,6 @@ pub fn doom_projects() -> Html {
                     </p>
                 </div>
             </div>
-            <Footer show={*show_footer} />
         </main>
     }
 }

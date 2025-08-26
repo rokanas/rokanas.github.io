@@ -2,7 +2,6 @@
 use yew::prelude::*;
 use web_sys::window;
 use crate::components::project_item::{ProjectItem, Tag};
-use crate::components::footer::Footer;
 
 // struct to hold project data
 #[derive(Clone, PartialEq)]
@@ -245,7 +244,6 @@ pub fn projects() -> Html {
                     </p>
                 </div>
             </div>
-            <Footer />
         </main>
     }
 }

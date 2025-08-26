@@ -1,6 +1,4 @@
 use yew::prelude::*;
-use crate::components::footer::Footer;
-
 
 #[function_component(Home)]
 pub fn home() -> Html {
@@ -9,7 +7,6 @@ pub fn home() -> Html {
             <main class="flex-grow flex flex-col items-center justify-center bg-black">
                 <img class="logo" src="https://yew.rs/img/logo.svg" alt="Yew logo" />
                 <h1 class="text-white">{ "Hello World!" }</h1>
-                <Footer />
             </main>
         </div>
     }
