@@ -1,5 +1,6 @@
 // pages/projects.rs
 use yew::prelude::*;
+use web_sys::window;
 use crate::components::project_item::{ProjectItem, Tag};
 use crate::components::footer::Footer;
 
@@ -21,6 +22,14 @@ pub struct Project {
 
 #[function_component(Projects)]
 pub fn projects() -> Html {
+    use_effect_with((), |_| {
+        // scroll to top when component mounts
+        if let Some(window) = window() {
+            window.scroll_to_with_x_and_y(0.0, 0.0);
+        }
+        || {}
+    });
+
     // project item definitions (temporarily hardcoded, can be moved to db later)
     let projects = vec![
         Project {
@@ -229,7 +238,7 @@ pub fn projects() -> Html {
                         <a 
                             href="https://github.com/rokanas" 
                             target="_blank" 
-                            class="text-red-400 hover:text-red-300 underline transition-colors duration-200"
+                            class="text-red-600 hover:text-red-300 underline transition-colors duration-200"
                         >
                             {"GitHub profile"}
                         </a>
