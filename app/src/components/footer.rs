@@ -8,6 +8,13 @@ use wasm_bindgen::JsCast;               // import trait for convering between Ja
 use crate::router::Route;               // import route enum for page navigation
 use crate::components::hud_section::HudSection;
 
+// props to control footer visibility and animation
+#[derive(Properties, PartialEq)]
+pub struct FooterProps {
+    #[prop_or(false)]
+    pub show: bool,
+}
+
 // hook to track mouse position and convert to grid position
 #[hook] // macro for yew hook (reusable stateful logic)
 fn use_mouse_grid() -> (i32, i32) {         // return tuple of signed integers (column, row)
@@ -93,12 +100,41 @@ fn use_navigation() -> Callback<Route> {        // returns callback that takes a
 }
 
 #[function_component(Footer)]   // declare function as footer component
-pub fn footer() -> Html {
+pub fn footer(props: &FooterProps) -> Html {
     let (mouse_col, mouse_row) = use_mouse_grid();     // destructure tuple returned by hook to two variables (column, row)
     let navigate = use_navigation();            // get navigation callback from hook
+    let is_visible = use_state(|| false);
+
+    // animate footer entrance when show prop changes
+    {
+        let is_visible = is_visible.clone();
+        use_effect_with(props.show, move |show| {
+            if *show {                                              // when true, footer renders but is off-screen
+                // small delay for smooth animation
+                let is_visible_clone = is_visible.clone();
+                gloo_timers::callback::Timeout::new(50, move || {   // after 50ms delay, is_visible becomes true (controls CSS animation)
+                    is_visible_clone.set(true);
+                }).forget();
+            } else {
+                is_visible.set(false);                              // when false, footer slides offscreen
+            }
+            || {}
+        });
+    }
+
+    // only render if show prop is true
+    if !props.show {
+        return html! {};
+    }
+
+    let footer_classes = if *is_visible {
+        "fixed bottom-0 left-0 right-0 w-full z-40 transform translate-y-0 transition-transform duration-500 ease-out"
+    } else {
+        "fixed bottom-0 left-0 right-0 w-full z-40 transform translate-y-full transition-transform duration-500 ease-out"
+    };
 
     html! { // macro to create html structure                       // start html block
-        <footer class="fixed bottom-0 left-0 right-0 w-full z-40">  // fixed position at bottom with high z-index (so it appears above other content)
+        <footer class={footer_classes}>  // fixed position at bottom with high z-index (so it appears above other content)
             <div class="flex w-full">                               // flex container div taking full horizontal width
                 
                 // home

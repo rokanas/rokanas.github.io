@@ -28,6 +28,7 @@ name = "app"
 version = "0.1.0"
 dependencies = [
  "gloo-events 0.1.2",
+ "gloo-timers 0.2.6",
  "log",
  "tracing",
  "tracing-subscriber",
