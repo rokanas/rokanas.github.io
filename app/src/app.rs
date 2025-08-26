@@ -26,8 +26,9 @@ pub fn app_content() -> Html {
     let route = use_route::<Route>().unwrap_or(Route::Home);
     let is_doom_projects = matches!(route, Route::DoomProjects);
     
-    web_sys::console::log_1(&format!("Current route: {:?}", route).into());
-    web_sys::console::log_1(&format!("Is doom projects: {}", is_doom_projects).into());
+    // TODO: remove debug logs
+    // web_sys::console::log_1(&format!("Current route: {:?}", route).into());
+    // web_sys::console::log_1(&format!("Is doom projects: {}", is_doom_projects).into());
 
     html! {
         <>
@@ -37,7 +38,7 @@ pub fn app_content() -> Html {
                 is_doom_projects_page={is_doom_projects}
             />
             
-            <main class={if is_doom_projects { "" } else { "pt-20" }}>
+            <main class={if is_doom_projects { "" } else { "pt-20 bg-black" }}>
                 <Switch<Route> render={switch} />
             </main>
 
