@@ -9,13 +9,29 @@ use crate::components::footer::Footer;
 
 fn switch(routes: Route) -> Html {
     match routes {
-        Route::Home => html! { <Home /> },
-        Route::Projects => html! { <Projects /> },
+        Route::Home => html! { 
+            <div class="page-content fade-in">
+                <Home /> 
+            </div>
+        },
+        Route::Projects => html! { 
+            <div class="page-content fade-in">
+                <Projects /> 
+            </div>
+        },
         //Route::About => html! { <About /> },
         //Route::Avatar => html! { <Avatar /> },
-        Route::DoomProjects => html! { <DoomProjects /> },
+        Route::DoomProjects => html! { 
+            <div class="page-content fade-in">
+                <DoomProjects /> 
+            </div>
+        },
         //Route::Contact => html! { <Contact /> },
-        Route::NotFound => html! { <div>{"404 - Page not found"}</div> },
+        Route::NotFound => html! { 
+            <div class="page-content fade-in">
+                <div>{"404 - Page not found"}</div> 
+            </div>
+        },
     }
 }
 
@@ -40,7 +56,9 @@ pub fn app_content() -> Html {
             />
             
             <main class={if is_doom_projects { "" } else { "pt-20" }}>
-                <Switch<Route> render={switch} />
+                <div key={format!("{:?}", route)}>      // key forces remount on route change, triggering use_effect in pages (yew doesn't unmount/remount on route change by default)
+                    <Switch<Route> render={switch} />
+                </div>
             </main>
 
             // footer only visible in doom projects page

@@ -193,6 +193,7 @@ pub fn projects() -> Html {
     html! {
         <main 
             class="min-h-screen text-white pt-8 pb-10"
+            style="background-image: url('/static/FLOOR4_9.png'); background-repeat: repeat; background-size: 290px; image-rendering: pixelated;"  
         >
 
             <div class="container mx-auto px-4 max-w-7xl">
