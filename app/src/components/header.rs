@@ -48,24 +48,27 @@
             return html! {};
         }
 
-        let header_style = if *is_visible {
-            "fixed top-0 left-0 right-0 w-full z-40 transform -translate-y-0 transition-transform duration-500 ease-out bg-black shadow-lg"
+        let header_class = if *is_visible {
+            "fixed top-0 left-0 right-0 w-full z-40 transform -translate-y-0 transition-transform duration-500 ease-out"
         } else {
-            "fixed top-0 left-0 right-0 w-full z-40 transform -translate-y-full transition-transform duration-500 ease-out bg-black shadow-lg"
+            "fixed top-0 left-0 right-0 w-full z-40 transform -translate-y-full transition-transform duration-500 ease-out"
         };
 
         html! {
-            <header class={header_style}>
+            <header class={header_class} style="background-image: url('/static/SHAWN_2.png'); background-repeat: repeat; background-size: 60px;">
                 <div class="container mx-auto px-6 py-4">
                     <div class="flex items-center justify-between">
                         
                         // Logo/Brand section
                         <div class="flex items-center space-x-2">
                             <button 
-                                onclick={navigate.reform(|_| Route::Home)}
-                                class="text-2xl font-bold text-red-600 hover:text-blue-600 transition-colors duration-200"
-                            >
-                                {"KR"}
+                                onclick={navigate.reform(|_| Route::Home)} 
+                                class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none"> // group class allows child elements to react to hover state of parent
+                                <img 
+                                    src="/static/KR_1.png" 
+                                    alt="Home"
+                                    class="w-4/5 block transition-opacity duration-200 ease-in-out group-hover:opacity-0"
+                                />
                             </button>
                         </div>
 

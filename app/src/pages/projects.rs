@@ -193,7 +193,6 @@ pub fn projects() -> Html {
     html! {
         <main 
             class="min-h-screen text-white pt-8 pb-10"
-            style="background-image: url('/static/SHAWN_2.png'); background-repeat: repeat; background-size: 300px;" // 
         >
 
             <div class="container mx-auto px-4 max-w-7xl">

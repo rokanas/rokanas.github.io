@@ -31,6 +31,7 @@ pub fn app_content() -> Html {
     // web_sys::console::log_1(&format!("Is doom projects: {}", is_doom_projects).into());
 
     html! {
+        <body style="background-image: url('/static/FLOOR4_9.png'); background-repeat: repeat; background-size: 290px; image-rendering: pixelated;">
         <>
             // header visible in all pages except doom projects
             <Header 
@@ -38,13 +39,14 @@ pub fn app_content() -> Html {
                 is_doom_projects_page={is_doom_projects}
             />
             
-            <main class={if is_doom_projects { "" } else { "pt-20 bg-black" }}>
+            <main class={if is_doom_projects { "" } else { "pt-20" }}>
                 <Switch<Route> render={switch} />
             </main>
 
             // footer only visible in doom projects page
             <Footer show={is_doom_projects} />
         </>
+        </body>
     }
 }
 
