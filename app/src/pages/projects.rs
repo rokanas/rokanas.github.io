@@ -194,7 +194,6 @@ pub fn projects() -> Html {
         <main 
             class="min-h-screen text-white pt-8 pb-10" 
         >
-
             <div class="container mx-auto px-4 max-w-7xl">
                 
                 // page header

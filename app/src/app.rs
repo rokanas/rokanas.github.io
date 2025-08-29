@@ -7,31 +7,32 @@ use crate::pages::projects::Projects;
 use crate::pages::doom_projects::DoomProjects;
 use crate::components::header::Header;
 use crate::components::footer::Footer;
+use crate::components::fade_wrapper::FadeWrapper;
 
 fn switch(routes: Route) -> Html {
     match routes {
         Route::Home => html! { 
-            <div class="page-content fade-in">
+            <FadeWrapper>
                 <Home /> 
-            </div>
+            </FadeWrapper>
         },
         Route::Projects => html! { 
-            <div class="page-content fade-in">
+            <FadeWrapper>
                 <Projects /> 
-            </div>
+            </FadeWrapper>
         },
         //Route::About => html! { <About /> },
         //Route::Avatar => html! { <Avatar /> },
         Route::DoomProjects => html! { 
-            <div class="page-content fade-in">
+            <FadeWrapper>
                 <DoomProjects /> 
-            </div>
+            </FadeWrapper>
         },
         //Route::Contact => html! { <Contact /> },
         Route::NotFound => html! { 
-            <div class="page-content fade-in">
+            <FadeWrapper>
                 <div>{"404 - Page not found"}</div> 
-            </div>
+            </FadeWrapper>
         },
     }
 }
@@ -64,7 +65,7 @@ pub fn app_content() -> Html {
             // footer only visible in doom projects page
             <Footer show={is_doom_projects} />
         </>
-    }
+        }
 }
 
 #[function_component(App)]

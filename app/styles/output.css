@@ -564,9 +564,6 @@
   .border-red-600 {
     border-color: var(--color-red-600);
   }
-  .bg-black {
-    background-color: var(--color-black);
-  }
   .bg-black\/50 {
     background-color: color-mix(in srgb, #000 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -746,6 +743,9 @@
   }
   .opacity-0 {
     opacity: 0%;
+  }
+  .opacity-100 {
+    opacity: 100%;
   }
   .shadow {
     --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
@@ -1001,21 +1001,6 @@
 html, body {
   height: 100%;
   margin: 0;
-}
-.page-content {
-  opacity: 0;
-  animation: fadeIn 0.5s ease-in-out forwards;
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-.fade-in {
-  animation: fadeIn 0.5s ease-in-out forwards;
 }
 @property --tw-translate-x {
   syntax: "*";
