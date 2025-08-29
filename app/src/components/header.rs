@@ -57,9 +57,9 @@
 
         // helper to get correct CSS class for a button
         let get_button_class = |route: Route| -> String {
-            let base_class = "font-medium transition-colors duration-200 px-3 py-2 rounded-md cursor-pointer";
-            let active_class = "text-white bg-red-600";
-            let inactive_class = "text-red-600 hover:text-white hover:bg-red-600";
+            let base_class = "font-medium transition-colors duration-200 px-3 py-2 rounded-md cursor-pointer border-red-900 border-3";
+            let active_class = "text-white bg-red-600 border-red-900 border-3";
+            let inactive_class = "text-red-600 hover:text-white hover:bg-red-600 border-2 border-transparent hover:border-red-900 hover:border-3";
             
             if let Some(current) = &current_route {
                 if *current == route {
