@@ -9,14 +9,6 @@
         #[prop_or_default]
         pub image_alt: Option<String>,
         #[prop_or_default]
-        pub detailed_description: Option<String>,
-        #[prop_or_default]
-        pub technologies_used: Vec<String>,
-        #[prop_or_default]
-        pub key_features: Vec<String>,
-        #[prop_or_default]
-        pub wiki_url: Option<String>,
-        #[prop_or_default]
         pub additional_images: Vec<String>, 
     }
 

@@ -2,7 +2,6 @@
 use yew::prelude::*;
 use web_sys::window;
 use crate::components::doom_project_item::{DoomProjectItem};
-use crate::components::footer::Footer;
 
 // struct to hold project data
 #[derive(Clone, PartialEq)]
@@ -125,7 +124,7 @@ pub fn doom_projects() -> Html {
     ];
 
     html! {
-        <main class="min-h-screen bg-black text-white pt-8 pb-24"> // pb-24 for footer space
+        <main class="min-h-screen text-white pt-8 pb-24"> // pb-24 for footer space
             <div class="container mx-auto px-4 max-w-7xl">
                 
                 // page header
@@ -136,8 +135,8 @@ pub fn doom_projects() -> Html {
                         class="w-auto h-auto mx-auto"
                     />
                     <img 
-                        src="/static/DIVIDER.png" 
-                        alt="Projects"
+                        src="/static/DIVIDER_2.png" 
+                        alt="Divider"
                         class="w-auto h-auto mx-auto mb-4 -mt-6"
                     />
                     //<p class="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
@@ -172,7 +171,6 @@ pub fn doom_projects() -> Html {
                     </p>
                 </div>
             </div>
-            <Footer show={*show_footer} />
         </main>
     }
 }
