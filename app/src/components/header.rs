@@ -25,6 +25,7 @@
     pub fn header(props: &HeaderProps) -> Html {
         let navigate = use_navigation();
         let is_visible = use_state(|| !props.is_doom_projects_page); // start visible by default, hidden on doom projects page
+        let current_route = use_route::<Route>();
 
         // animate header entrance when show prop changes
         {
@@ -54,6 +55,20 @@
             "fixed top-0 left-0 right-0 w-full z-40 transform -translate-y-full transition-transform duration-500 ease-out"
         };
 
+        // helper to get correct CSS class for a button
+        let get_button_class = |route: Route| -> String {
+            let base_class = "font-medium transition-colors duration-200 px-3 py-2 rounded-md cursor-pointer";
+            let active_class = "text-white bg-red-600";
+            let inactive_class = "text-red-600 hover:text-white hover:bg-red-600";
+            
+            if let Some(current) = &current_route {
+                if *current == route {
+                    return format!("{} {}", base_class, active_class);
+                }
+            }
+            format!("{} {}", base_class, inactive_class)
+        };
+
         html! {
             <header class={header_class} style="background-image: url('/static/SHAWN_2.png'); background-repeat: repeat; background-size: 60px;">
                 <div class="container mx-auto px-6 py-4">
@@ -78,7 +93,7 @@
                             // Home
                             <button
                                 onclick={navigate.reform(|_| Route::Home)}
-                                class="text-red-600 hover:text-white font-medium transition-colors duration-200 px-3 py-2 rounded-md hover:bg-red-600"
+                                class={get_button_class(Route::Home)}
                             >
                                 {"Home"}
                             </button>
@@ -86,7 +101,7 @@
                             // Projects
                             <button
                                 onclick={navigate.reform(|_| Route::Projects)}
-                                class="text-red-600 hover:text-white font-medium transition-colors duration-200 px-3 py-2 rounded-md hover:bg-red-600"
+                                class={get_button_class(Route::Projects)}
                             >
                                 {"Projects"}
                             </button>
@@ -94,7 +109,7 @@
                             // Doom Projects
                             <button
                                 onclick={navigate.reform(|_| Route::DoomProjects)}
-                                class="text-red-600 hover:text-white font-medium transition-colors duration-200 px-3 py-2 rounded-md hover:bg-red-600"
+                                class={get_button_class(Route::DoomProjects)}
                             >
                                 {"Doom Projects"}
                             </button>
