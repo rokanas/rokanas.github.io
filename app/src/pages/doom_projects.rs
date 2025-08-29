@@ -130,7 +130,7 @@ pub fn doom_projects() -> Html {
                 // page header
                 <div class="text-center mb-12">
                     <img 
-                        src="/static/DOOM_PROJECTS_1.png" 
+                        src="/static/DOOM_PROJECTS_3.png" 
                         alt="Doom Projects"
                         class="w-auto h-auto mx-auto"
                     />

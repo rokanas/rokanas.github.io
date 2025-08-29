@@ -12,6 +12,7 @@
     --color-red-500: oklch(63.7% 0.237 25.331);
     --color-red-600: oklch(57.7% 0.245 27.325);
     --color-red-700: oklch(50.5% 0.213 27.518);
+    --color-red-900: oklch(39.6% 0.141 25.723);
     --color-yellow-400: oklch(85.2% 0.199 91.936);
     --color-yellow-500: oklch(79.5% 0.184 86.047);
     --color-blue-400: oklch(70.7% 0.165 254.624);
@@ -540,6 +541,10 @@
     border-style: var(--tw-border-style);
     border-width: 2px;
   }
+  .border-3 {
+    border-style: var(--tw-border-style);
+    border-width: 3px;
+  }
   .border-t {
     border-top-style: var(--tw-border-style);
     border-top-width: 1px;
@@ -563,6 +568,12 @@
   }
   .border-red-600 {
     border-color: var(--color-red-600);
+  }
+  .border-red-900 {
+    border-color: var(--color-red-900);
+  }
+  .border-transparent {
+    border-color: transparent;
   }
   .bg-black\/50 {
     background-color: color-mix(in srgb, #000 50%, transparent);
@@ -860,6 +871,14 @@
       }
     }
   }
+  .hover\:border-3 {
+    &:hover {
+      @media (hover: hover) {
+        border-style: var(--tw-border-style);
+        border-width: 3px;
+      }
+    }
+  }
   .hover\:border-gray-400 {
     &:hover {
       @media (hover: hover) {
@@ -871,6 +890,13 @@
     &:hover {
       @media (hover: hover) {
         border-color: var(--color-red-600);
+      }
+    }
+  }
+  .hover\:border-red-900 {
+    &:hover {
+      @media (hover: hover) {
+        border-color: var(--color-red-900);
       }
     }
   }
