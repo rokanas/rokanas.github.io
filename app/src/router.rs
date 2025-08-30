@@ -6,8 +6,8 @@ pub enum Route {
     Home,
     #[at("/projects")]
     Projects,
-    //#[at("/about")]
-    //About,
+    #[at("/about")]
+    About,
     //#[at("/avatar")]
     //Avatar,
     #[at("/doom-projects")]

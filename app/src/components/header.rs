@@ -98,6 +98,14 @@
                                 {"Home"}
                             </button>
 
+                            // About (commented out like in footer)
+                             <button
+                                onclick={navigate.reform(|_| Route::About)}
+                                class={get_button_class(Route::About)}
+                            >
+                                {"About"}
+                            </button>
+
                             // Projects
                             <button
                                 onclick={navigate.reform(|_| Route::Projects)}
@@ -112,15 +120,6 @@
                                 class={get_button_class(Route::DoomProjects)}
                             >
                                 {"Doom Projects"}
-                            </button>
-
-                            // About (commented out like in footer)
-                            <button
-                                // onclick={navigate.reform(|_| Route::About)}
-                                class="text-gray-400 cursor-not-allowed font-medium px-3 py-2 rounded-md"
-                                disabled={true}
-                            >
-                                {"About"}
                             </button>
 
                             // Contact (commented out like in footer)
