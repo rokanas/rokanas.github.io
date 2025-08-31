@@ -8,7 +8,7 @@ pub struct Experience {
     pub title: String,
     pub company: String,
     pub date: String,
-    pub description: String,
+    pub description: Option<String>,
     pub icon: String,
 }
 
@@ -36,22 +36,22 @@ pub fn about() -> Html {
             title: "Software Engineering & Management (BSc)".to_string(),
             company: "University of Gothenburg, SE".to_string(),
             date: "Aug 2022 - Jun 2025".to_string(),
-            description: "".to_string(),
-            icon: "🏢".to_string(),
+            description: None,
+            icon: "/static/U_GOTH.png".to_string(),
         },
         Experience {
             title: "European Law (LLM)".to_string(),
             company: "Leiden University, NL".to_string(),
             date: "Sep 2015 - Jun 2016".to_string(),
-            description: "".to_string(),
-            icon: "💻".to_string(),
+            description: None,
+            icon: "/static/U_LEID.png".to_string(),
         },
         Experience {
             title: "Law (LLB)".to_string(),
             company: "University of Reading".to_string(),
             date: "Sep 2012 - Jun 2015".to_string(),
-            description: "".to_string(),
-            icon: "🚀".to_string(),
+            description: None,
+            icon: "/static/U_READ.png".to_string(),
         },
     ];
 
@@ -61,23 +61,23 @@ pub fn about() -> Html {
             title: "Teaching Assistant".to_string(),
             company: "University of Gothenburg".to_string(),
             date: "Aug 2024 - Jun 2025".to_string(),
-            description: "TA for Software Architecture, Requirements Engineering and Systems Development.
-            \n Led TA meetings and workshops with students, promoted in-person and remote guidance.".to_string(),
-            icon: "🏢".to_string(),
+            description: Some("TA for Software Architecture, Requirements Engineering and Systems Development.
+            \n Led TA meetings and workshops with students, promoted in-person and remote guidance.".to_string()),
+            icon: "/static/AVATAR_1.png".to_string(),
         },
         Experience {
             title: "Full Stack Developer".to_string(),
             company: "Innovative Solutions Ltd.".to_string(),
             date: "2020 - 2022".to_string(),
-            description: "Placeholder".to_string(),
-            icon: "💻".to_string(),
+            description: Some("Placeholder".to_string()),
+            icon: "/static/AVATAR_1.png".to_string(),
         },
         Experience {
             title: "Software Engineering Intern".to_string(),
             company: "StartUp Inc.".to_string(),
             date: "2019 - 2020".to_string(),
-            description: "Placeholder.".to_string(),
-            icon: "🚀".to_string(),
+            description: Some("Placeholder".to_string()),
+            icon: "/static/AVATAR_1.png".to_string(),
         },
     ];
 
@@ -165,8 +165,12 @@ pub fn about() -> Html {
                                         if is_even { "md:flex-row" } else { "md:flex-row-reverse" }
                                     )}>
                                         // timeline node
-                                        <div class="absolute left-4 md:left-1/2 w-12 h-12 bg-gray-900 border-4 border-red-600 rounded-full flex items-center justify-center transform md:-translate-x-1/2 z-20">
-                                            <span class="text-xl">{&exp.icon}</span>
+                                        <div class="absolute left-4 md:left-1/2 w-12 h-12 bg-white border-4 border-red-600 rounded-full flex items-center justify-center transform md:-translate-x-1/2 z-20">
+                                            <img 
+                                                src={exp.icon.clone()} 
+                                                alt="Avatar" 
+                                                class="w-8 h-8 object-contain rounded-full"
+                                            />
                                         </div>
 
                                         // date on opposite side
@@ -199,11 +203,7 @@ pub fn about() -> Html {
                                                     <div class="text-red-600 font-semibold mb-2">{&exp.company}</div>
                                                     // date shown on mobile only
                                                     <div class="text-gray-300 text-sm mb-3 md:hidden">{&exp.date}</div>
-                                                    {if !exp.description.is_empty() {
-                                                        html! { <p class="text-gray-200 text-sm leading-relaxed">{&exp.description}</p> }
-                                                    } else {
-                                                        html! {}
-                                                    }}
+                                                        <p class="text-gray-200 text-sm leading-relaxed">{&exp.description}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -243,7 +243,11 @@ pub fn about() -> Html {
                                     )}>
                                         // timeline node
                                         <div class="absolute left-4 md:left-1/2 w-12 h-12 bg-gray-900 border-4 border-red-600 rounded-full flex items-center justify-center transform md:-translate-x-1/2 z-20">
-                                            <span class="text-xl">{&exp.icon}</span>
+                                            <img 
+                                                src="/static/AVATAR_1.png" 
+                                                alt="Avatar" 
+                                                class="w-full h-full object-contain"
+                                            />
                                         </div>
 
                                         // date on opposite side
