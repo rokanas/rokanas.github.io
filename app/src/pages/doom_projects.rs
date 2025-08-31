@@ -72,7 +72,7 @@ pub fn doom_projects() -> Html {
         },
         Project {
             title: "Whispers of Change".to_string(),
-            description: "A short and atmospheric map with story elements and light puzzles. Co-authored by Erik Lindstrand and made in 1 day for Chalmers March GameJam 2024. We were disqualified.".to_string(),
+            description: "A short and atmospheric map with story elements and light puzzles. Co-authored by Erik Lindstrand and made in 1 day for Chalmers March GameJam 2024.".to_string(),
             image_src: "/static/doom_projects/whispers_of_change/whispers_of_change_1.png".to_string(),
             image_alt: Some("Whispers of Change".to_string()),
             additional_images: vec![

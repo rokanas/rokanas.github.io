@@ -2,7 +2,7 @@
 use yew::prelude::*;
 use web_sys::window;
 
-// Struct to hold experience data
+// struct to hold education and experience data
 #[derive(Clone, PartialEq)]
 pub struct Experience {
     pub title: String,
@@ -12,7 +12,7 @@ pub struct Experience {
     pub icon: String,
 }
 
-// Struct to hold skill data
+// struct to hold skill data
 #[derive(Clone, PartialEq)]
 pub struct Skill {
     pub name: String,
@@ -30,13 +30,39 @@ pub fn about() -> Html {
         || {}
     });
 
+    // education data
+    let education: Vec<Experience> = vec![
+        Experience {
+            title: "Software Engineering & Management (BSc)".to_string(),
+            company: "University of Gothenburg, SE".to_string(),
+            date: "Aug 2022 - Jun 2025".to_string(),
+            description: "".to_string(),
+            icon: "🏢".to_string(),
+        },
+        Experience {
+            title: "European Law (LLM)".to_string(),
+            company: "Leiden University, NL".to_string(),
+            date: "Sep 2015 - Jun 2016".to_string(),
+            description: "".to_string(),
+            icon: "💻".to_string(),
+        },
+        Experience {
+            title: "Law (LLB)".to_string(),
+            company: "University of Reading".to_string(),
+            date: "Sep 2012 - Jun 2015".to_string(),
+            description: "Placeholder.".to_string(),
+            icon: "🚀".to_string(),
+        },
+    ];
+
     // experience data
     let experiences = vec![
         Experience {
-            title: "Senior Rust Developer".to_string(),
-            company: "Amazing Tech Co.".to_string(),
-            date: "2022 - Present".to_string(),
-            description: "Placeholder.".to_string(),
+            title: "Teaching Assistant".to_string(),
+            company: "University of Gothenburg".to_string(),
+            date: "Aug 2024 - Jun 2025".to_string(),
+            description: "TA for Software Architecture, Requirements Engineering and Systems Development.
+            \n Led TA meetings and workshops with students, promoted in-person and remote guidance.".to_string(),
             icon: "🏢".to_string(),
         },
         Experience {
@@ -79,18 +105,6 @@ pub fn about() -> Html {
                 
                 // about section
                 <div class="mb-16">
-                    <div class="text-center mb-12">
-                        <img 
-                            src="/static/ABOUT_ME.png" 
-                            alt="About"
-                            class="w-auto h-auto mx-auto"
-                        />
-                        <img 
-                            src="/static/DIVIDER_2.png" 
-                            alt="Divider"
-                            class="w-auto h-auto mx-auto mb-4 -mt-6"
-                        />
-                    </div>
                     
                     <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 max-w-6xl mx-auto">
                         // portrait
@@ -102,9 +116,13 @@ pub fn about() -> Html {
                         
                         // description
                         <div class="flex-1 text-center lg:text-left">
-                            <h1 class="text-4xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-red-500 to-purple-600 bg-clip-text text-transparent">
-                                {"Your Name"}
-                            </h1>
+                    <div class="text-center mb-12">
+                        <img 
+                            src="/static/KONSTANTINOS_ROKANAS_1.png" 
+                            alt="Konstantinos Rokanas"
+                            class="w-auto h-auto mx-auto"
+                        />
+                    </div>
                             <p class="text-gray-300 text-lg lg:text-xl leading-relaxed mb-4">
                                 {"Welcome to my portfolio! I'm a passionate Rust developer with expertise in building high-performance web applications using Yew and other modern technologies."}
                             </p>
@@ -119,14 +137,14 @@ pub fn about() -> Html {
                 <div class="mb-16">
                     <div class="text-center mb-12">
                         <img 
-                            src="/static/EXPERIENCE.png" 
+                            src="/static/EXPERIENCE_1.png" 
                             alt="Experience"
-                            class="w-auto h-auto mx-auto"
+                            class="max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto"
                         />
                         <img 
                             src="/static/DIVIDER_2.png" 
                             alt="Divider"
-                            class="w-auto h-auto mx-auto mb-4 -mt-6"
+                            class="max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto mb-4 -mt-6"
                         />
                     </div>
 
@@ -134,17 +152,24 @@ pub fn about() -> Html {
                     <div class="max-w-4xl mx-auto">
                         <div class="relative">
                             // vertical line
-                            <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-red-600 to-purple-700 transform md:-translate-x-1/2"></div>
+                            <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 bg-red-600 transform md:-translate-x-1/2"></div>
                             
                             { for experiences.iter().enumerate().map(|(index, exp)| {
                                 let is_even = index % 2 == 0;
                                 html! {
-                                    <div class={format!("relative flex items-center mb-12 {}", 
+                                    <div class={format!("relative flex items-start mb-12 {}", 
                                         if is_even { "md:flex-row" } else { "md:flex-row-reverse" }
                                     )}>
                                         // timeline node
-                                        <div class="absolute left-4 md:left-1/2 w-12 h-12 bg-gray-900 border-4 border-red-600 rounded-full flex items-center justify-center transform md:-translate-x-1/2 z-10">
+                                        <div class="absolute left-4 md:left-1/2 w-12 h-12 bg-gray-900 border-4 border-red-600 rounded-full flex items-center justify-center transform md:-translate-x-1/2 z-20">
                                             <span class="text-xl">{&exp.icon}</span>
+                                        </div>
+
+                                        // date on opposite side
+                                        <div class={format!("hidden md:block absolute top-4 {} md:w-5/12", 
+                                            if is_even { "md:ml-8 right-0" } else { "md:mr-8 left-0 text-right" }
+                                        )}>
+                                            <div class="text-red-600 font-semibold text-sm">{&exp.date}</div>
                                         </div>
                                         
                                         // content
@@ -153,8 +178,9 @@ pub fn about() -> Html {
                                         )}>
                                             <div class="bg-gray-900 p-6 rounded-lg shadow-xl border border-gray-700 hover:border-red-600 transition-colors duration-300">
                                                 <h3 class="text-xl font-bold text-white mb-2">{&exp.title}</h3>
-                                                <div class="text-red-400 font-semibold mb-2">{&exp.company}</div>
-                                                <div class="text-gray-400 text-sm mb-3">{&exp.date}</div>
+                                                <div class="text-red-600 font-semibold mb-2">{&exp.company}</div>
+                                                // date shown on mobile only
+                                                <div class="text-gray-400 text-sm mb-3 md:hidden">{&exp.date}</div>
                                                 <p class="text-gray-300 leading-relaxed">{&exp.description}</p>
                                             </div>
                                         </div>
@@ -169,7 +195,7 @@ pub fn about() -> Html {
                 <div class="mb-16">
                     <div class="text-center mb-12">
                         <img 
-                            src="/static/SKILLS.png" 
+                            src="/static/SKILLS_1.png" 
                             alt="Skills"
                             class="w-auto h-auto mx-auto"
                         />
