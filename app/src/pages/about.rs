@@ -50,7 +50,7 @@ pub fn about() -> Html {
             title: "Law (LLB)".to_string(),
             company: "University of Reading".to_string(),
             date: "Sep 2012 - Jun 2015".to_string(),
-            description: "Placeholder.".to_string(),
+            description: "".to_string(),
             icon: "🚀".to_string(),
         },
     ];
@@ -109,8 +109,12 @@ pub fn about() -> Html {
                     <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 max-w-6xl mx-auto">
                         // portrait
                         <div class="flex-shrink-0">
-                            <div class="w-64 h-64 lg:w-80 lg:h-80 rounded-full bg-gradient-to-br from-red-600 to-purple-700 flex items-center justify-center text-6xl lg:text-8xl shadow-2xl border-4 border-gray-700 hover:scale-105 transition-transform duration-300">
-                                {"👤"}
+                            <div class="w-64 h-64 lg:w-80 lg:h-80 rounded-full bg-[#1a1a1a] flex items-center justify-center text-6xl lg:text-8xl shadow-2xl border-8 border-[#0b0b0a] hover:scale-105 transition-transform duration-300">
+                                <img 
+                                    src="/static/AVATAR_1.png" 
+                                    alt="Avatar" 
+                                    class="w-full h-full object-contain"
+                                />
                             </div>
                         </div>
                         
@@ -129,6 +133,83 @@ pub fn about() -> Html {
                             <p class="text-gray-300 text-lg lg:text-xl leading-relaxed">
                                 {"I love creating efficient, scalable solutions and am always eager to tackle new challenges in systems programming and web development."}
                             </p>
+                        </div>
+                    </div>
+                </div>
+
+                // education section
+                <div class="mb-16">
+                    <div class="text-center mb-12">
+                        <img 
+                            src="/static/EDUCATION_1.png" 
+                            alt="Experience"
+                            class="max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto"
+                        />
+                        <img 
+                            src="/static/DIVIDER_2.png" 
+                            alt="Divider"
+                            class="max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto mb-4 -mt-6"
+                        />
+                    </div>
+
+                    // timeline
+                    <div class="max-w-4xl mx-auto">
+                        <div class="relative">
+                            // vertical line
+                            <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 bg-red-600 transform md:-translate-x-1/2"></div>
+                            
+                            { for education.iter().enumerate().map(|(index, exp)| {
+                                let is_even = index % 2 == 0;
+                                html! {
+                                    <div class={format!("relative flex items-start mb-12 {}", 
+                                        if is_even { "md:flex-row" } else { "md:flex-row-reverse" }
+                                    )}>
+                                        // timeline node
+                                        <div class="absolute left-4 md:left-1/2 w-12 h-12 bg-gray-900 border-4 border-red-600 rounded-full flex items-center justify-center transform md:-translate-x-1/2 z-20">
+                                            <span class="text-xl">{&exp.icon}</span>
+                                        </div>
+
+                                        // date on opposite side
+                                        <div class={format!("hidden md:block absolute top-4 {} md:w-5/12", 
+                                            if is_even { "md:ml-8 right-0" } else { "md:mr-8 left-0 text-right" }
+                                        )}>
+                                            <div class="text-red-600 font-semibold text-sm">{&exp.date}</div>
+                                        </div>
+                                        
+                                        // content with HUD-style background
+                                        <div class={format!("ml-20 md:ml-0 {} md:w-5/12", 
+                                            if is_even { "md:mr-8 md:text-right" } else { "md:ml-8" }
+                                        )}>
+                                            <div 
+                                                class="relative text-white flex items-center justify-center text-center p-6 hover:scale-105 transition-transform duration-300"
+                                                style="background-image: url('/static/STBAR7.png'); 
+                                                       background-repeat: no-repeat; 
+                                                       background-size: 100% 100%; 
+                                                       image-rendering: pixelated; 
+                                                       min-height: 120px;"
+                                            >
+
+                                                // inner box
+                                                <div 
+                                                    class="absolute inset-0 m-4 z-5 bg-[#1a1a1a] bg-opacity-60 border-4 border-[#0b0b0a]"
+                                                ></div>
+
+                                                <div class="z-10">
+                                                    <h3 class="text-xl font-bold text-white mb-2">{&exp.title}</h3>
+                                                    <div class="text-red-600 font-semibold mb-2">{&exp.company}</div>
+                                                    // date shown on mobile only
+                                                    <div class="text-gray-300 text-sm mb-3 md:hidden">{&exp.date}</div>
+                                                    {if !exp.description.is_empty() {
+                                                        html! { <p class="text-gray-200 text-sm leading-relaxed">{&exp.description}</p> }
+                                                    } else {
+                                                        html! {}
+                                                    }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            })}
                         </div>
                     </div>
                 </div>
