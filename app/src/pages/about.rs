@@ -120,18 +120,27 @@ pub fn about() -> Html {
                         
                         // description
                         <div class="flex-1 text-center lg:text-left">
-                    <div class="text-center mb-12">
+                    <div class="text-center mb-10 mt-10">
                         <img 
                             src="/static/KONSTANTINOS_ROKANAS_1.png" 
                             alt="Konstantinos Rokanas"
                             class="w-auto h-auto mx-auto"
                         />
                     </div>
-                            <p class="text-gray-300 text-lg lg:text-xl leading-relaxed mb-4">
-                                {"Welcome to my portfolio! I'm a passionate Rust developer with expertise in building high-performance web applications using Yew and other modern technologies."}
-                            </p>
                             <p class="text-gray-300 text-lg lg:text-xl leading-relaxed">
-                                {"I love creating efficient, scalable solutions and am always eager to tackle new challenges in systems programming and web development."}
+                                {"🎓 I'm a recent software engineering graduate eager to begin a career in tech."}
+                            </p>
+                            <p class="text-gray-300 text-lg lg:text-xl leading-relaxed mt-4">
+                                {"🛠 I want to build software solutions that make your life easier, saving you time and effort. I'm also a big believer in process automation and am interested in the increasing adoption of AI Agents."}
+                            </p>
+                            <p class="text-gray-300 text-lg lg:text-xl leading-relaxed mt-4">
+                                {"⚖️ Formerly a legal professional with a specialization European Law. I have experience both in international organizations and in the private sector, with a focus on personal data and cybersecurity policy compliance."}
+                            </p>
+                            <p class="text-gray-300 text-lg lg:text-xl leading-relaxed mt-4">
+                                {"⛧ I'm also a lifelong "} <strong>{"Doom"}</strong> {" enthusiast, mapmaker and content creator."}
+                            </p>
+                            <p class="text-gray-300 text-lg lg:text-xl leading-relaxed mt-4">
+                                {"🤼‍♂️ When not at the computer, I enjoy practicing mixed-martial arts, submission wrestling, rock-climbing and playing electric guitar."}
                             </p>
                         </div>
                     </div>

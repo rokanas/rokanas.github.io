@@ -84,7 +84,7 @@ pub fn doom_projects() -> Html {
         },
         Project {
             title: "SWEDEN".to_string(),
-            description: "An adventure map that has nothing to do with Sweden.".to_string(),
+            description: "An adventure map that has nothing to do with Sweden. Explore the demonic presence aroused in the ruins by human interference.".to_string(),
             image_src: "/static/doom_projects/sweden/sweden_1.png".to_string(),
             image_alt: Some("SWEDEN".to_string()),
             additional_images: vec![
@@ -100,7 +100,7 @@ pub fn doom_projects() -> Html {
         },
         Project {
             title: "ΣΣΑΣ".to_string(),
-            description: "A map that is definitely not inspired by a real military base.".to_string(),
+            description: "A map that is definitely not inspired by a real military base. Discover the hellish secrets buried beneath military inefficiency and bureaucracy!".to_string(),
             image_src: "/static/doom_projects/ssas/ssas_1.png".to_string(),
             image_alt: Some("ΣΣΑΣ".to_string()),
             additional_images: vec![
