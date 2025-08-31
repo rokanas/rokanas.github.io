@@ -156,12 +156,12 @@ pub fn about() -> Html {
                     <div class="max-w-4xl mx-auto">
                         <div class="relative">
                             // vertical line
-                            <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 bg-red-600 transform md:-translate-x-1/2"></div>
+                            <div class="absolute left-4 md:left-1/2 w-1 bg-red-600 transform md:-translate-x-1/2" style="top: 50px; bottom: 50px;"></div>
                             
                             { for education.iter().enumerate().map(|(index, exp)| {
                                 let is_even = index % 2 == 0;
                                 html! {
-                                    <div class={format!("relative flex items-start mb-12 {}", 
+                                    <div class={format!("relative flex items-center mb-12 {}", 
                                         if is_even { "md:flex-row" } else { "md:flex-row-reverse" }
                                     )}>
                                         // timeline node
@@ -174,10 +174,10 @@ pub fn about() -> Html {
                                         </div>
 
                                         // date on opposite side
-                                        <div class={format!("hidden md:block absolute top-4 {} md:w-5/12", 
+                                        <div class={format!("hidden md:block absolute top-1/2 transform -translate-y-1/2 {} md:w-5/12", 
                                             if is_even { "md:ml-8 right-0" } else { "md:mr-8 left-0 text-right" }
                                         )}>
-                                            <div class="text-red-600 font-semibold text-sm">{&exp.date}</div>
+                                            <div class="text-red-600 font-semibold text-l">{&exp.date}</div>
                                         </div>
                                         
                                         // content with HUD-style background
