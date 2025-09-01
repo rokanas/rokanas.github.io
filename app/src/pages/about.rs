@@ -37,21 +37,21 @@ pub fn about() -> Html {
         Experience {
             title: "Software Engineering & Management (BSc)".to_string(),
             company: "University of Gothenburg, SE".to_string(),
-            date: "Aug 2022 - Jun 2025".to_string(),
+            date: "AUG 2022 - JUN 2025".to_string(),
             description: None,
             icon: "/static/U_GOTH.png".to_string(),
         },
         Experience {
             title: "European Law (LLM)".to_string(),
             company: "Leiden University, NL".to_string(),
-            date: "Sep 2015 - Jun 2016".to_string(),
+            date: "SEP 2015 - JUN 2016".to_string(),
             description: None,
             icon: "/static/U_LEID.png".to_string(),
         },
         Experience {
             title: "Law (LLB)".to_string(),
             company: "University of Reading".to_string(),
-            date: "Sep 2012 - Jun 2015".to_string(),
+            date: "SEP 2012 - JUN 2015".to_string(),
             description: None,
             icon: "/static/U_READ.png".to_string(),
         },
@@ -176,19 +176,19 @@ pub fn about() -> Html {
                                         if is_even { "md:flex-row" } else { "md:flex-row-reverse" }
                                     )}>
                                         // timeline node
-                                        <div class="absolute left-4 md:left-1/2 w-12 h-12 bg-white border-4 border-red-600 rounded-full flex items-center justify-center transform md:-translate-x-1/2 z-20">
+                                        <div class="absolute left-4 md:left-1/2 w-16 h-16 bg-white border-4 border-red-600 rounded-full flex items-center justify-center transform md:-translate-x-1/2 z-20">
                                             <img 
                                                 src={exp.icon.clone()} 
                                                 alt="Avatar" 
-                                                class="w-8 h-8 object-contain rounded-full"
+                                                class="w-12 h-12 object-contain rounded-full"
                                             />
                                         </div>
 
-                                        // date on opposite side
-                                        <div class={format!("hidden md:block absolute top-1/2 transform -translate-y-1/2 {} md:w-5/12", 
-                                            if is_even { "md:ml-8 right-0" } else { "md:mr-8 left-0 text-right" }
-                                        )}>
-                                            <div class="text-red-600 font-semibold text-l">{&exp.date}</div>
+                                            // date on opposite side
+                                            <div class={format!("hidden md:block absolute top-1/2 transform -translate-y-1/2 {} md:w-5/12", 
+                                                if is_even { "md:ml-8 right-10 pl-5" } else { "md:mr-8 left-10 pr-5 text-right" }
+                                            )}>
+                                                <div class="text-red-600 font-semibold text-l">{&exp.date}</div>
                                         </div>
                                         
                                         // content with HUD-style background
@@ -196,7 +196,7 @@ pub fn about() -> Html {
                                             if is_even { "md:mr-8 md:text-right" } else { "md:ml-8" }
                                         )}>
                                             <div 
-                                                class="relative text-white flex items-center justify-center text-center p-6 hover:scale-105 transition-transform duration-300"
+                                                class="relative text-white flex items-center justify-left text-left p-6 hover:scale-105 transition-transform duration-300"
                                                 style="background-image: url('/static/STBAR7.png'); 
                                                        background-repeat: no-repeat; 
                                                        background-size: 100% 100%; 
