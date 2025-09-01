@@ -238,49 +238,85 @@ pub fn about() -> Html {
                         />
                     </div>
 
-                    // timeline
-                    <div class="max-w-4xl mx-auto">
-                        <div class="relative">
-                            // vertical line
-                            <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 bg-red-600 transform md:-translate-x-1/2"></div>
-                            
-                            { for experiences.iter().enumerate().map(|(index, exp)| {
-                                let is_even = index % 2 == 0;
-                                html! {
-                                    <div class={format!("relative flex items-start mb-12 {}", 
-                                        if is_even { "md:flex-row" } else { "md:flex-row-reverse" }
-                                    )}>
-                                        // timeline node
-                                        <div class="absolute left-4 md:left-1/2 w-12 h-12 bg-gray-900 border-4 border-red-600 rounded-full flex items-center justify-center transform md:-translate-x-1/2 z-20">
-                                            <img 
-                                                src="/static/AVATAR_1.png" 
-                                                alt="Avatar" 
-                                                class="w-full h-full object-contain"
-                                            />
-                                        </div>
-
-                                        // date on opposite side
-                                        <div class={format!("hidden md:block absolute top-4 {} md:w-5/12", 
-                                            if is_even { "md:ml-8 right-0" } else { "md:mr-8 left-0 text-right" }
+                    <div class="max-w-6xl mx-auto">
+                        <div class="flex flex-col lg:flex-row gap-8">
+                            // left sidebar (job titles)
+                            <div class="lg:w-1/3 space-y-4">
+                                { for experiences.iter().enumerate().map(|(index, exp)| {
+                                    let is_selected = index == 0; // first item selected by default
+                                    html! {
+                                        <div class={format!("flex items-center p-4 rounded-lg cursor-pointer transition-all duration-300 {}", 
+                                            if is_selected { 
+                                                "bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30" 
+                                            } else { 
+                                                "bg-gray-900/50 border border-gray-700 hover:border-gray-600" 
+                                            }
                                         )}>
-                                            <div class="text-red-600 font-semibold text-sm">{&exp.date}</div>
-                                        </div>
-                                        
-                                        // content
-                                        <div class={format!("ml-20 md:ml-0 {} md:w-5/12", 
-                                            if is_even { "md:mr-8 md:text-right" } else { "md:ml-8" }
-                                        )}>
-                                            <div class="bg-gray-900 p-6 rounded-lg shadow-xl border border-gray-700 hover:border-red-600 transition-colors duration-300">
-                                                <h3 class="text-xl font-bold text-white mb-2">{&exp.title}</h3>
-                                                <div class="text-red-600 font-semibold mb-2">{&exp.company}</div>
-                                                // date shown on mobile only
-                                                <div class="text-gray-400 text-sm mb-3 md:hidden">{&exp.date}</div>
-                                                <p class="text-gray-300 leading-relaxed">{&exp.description}</p>
+                                            <div class="flex-shrink-0 mr-4">
+                                                <div class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center">
+                                                    <img 
+                                                        src={exp.icon.clone()} 
+                                                        alt="Company logo" 
+                                                        class="w-8 h-8 object-contain"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="flex-1">
+                                                <h3 class="text-white font-semibold text-lg mb-1">{&exp.title}</h3>
+                                                <p class="text-gray-400 text-sm">{&exp.company}</p>
                                             </div>
                                         </div>
+                                    }
+                                })}
+                            </div>
+
+                            // right content (job details))
+                            <div class="lg:w-2/3">
+                                <div class="bg-gray-900/50 border border-gray-700 rounded-lg p-8">
+                                    <div class="flex items-center mb-6">
+                                        <div class="flex-shrink-0 mr-4">
+                                            <div class="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center">
+                                                <img 
+                                                    src={experiences[0].icon.clone()} 
+                                                    alt="Company logo" 
+                                                    class="w-10 h-10 object-contain"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h2 class="text-2xl font-bold text-white mb-2">{&experiences[0].title}</h2>
+                                            <p class="text-gray-400 text-lg mb-1">{&experiences[0].company}</p>
+                                            <p class="text-gray-500 text-sm">{&experiences[0].date}</p>
+                                        </div>
                                     </div>
-                                }
-                            })}
+
+                                    <div class="space-y-4">
+                                        { 
+                                            if let Some(description) = &experiences[0].description {
+                                                let bullet_points: Vec<&str> = description.split("\n\n").collect();
+                                                html! {
+                                                    <ul class="space-y-3">
+                                                        { for bullet_points.iter().map(|point| {
+                                                            if !point.trim().is_empty() {
+                                                                html! {
+                                                                    <li class="flex items-start">
+                                                                        <div class="flex-shrink-0 w-2 h-2 bg-red-500 rounded-full mt-2 mr-3"></div>
+                                                                        <p class="text-gray-300 leading-relaxed">{point.trim()}</p>
+                                                                    </li>
+                                                                }
+                                                            } else {
+                                                                html! {}
+                                                            }
+                                                        })}
+                                                    </ul>
+                                                }
+                                            } else {
+                                                html! {}
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
