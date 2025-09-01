@@ -22,6 +22,8 @@ pub struct Skill {
 
 #[function_component(About)]
 pub fn about() -> Html {
+    let selected_job = use_state(|| 0usize);    // track which job is selected
+
     use_effect_with((), |_| {
         // scroll to top when component mounts
         if let Some(window) = window() {
@@ -127,19 +129,19 @@ pub fn about() -> Html {
                             class="w-auto h-auto mx-auto"
                         />
                     </div>
-                            <p class="text-gray-300 text-lg lg:text-xl leading-relaxed">
+                            <p class="text-gray-300 text-lg lg:text-lg leading-relaxed">
                                 {"🎓 I'm a recent software engineering graduate eager to begin a career in tech."}
                             </p>
-                            <p class="text-gray-300 text-lg lg:text-xl leading-relaxed mt-4">
+                            <p class="text-gray-300 text-lg lg:text-lg leading-relaxed mt-4">
                                 {"🛠 I want to build software solutions that make your life easier, saving you time and effort. I'm also a big believer in process automation and am interested in the increasing adoption of AI Agents."}
                             </p>
-                            <p class="text-gray-300 text-lg lg:text-xl leading-relaxed mt-4">
+                            <p class="text-gray-300 text-lg lg:text-lg leading-relaxed mt-4">
                                 {"⚖️ Formerly a legal professional with a specialization European Law. I have experience both in international organizations and in the private sector, with a focus on personal data and cybersecurity policy compliance."}
                             </p>
-                            <p class="text-gray-300 text-lg lg:text-xl leading-relaxed mt-4">
+                            <p class="text-gray-300 text-lg lg:text-lg leading-relaxed mt-4">
                                 {"⛧ I'm also a lifelong "} <strong>{"Doom"}</strong> {" enthusiast, mapmaker and content creator."}
                             </p>
-                            <p class="text-gray-300 text-lg lg:text-xl leading-relaxed mt-4">
+                            <p class="text-gray-300 text-lg lg:text-lg leading-relaxed mt-4">
                                 {"🤼‍♂️ When not at the computer, I enjoy practicing mixed-martial arts, submission wrestling, rock-climbing and playing electric guitar."}
                             </p>
                         </div>
@@ -243,7 +245,11 @@ pub fn about() -> Html {
                             // left sidebar (job titles)
                             <div class="lg:w-1/3 space-y-4">
                                 { for experiences.iter().enumerate().map(|(index, exp)| {
-                                    let is_selected = index == 0; // first item selected by default
+                                    let is_selected = *selected_job == index; // first item selected by default
+                                    let selected_job_clone = selected_job.clone();
+                                    let onclick = Callback::from(move |_| {
+                                        selected_job_clone.set(index);
+                                    });
                                     html! {
                                         <div class={format!("flex items-center p-4 rounded-lg cursor-pointer transition-all duration-300 {}", 
                                             if is_selected { 
@@ -251,7 +257,8 @@ pub fn about() -> Html {
                                             } else { 
                                                 "bg-gray-900/50 border border-gray-700 hover:border-gray-600" 
                                             }
-                                        )}>
+                                        )}
+                                        onclick={onclick}>
                                             <div class="flex-shrink-0 mr-4">
                                                 <div class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center">
                                                     <img 
@@ -277,16 +284,16 @@ pub fn about() -> Html {
                                         <div class="flex-shrink-0 mr-4">
                                             <div class="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center">
                                                 <img 
-                                                    src={experiences[0].icon.clone()} 
+                                                    src={experiences[*selected_job].icon.clone()}
                                                     alt="Company logo" 
                                                     class="w-10 h-10 object-contain"
                                                 />
                                             </div>
                                         </div>
                                         <div>
-                                            <h2 class="text-2xl font-bold text-white mb-2">{&experiences[0].title}</h2>
-                                            <p class="text-gray-400 text-lg mb-1">{&experiences[0].company}</p>
-                                            <p class="text-gray-500 text-sm">{&experiences[0].date}</p>
+                                            <h2 class="text-2xl font-bold text-white mb-2">{&experiences[*selected_job].title}</h2>
+                                            <p class="text-gray-400 text-lg mb-1">{&experiences[*selected_job].company}</p>
+                                            <p class="text-gray-500 text-sm">{&experiences[*selected_job].date}</p>
                                         </div>
                                     </div>
 

@@ -1392,10 +1392,10 @@
       line-height: var(--tw-leading, var(--text-8xl--line-height));
     }
   }
-  .lg\:text-xl {
+  .lg\:text-lg {
     @media (width >= 64rem) {
-      font-size: var(--text-xl);
-      line-height: var(--tw-leading, var(--text-xl--line-height));
+      font-size: var(--text-lg);
+      line-height: var(--tw-leading, var(--text-lg--line-height));
     }
   }
   .xl\:max-w-xl {
