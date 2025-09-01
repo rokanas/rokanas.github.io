@@ -426,6 +426,9 @@
   .h-12 {
     height: calc(var(--spacing) * 12);
   }
+  .h-13 {
+    height: calc(var(--spacing) * 13);
+  }
   .h-16 {
     height: calc(var(--spacing) * 16);
   }
@@ -467,6 +470,9 @@
   }
   .w-12 {
     width: calc(var(--spacing) * 12);
+  }
+  .w-13 {
+    width: calc(var(--spacing) * 13);
   }
   .w-16 {
     width: calc(var(--spacing) * 16);
@@ -776,12 +782,6 @@
   .bg-red-600 {
     background-color: var(--color-red-600);
   }
-  .bg-red-600\/50 {
-    background-color: color-mix(in srgb, oklch(57.7% 0.245 27.325) 50%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-red-600) 50%, transparent);
-    }
-  }
   .bg-transparent {
     background-color: transparent;
   }
@@ -947,9 +947,6 @@
   }
   .text-blue-400 {
     color: var(--color-blue-400);
-  }
-  .text-gray-200 {
-    color: var(--color-gray-200);
   }
   .text-gray-300 {
     color: var(--color-gray-300);

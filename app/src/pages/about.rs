@@ -37,21 +37,21 @@ pub fn about() -> Html {
         Experience {
             title: "Software Engineering & Management (BSc)".to_string(),
             company: "University of Gothenburg, SE".to_string(),
-            date: "AUG 2022 - JUN 2025".to_string(),
+            date: "2022 - 2025".to_string(),
             description: None,
             icon: "/static/U_GOTH.png".to_string(),
         },
         Experience {
             title: "European Law (LLM)".to_string(),
             company: "Leiden University, NL".to_string(),
-            date: "SEP 2015 - JUN 2016".to_string(),
+            date: "2015 - 2016".to_string(),
             description: None,
             icon: "/static/U_LEID.png".to_string(),
         },
         Experience {
             title: "Law (LLB)".to_string(),
-            company: "University of Reading".to_string(),
-            date: "SEP 2012 - JUN 2015".to_string(),
+            company: "University of Reading, UK".to_string(),
+            date: "2012 - 2015".to_string(),
             description: None,
             icon: "/static/U_READ.png".to_string(),
         },
@@ -62,25 +62,45 @@ pub fn about() -> Html {
         Experience {
             title: "Teaching Assistant".to_string(),
             company: "University of Gothenburg".to_string(),
-            date: "Aug 2024 - Jun 2025".to_string(),
+            date: "2024 - 2025".to_string(),
             description: Some(vec![
                 "TA for Software Architecture, Requirements Engineering and Systems Development.".to_string(),
-                "Led TA meetings and workshops with students, promoted in-person and remote guidance.".to_string()]),
-            icon: "/static/AVATAR_1.png".to_string(),
+                "Led TA meetings and workshops with students, provided in-person and remote guidance.".to_string(),
+                "Provided support and feedback to professors concerning assignments and course materials.".to_string(),
+                "Graded student assignments and exams.".to_string()]),
+            icon: "/static/U_GOTH.png".to_string(),
         },
         Experience {
-            title: "Full Stack Developer".to_string(),
-            company: "Innovative Solutions Ltd.".to_string(),
-            date: "2020 - 2022".to_string(),
-            description: Some(vec!["Placeholder".to_string()]),
-            icon: "/static/AVATAR_1.png".to_string(),
+            title: "Compliance Officer".to_string(),
+            company: "Huawei Technologies S.A.".to_string(),
+            date: "2019 - 2022".to_string(),
+            description: Some(vec![
+                "Legal compliance assessment and risk analysis for all areas of company operations in Athens and Cyprus offices (specialization in Data Protection (GDPR) and Cybersecurity)".to_string(),
+                "Legal support to regional offices in Albania, Northern Macedonia and Bulgaria.".to_string(),
+                "Led training sessions for all regional offices on sensitive areas (personal data protection, cybersecurity, anti-bribery).".to_string(),]),
+            icon: "/static/HUAWEI.png".to_string(),
         },
         Experience {
-            title: "Software Engineering Intern".to_string(),
-            company: "StartUp Inc.".to_string(),
+            title: "Intern at Academy of European Public Law".to_string(),
+            company: "European Public Law Organization (EPLO)".to_string(),
+            date: "2019".to_string(),
+            description: Some(vec![
+                "Assisted in the design, organization and implementation of European and Public Law university programs and summer exchange programs".to_string(),
+                "Assisted in the administration of the Department of Education.".to_string(),
+                "Drafted reports on EPLO activities and conducted research for various other departments.".to_string(),
+                ]),
+            icon: "/static/EPLO.png".to_string(),
+        },
+        Experience {
+            title: "Intern at Greek National Desk".to_string(),
+            company: "Eurojust".to_string(),
             date: "2019 - 2020".to_string(),
-            description: Some(vec!["Placeholder".to_string()]),
-            icon: "/static/AVATAR_1.png".to_string(),
+            description: Some(vec![
+                "Assisted in administrative functions of the Greek national desk.".to_string(),
+                "Composed external and internal communications towards national authorities and national desks.".to_string(),
+                "Legal case file and database management.".to_string(),
+                    ]),
+            icon: "/static/EUROJUST.png".to_string(),
         },
     ];
 
@@ -143,7 +163,7 @@ pub fn about() -> Html {
                                 {"⛧ I'm also a lifelong "} <strong>{"Doom"}</strong> {" enthusiast, mapmaker and content creator."}
                             </p>
                             <p class="text-gray-300 text-lg lg:text-lg leading-relaxed mt-4">
-                                {"🤼‍♂️ When not at the computer, I enjoy practicing mixed-martial arts, submission wrestling, rock-climbing and playing electric guitar."}
+                                {"🤼‍♂️ When away from the computer, I enjoy practicing mixed-martial arts, submission wrestling, rock-climbing and playing electric guitar."}
                             </p>
                         </div>
                     </div>
@@ -214,8 +234,7 @@ pub fn about() -> Html {
                                                     <h3 class="text-xl font-bold text-white mb-2 pl-3">{&exp.title}</h3>
                                                     <div class="text-red-600 font-semibold mb-2 pl-3">{&exp.company}</div>
                                                     // date shown on mobile only
-                                                    <div class="text-gray-300 text-sm mb-3 md:hidden">{&exp.date}</div>
-                                                        <p class="text-gray-200 text-sm leading-relaxed">{&exp.description}</p>
+                                                    <div class="text-gray-400 text-sm mb-3 md:hidden pl-3">{&exp.date}</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -265,7 +284,7 @@ pub fn about() -> Html {
                                                     <img 
                                                         src={exp.icon.clone()} 
                                                         alt="Company logo" 
-                                                        class="w-8 h-8 object-contain"
+                                                        class="w-10 h-10 object-contain rounded-full bg-white"
                                                     />
                                                 </div>
                                             </div>
@@ -277,38 +296,53 @@ pub fn about() -> Html {
                                     }
                                 })}
                             </div>
-
+// border-9 border-gray-500
                             // right content (job details))
                             <div class="lg:w-2/3">
-                                <div class="bg-red-600/50 border-9 border-red-900 p-8">
-                                    <div class="flex items-center mb-6">
-                                        <div class="flex-shrink-0 mr-4">
-                                            <div class="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center">
-                                                <img 
-                                                    src={experiences[*selected_job].icon.clone()}
-                                                    alt="Company logo" 
-                                                    class="w-10 h-10 object-contain"
-                                                />
+                                <div 
+                                    class="relative p-8"                                                 
+                                    style="background-image: url('/static/STBAR7.png'); 
+                                           background-repeat: no-repeat; 
+                                           background-size: 100% 100%; 
+                                           image-rendering: pixelated;
+                                           min-height: 120px;
+                                           transparency: 0.9;"
+                                >
+                                    // inner box
+                                    <div 
+                                        class="absolute inset-0 m-4 z-5 bg-[#1a1a1a] bg-opacity-60 border-4 border-[#0b0b0a]"
+                                    ></div>
+                                    
+                                    <div class="relative z-10">
+                                        <div class="flex items-center mb-6">
+                                            <div class="flex-shrink-0 mr-4">
+                                                <div class="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center">
+                                                    <img 
+                                                        src={experiences[*selected_job].icon.clone()}
+                                                        alt="Company logo" 
+                                                        class="w-13 h-13 object-contain rounded-full bg-white"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h2 class="text-2xl font-bold text-white mb-2">{&experiences[*selected_job].title}</h2>
+                                                <p class="text-red-600 text-lg mb-1">{&experiences[*selected_job].company}</p>
+                                                <p class="text-gray-400 text-sm">{&experiences[*selected_job].date}</p>
                                             </div>
                                         </div>
-                                        <div>
-                                            <h2 class="text-2xl font-bold text-white mb-2">{&experiences[*selected_job].title}</h2>
-                                            <p class="text-gray-400 text-lg mb-1">{&experiences[*selected_job].company}</p>
-                                            <p class="text-gray-500 text-sm">{&experiences[*selected_job].date}</p>
-                                        </div>
-                                    </div>
 
-                                    <div class="space-y-4">                                        
-                                        if let Some(description) = &experiences[*selected_job].description {
-                                            { for description.iter().map(|point| {
-                                                html! {
-                                                    <li class="flex items-start">
-                                                        <div class="flex-shrink-0 w-2 h-2 bg-red-500 rounded-full mt-2 mr-3"></div>
-                                                        <p class="text-gray-300 leading-relaxed">{point}</p>
-                                                    </li>
-                                                }
-                                            })}
-                                        }
+                                        <div class="space-y-4">                                        
+                                            if let Some(description) = &experiences[*selected_job].description {
+                                                { for description.iter().map(|point| {
+                                                    html! {
+                                                        <li class="flex items-start">
+                                                            <div class="flex-shrink-0 w-2 h-2 bg-red-500 rounded-full mt-2 mr-3"></div>
+                                                            <p class="text-gray-300 leading-relaxed">{point}</p>
+                                                        </li>
+                                                    }
+                                                })}
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </div>
