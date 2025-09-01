@@ -8,7 +8,7 @@ pub struct Experience {
     pub title: String,
     pub company: String,
     pub date: String,
-    pub description: Option<String>,
+    pub description: Option<Vec<String>>,
     pub icon: String,
 }
 
@@ -63,22 +63,23 @@ pub fn about() -> Html {
             title: "Teaching Assistant".to_string(),
             company: "University of Gothenburg".to_string(),
             date: "Aug 2024 - Jun 2025".to_string(),
-            description: Some("TA for Software Architecture, Requirements Engineering and Systems Development.
-            \n Led TA meetings and workshops with students, promoted in-person and remote guidance.".to_string()),
+            description: Some(vec![
+                "TA for Software Architecture, Requirements Engineering and Systems Development.".to_string(),
+                "Led TA meetings and workshops with students, promoted in-person and remote guidance.".to_string()]),
             icon: "/static/AVATAR_1.png".to_string(),
         },
         Experience {
             title: "Full Stack Developer".to_string(),
             company: "Innovative Solutions Ltd.".to_string(),
             date: "2020 - 2022".to_string(),
-            description: Some("Placeholder".to_string()),
+            description: Some(vec!["Placeholder".to_string()]),
             icon: "/static/AVATAR_1.png".to_string(),
         },
         Experience {
             title: "Software Engineering Intern".to_string(),
             company: "StartUp Inc.".to_string(),
             date: "2019 - 2020".to_string(),
-            description: Some("Placeholder".to_string()),
+            description: Some(vec!["Placeholder".to_string()]),
             icon: "/static/AVATAR_1.png".to_string(),
         },
     ];
@@ -210,8 +211,8 @@ pub fn about() -> Html {
                                                 ></div>
 
                                                 <div class="z-10">
-                                                    <h3 class="text-xl font-bold text-white mb-2">{&exp.title}</h3>
-                                                    <div class="text-red-600 font-semibold mb-2">{&exp.company}</div>
+                                                    <h3 class="text-xl font-bold text-white mb-2 pl-3">{&exp.title}</h3>
+                                                    <div class="text-red-600 font-semibold mb-2 pl-3">{&exp.company}</div>
                                                     // date shown on mobile only
                                                     <div class="text-gray-300 text-sm mb-3 md:hidden">{&exp.date}</div>
                                                         <p class="text-gray-200 text-sm leading-relaxed">{&exp.description}</p>
@@ -279,7 +280,7 @@ pub fn about() -> Html {
 
                             // right content (job details))
                             <div class="lg:w-2/3">
-                                <div class="bg-gray-900/50 border border-gray-700 rounded-lg p-8">
+                                <div class="bg-red-600/50 border-9 border-red-900 p-8">
                                     <div class="flex items-center mb-6">
                                         <div class="flex-shrink-0 mr-4">
                                             <div class="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center">
@@ -297,29 +298,16 @@ pub fn about() -> Html {
                                         </div>
                                     </div>
 
-                                    <div class="space-y-4">
-                                        { 
-                                            if let Some(description) = &experiences[0].description {
-                                                let bullet_points: Vec<&str> = description.split("\n\n").collect();
+                                    <div class="space-y-4">                                        
+                                        if let Some(description) = &experiences[*selected_job].description {
+                                            { for description.iter().map(|point| {
                                                 html! {
-                                                    <ul class="space-y-3">
-                                                        { for bullet_points.iter().map(|point| {
-                                                            if !point.trim().is_empty() {
-                                                                html! {
-                                                                    <li class="flex items-start">
-                                                                        <div class="flex-shrink-0 w-2 h-2 bg-red-500 rounded-full mt-2 mr-3"></div>
-                                                                        <p class="text-gray-300 leading-relaxed">{point.trim()}</p>
-                                                                    </li>
-                                                                }
-                                                            } else {
-                                                                html! {}
-                                                            }
-                                                        })}
-                                                    </ul>
+                                                    <li class="flex items-start">
+                                                        <div class="flex-shrink-0 w-2 h-2 bg-red-500 rounded-full mt-2 mr-3"></div>
+                                                        <p class="text-gray-300 leading-relaxed">{point}</p>
+                                                    </li>
                                                 }
-                                            } else {
-                                                html! {}
-                                            }
+                                            })}
                                         }
                                     </div>
                                 </div>
