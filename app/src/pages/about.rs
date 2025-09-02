@@ -229,16 +229,16 @@ pub fn about() -> Html {
                             <p class="text-gray-300 text-lg lg:text-lg leading-relaxed">
                                 {"🎓 I'm a recent software engineering graduate eager to begin a career in tech."}
                             </p>
-                            <p class="text-gray-300 text-lg lg:text-lg leading-relaxed mt-4">
-                                {"🛠 I want to build software solutions that make your life easier, saving you time and effort. I'm also a big believer in process automation and am interested in the increasing adoption of AI Agents."}
+                            <p class="text-gray-300 text-lg lg:text-lg leading-relaxed mt-5">
+                                {"🛠 I want to build intuitive software solutions that make your jobs and lives easier, saving you time and effort. Currently learning Rust and about AI agent workflow automation."}
                             </p>
-                            <p class="text-gray-300 text-lg lg:text-lg leading-relaxed mt-4">
-                                {"⚖️ Formerly a legal professional with a specialization European Law. I have experience both in international organizations and in the private sector, with a focus on personal data and cybersecurity policy compliance."}
+                            <p class="text-gray-300 text-lg lg:text-lg leading-relaxed mt-5">
+                                {"⚖️ Formerly a legal professional with a focus on personal data and cybersecurity policy compliance and experience both in international organizations and in the private sector."}
                             </p>
-                            <p class="text-gray-300 text-lg lg:text-lg leading-relaxed mt-4">
+                            <p class="text-gray-300 text-lg lg:text-lg leading-relaxed mt-5">
                                 {"⛧ I'm also a lifelong "} <strong>{"Doom"}</strong> {" enthusiast, mapmaker and content creator."}
                             </p>
-                            <p class="text-gray-300 text-lg lg:text-lg leading-relaxed mt-4">
+                            <p class="text-gray-300 text-lg lg:text-lg leading-relaxed mt-5">
                                 {"🤼‍♂️ When away from the computer, I enjoy practicing mixed-martial arts, submission wrestling, rock-climbing and playing electric guitar."}
                             </p>
                         </div>
@@ -340,7 +340,7 @@ pub fn about() -> Html {
                         <div class="flex flex-col lg:flex-row gap-8">
                     
                             // left sidebar (job titles)
-                            <div class="lg:w-1/3 space-y-4">
+                            <div class="lg:w-1/3 space-y-3">
                                 { for experiences.iter().enumerate().map(|(index, exp)| {
                                     let is_selected = *selected_job == index; // first item selected by default
                                     let selected_job_clone = selected_job.clone();
@@ -348,11 +348,11 @@ pub fn about() -> Html {
                                         selected_job_clone.set(index);
                                     });
                                     html! {
-                                        <div class={format!("flex items-center p-4 rounded-lg cursor-pointer transition-all duration-300 {}", 
+                                        <div class={format!("flex items-center p-4 cursor-pointer transition-all duration-300 {}", 
                                             if is_selected { 
-                                                "bg-red-600/30 border border-red-600/40" 
+                                                "bg-red-600/30 border-3 border-red-600/40" 
                                             } else { 
-                                                "bg-gray-900/50 border border-gray-700 hover:border-gray-600" 
+                                                "bg-gray-500/25 border-3 border-gray-900 hover:border-gray-600" 
                                             }
                                         )}
                                         onclick={onclick}>
