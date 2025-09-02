@@ -86,7 +86,7 @@ pub fn about() -> Html {
                 "Legal compliance assessment and risk analysis for all areas of company operations in Athens and Cyprus offices (specialization in Data Protection (GDPR) and Cybersecurity)".to_string(),
                 "Legal support to regional offices in Albania, Northern Macedonia and Bulgaria.".to_string(),
                 "Led training sessions for all regional offices on sensitive areas (personal data protection, cybersecurity, anti-bribery).".to_string(),]),
-            icon: "/static/HUAWEI.png".to_string(),
+            icon: "/static/about/HUAWEI.png".to_string(),
         },
         Experience {
             title: "Intern at Academy of European Public Law".to_string(),
@@ -114,18 +114,21 @@ pub fn about() -> Html {
 
     // skills data
     let skills = vec![
-        Skill { name: "Rust".to_string(), icon: "🦀".to_string(), color: "bg-orange-500".to_string() },
-        Skill { name: "Yew".to_string(), icon: "🕸️".to_string(), color: "bg-green-500".to_string() },
-        Skill { name: "Python".to_string(), icon: "🐍".to_string(), color: "bg-blue-500".to_string() },
-        Skill { name: "Docker".to_string(), icon: "🐳".to_string(), color: "bg-blue-600".to_string() },
-        Skill { name: "React".to_string(), icon: "⚛️".to_string(), color: "bg-cyan-500".to_string() },
-        Skill { name: "WebAssembly".to_string(), icon: "🌐".to_string(), color: "bg-purple-500".to_string() },
-        Skill { name: "PostgreSQL".to_string(), icon: "🗃️".to_string(), color: "bg-blue-700".to_string() },
-        Skill { name: "AWS".to_string(), icon: "☁️".to_string(), color: "bg-yellow-500".to_string() },
-        Skill { name: "TypeScript".to_string(), icon: "📘".to_string(), color: "bg-blue-800".to_string() },
-        Skill { name: "JavaScript".to_string(), icon: "📜".to_string(), color: "bg-yellow-600".to_string() },
-        Skill { name: "C++".to_string(), icon: "⚡".to_string(), color: "bg-pink-500".to_string() },
-        Skill { name: "Git".to_string(), icon: "🔧".to_string(), color: "bg-red-500".to_string() },
+        Skill { name: "Python".to_string(), icon: "/static/about/skills/PYTHON.svg".to_string(), color: "bg-orange-500".to_string() },
+        Skill { name: "Java".to_string(), icon: "/static/about/skills/JAVA.svg".to_string(), color: "bg-blue-500".to_string() },
+        Skill { name: "C++".to_string(), icon: "/static/about/skills/CPP.svg".to_string(), color: "bg-blue-600".to_string() },
+        Skill { name: "Cmake".to_string(), icon: "/static/about/skills/CMAKE.svg".to_string(), color: "bg-yellow-600".to_string() },
+        Skill { name: "Typescript".to_string(), icon: "/static/about/skills/TS.svg".to_string(), color: "bg-cyan-500".to_string() },
+        Skill { name: "SQL".to_string(), icon: "/static/about/skills/SQL.svg".to_string(), color: "bg-purple-500".to_string() },
+        Skill { name: "Docker".to_string(), icon: "/static/about/skills/DOCKER.svg".to_string(), color: "bg-yellow-600".to_string() },
+        Skill { name: "Yew".to_string(), icon: "/static/about/skills/YEW.svg".to_string(), color: "bg-blue-700".to_string() },
+        Skill { name: "Vue".to_string(), icon: "/static/about/skills/VUE.svg".to_string(), color: "bg-yellow-500".to_string() },
+        Skill { name: "React".to_string(), icon: "/static/about/skills/REACT.svg".to_string(), color: "bg-yellow-600".to_string() },
+        Skill { name: "Svelte".to_string(), icon: "/static/about/skills/SVELTE.svg".to_string(), color: "bg-blue-800".to_string() },
+        Skill { name: "Express".to_string(), icon: "/static/about/skills/EXPRESS.svg".to_string(), color: "bg-yellow-600".to_string() },
+        Skill { name: "Postman".to_string(), icon: "/static/about/skills/POSTMAN.svg".to_string(), color: "bg-yellow-600".to_string() },
+        Skill { name: "TensorFlow".to_string(), icon: "/static/about/skills/TENSORFLOW.svg".to_string(), color: "bg-yellow-600".to_string() },
+        Skill { name: "Arduino".to_string(), icon: "/static/about/skills/ARDUINO.svg".to_string(), color: "bg-yellow-600".to_string() },
     ];
 
     html! {
@@ -414,7 +417,7 @@ pub fn about() -> Html {
                                                     html! {
                                                         <li class="flex items-start">
                                                             <div class="flex-shrink-0 w-2 h-2 bg-red-500 rounded-full mt-2 mr-3"></div>
-                                                            <p class="text-gray-300 leading-relaxed">{point}</p>
+                                                            <p class="text-gray-300 leading-relaxed mb-2">{point}</p>
                                                         </li>
                                                     }
                                                 })}
@@ -446,8 +449,12 @@ pub fn about() -> Html {
                     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-6xl mx-auto">
                         { for skills.iter().map(|skill| html! {
                             <div class="bg-gray-900 p-6 rounded-lg text-center hover:scale-105 transform transition-all duration-300 border border-gray-700 hover:border-red-600 group">
-                                <div class={format!("w-12 h-12 {} rounded-lg flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300", skill.color)}>
-                                    <span class="text-white text-xl">{&skill.icon}</span>
+                                <div class="w-15 h-15 rounded-lg flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300 overflow-hidden">
+                                    <img 
+                                        src={skill.icon.clone()} 
+                                        alt={skill.name.clone()} 
+                                        class="object-contain w-full h-full"
+                                    />
                                 </div>
                                 <span class="text-gray-300 text-sm font-medium">{&skill.name}</span>
                             </div>
