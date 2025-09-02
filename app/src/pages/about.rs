@@ -467,36 +467,6 @@ pub fn about() -> Html {
                     </div>
                 </div>
 
-                // hobbies section
-                <div class="mb-16">
-                    <div class="text-center mb-12">
-                        <img 
-                            src="/static/HOBBIES.png" 
-                            alt="Hobbies"
-                            class="w-auto h-auto mx-auto"
-                        />
-                        <img 
-                            src="/static/DIVIDER_2.png" 
-                            alt="Divider"
-                            class="w-auto h-auto mx-auto mb-4 -mt-6"
-                        />
-                    </div>
-
-                    <div class="max-w-4xl mx-auto">
-                        <div class="bg-gray-900 p-8 rounded-lg shadow-xl border border-gray-700">
-                            <p class="text-gray-300 text-lg leading-relaxed mb-6">
-                                {"When I'm not coding, you can find me exploring the great outdoors through hiking and photography. I'm passionate about capturing the beauty of nature and sharing it with others."}
-                            </p>
-                            <p class="text-gray-300 text-lg leading-relaxed mb-6">
-                                {"I'm also an avid reader of science fiction novels and enjoy staying up-to-date with the latest developments in technology and programming languages. In my spare time, I contribute to open-source projects and enjoy experimenting with new frameworks and tools."}
-                            </p>
-                            <p class="text-gray-300 text-lg leading-relaxed">
-                                {"Music is another big part of my life - I play guitar and enjoy attending live concerts whenever possible. There's something magical about the intersection of creativity and technical skill that appeals to me in both programming and music."}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
                 // projects link
                 <div class="text-center mt-16">
                     <a 
