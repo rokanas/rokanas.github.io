@@ -267,8 +267,8 @@ pub fn about() -> Html {
                     <div class="max-w-4xl mx-auto">
                         <div class="relative">
                             // vertical line
-                            <div class="absolute left-4 md:left-1/2 w-1 bg-red-600 transform md:-translate-x-1/2" style="top: 50px; bottom: 50px;"></div>
-                            
+                            <div class="absolute left-8 md:left-1/2 w-1 bg-red-600 transform md:-translate-x-1/2 top-14 bottom-12 md:top-12 md:bottom-12"></div>
+
                             { for education.iter().enumerate().map(|(index, exp)| {
                                 let is_even = index % 2 == 0;
                                 html! {
@@ -276,7 +276,7 @@ pub fn about() -> Html {
                                         if is_even { "md:flex-row" } else { "md:flex-row-reverse" }
                                     )}>
                                         // timeline node
-                                        <div class="absolute left-4 md:left-1/2 w-16 h-16 bg-white border-4 border-red-600 rounded-full flex items-center justify-center transform md:-translate-x-1/2 z-20">
+                                        <div class="absolute left-8 md:left-1/2 w-16 h-16 bg-white border-4 border-red-600 rounded-full flex items-center justify-center transform -translate-x-1/2 md:-translate-x-1/2 z-20">
                                             <img 
                                                 src={exp.icon.clone()} 
                                                 alt="Avatar" 
@@ -292,7 +292,7 @@ pub fn about() -> Html {
                                         </div>
                                         
                                         // content with HUD-style background
-                                        <div class={format!("ml-20 md:ml-0 {} md:w-5/12", 
+                                        <div class={format!("ml-24 md:ml-0 {} md:w-5/12", 
                                             if is_even { "md:mr-8 md:text-right" } else { "md:ml-8" }
                                         )}>
                                             <div 
