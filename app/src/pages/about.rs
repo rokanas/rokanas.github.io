@@ -446,17 +446,22 @@ pub fn about() -> Html {
                     </div>
 
                     // skills grid
-                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-6xl mx-auto">
+                    <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-6xl mx-auto">
                         { for skills.iter().map(|skill| html! {
-                            <div class="bg-gray-900 p-6 rounded-lg text-center hover:scale-105 transform transition-all duration-300 border border-gray-700 hover:border-red-600 group">
-                                <div class="w-15 h-15 rounded-lg flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300 overflow-hidden">
+                            <div 
+                                class="relative text-white flex items-center justify-left text-left p-6 hover:scale-105 transition-transform duration-300 aspect-square"
+                                style="background-image: url('/static/STBAR6_2.png'); 
+                                        background-repeat: no-repeat; 
+                                        background-size: 100% 100%; 
+                                        image-rendering: pixelated;"
+                            >
+                            <div class="w-15 h-15 rounded-lg flex text-center items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300 overflow-hidden">
                                     <img 
                                         src={skill.icon.clone()} 
                                         alt={skill.name.clone()} 
-                                        class="object-contain w-full h-full"
+                                        class="object-contain w-full h-full drop-shadow-[2px_4px_6px_rgba(0,0,0,0.9)]"
                                     />
                                 </div>
-                                <span class="text-gray-300 text-sm font-medium">{&skill.name}</span>
                             </div>
                         })}
                     </div>
