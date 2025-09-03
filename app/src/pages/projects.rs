@@ -1,6 +1,7 @@
 // pages/projects.rs
 use yew::prelude::*;
 use web_sys::window;
+use crate::components::heading::{Heading};
 use crate::components::project_item::{ProjectItem, Tag};
 
 // struct to hold project data
@@ -196,22 +197,12 @@ pub fn projects() -> Html {
         >
             <div class="container mx-auto px-4 max-w-7xl">
                 
-                // page header
-                <div class="text-center mb-12">
-                    <img 
-                        src="/static/PROJECTS_1.png" 
-                        alt="Projects"
-                        class="w-auto h-auto mx-auto"
-                    />
-                    <img 
-                        src="/static/DIVIDER_2.png" 
-                        alt="Divider"
-                        class="w-auto h-auto mx-auto mb-4 -mt-6"
-                    />
-                    <p class="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
-                        {"A collection of my software projects, both personal and academic."}
-                    </p>
-                </div>
+                // page heading
+                <Heading 
+                    src="/static/PROJECTS_1.png" 
+                    alt="Projects"
+                    sub_heading="A collection of my software projects, both personal and academic."
+                />
 
                 // projects grid
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">

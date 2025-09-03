@@ -1,10 +1,9 @@
+// components/social_buttons.rs
 use yew::prelude::*;
 
 #[derive(Properties, PartialEq)]
 pub struct SocialButtonProps {
-    #[prop_or (10)]
     pub button_size: u8,
-    #[prop_or (8)]
     pub svg_size: u8,
 }
 

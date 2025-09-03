@@ -3,6 +3,7 @@ use yew::prelude::*;
 use web_sys::window;
 
 use crate::components::social_buttons::{SocialButtons};
+use crate::components::heading::{Heading};
 
 // struct to hold education and experience data
 #[derive(Clone, PartialEq)]
@@ -182,18 +183,12 @@ pub fn about() -> Html {
 
                 // education section
                 <div class="mb-16">
-                    <div class="text-center mb-12">
-                        <img 
-                            src="/static/EDUCATION_1.png" 
-                            alt="Experience"
-                            class="max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto"
-                        />
-                        <img 
-                            src="/static/DIVIDER_2.png" 
-                            alt="Divider"
-                            class="max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto mb-4 -mt-6"
-                        />
-                    </div>
+                    // heading
+                    <Heading 
+                        src="/static/EDUCATION_1.png" 
+                        alt="Education"
+                        sub_heading=""             
+                    />
 
                     // timeline
                     <div class="max-w-4xl mx-auto">
@@ -258,18 +253,12 @@ pub fn about() -> Html {
 
                 // work experience section
                 <div class="mb-16">
-                    <div class="text-center mb-12">
-                        <img 
-                            src="/static/EXPERIENCE_1.png" 
-                            alt="Experience"
-                            class="max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto"
-                        />
-                        <img 
-                            src="/static/DIVIDER_2.png" 
-                            alt="Divider"
-                            class="max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto mb-4 -mt-6"
-                        />
-                    </div>
+                    // heading
+                    <Heading 
+                        src="/static/EXPERIENCE_1.png" 
+                        alt="Experience"
+                        sub_heading=""             
+                    />
 
                     <div class="max-w-6xl mx-auto">
                         <div class="flex flex-col lg:flex-row gap-8">
@@ -364,18 +353,12 @@ pub fn about() -> Html {
 
                 // skills section
                 <div class="mb-16">
-                    <div class="text-center mb-12">
-                        <img 
-                            src="/static/SKILLS_1.png" 
-                            alt="Skills"
-                            class="w-auto h-auto mx-auto"
-                        />
-                        <img 
-                            src="/static/DIVIDER_2.png" 
-                            alt="Divider"
-                            class="w-auto h-auto mx-auto mb-4 -mt-6"
-                        />
-                    </div>
+                    // heading
+                    <Heading 
+                        src="/static/SKILLS_1.png" 
+                        alt="Skills"
+                        sub_heading=""             
+                    />
 
                     // skills grid
                     <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-6xl mx-auto">
