@@ -121,8 +121,8 @@ pub fn about() -> Html {
 
                 // social media button links footer
                 <SocialButtons 
-                    button_size={14}
-                    svg_size={10}
+                    button_size={12}
+                    svg_size={8}
                 />
 
             </div>
