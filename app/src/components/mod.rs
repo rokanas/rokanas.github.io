@@ -8,3 +8,4 @@ pub mod fade_wrapper;
 pub mod social_buttons;
 pub mod education;
 pub mod experience;
+pub mod skills;
