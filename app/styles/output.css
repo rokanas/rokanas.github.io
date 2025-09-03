@@ -452,6 +452,9 @@
   .h-full {
     height: 100%;
   }
+  .max-h-35 {
+    max-height: calc(var(--spacing) * 35);
+  }
   .max-h-\[90vh\] {
     max-height: 90vh;
   }
@@ -511,6 +514,9 @@
   }
   .max-w-7xl {
     max-width: var(--container-7xl);
+  }
+  .max-w-35 {
+    max-width: calc(var(--spacing) * 35);
   }
   .max-w-full {
     max-width: 100%;
@@ -1434,9 +1440,9 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
-  .lg\:grid-cols-6 {
+  .lg\:grid-cols-7 {
     @media (width >= 64rem) {
-      grid-template-columns: repeat(6, minmax(0, 1fr));
+      grid-template-columns: repeat(7, minmax(0, 1fr));
     }
   }
   .lg\:flex-row {
