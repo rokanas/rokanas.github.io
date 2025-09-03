@@ -1,6 +1,11 @@
 pub mod footer;
 pub mod header;
+pub mod heading;
 pub mod hud_section;
 pub mod project_item;
 pub mod doom_project_item;
 pub mod fade_wrapper;
+pub mod social_buttons;
+pub mod education;
+pub mod experience;
+pub mod skills;

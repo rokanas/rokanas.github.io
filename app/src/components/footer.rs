@@ -188,7 +188,7 @@ pub fn footer(props: &FooterProps) -> Html {
                     background_height=32
                     text_color="text-yellow-400">
                     <button 
-                        //onclick={navigate.reform(|_| Route::About)}
+                        onclick={navigate.reform(|_| Route::About)}
                         class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
                         <img 
                             src="/static/ABOUT1.png" 

@@ -3,6 +3,7 @@ use yew::prelude::*;
 use yew_router::prelude::*; 
 use crate::router::Route;
 use crate::pages::home::Home;
+use crate::pages::about::About;
 use crate::pages::projects::Projects;
 use crate::pages::doom_projects::DoomProjects;
 use crate::components::header::Header;
@@ -21,7 +22,11 @@ fn switch(routes: Route) -> Html {
                 <Projects /> 
             </FadeWrapper>
         },
-        //Route::About => html! { <About /> },
+        Route::About => html! { 
+            <FadeWrapper>
+                <About /> 
+            </FadeWrapper>
+        },
         //Route::Avatar => html! { <Avatar /> },
         Route::DoomProjects => html! { 
             <FadeWrapper>

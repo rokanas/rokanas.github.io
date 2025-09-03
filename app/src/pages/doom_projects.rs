@@ -2,6 +2,7 @@
 use yew::prelude::*;
 use web_sys::window;
 use crate::components::doom_project_item::{DoomProjectItem};
+use crate::components::heading::{Heading};
 
 // struct to hold project data
 #[derive(Clone, PartialEq)]
@@ -72,7 +73,7 @@ pub fn doom_projects() -> Html {
         },
         Project {
             title: "Whispers of Change".to_string(),
-            description: "A short and atmospheric map with story elements and light puzzles. Co-authored by Erik Lindstrand and made in 1 day for Chalmers March GameJam 2024. We were disqualified.".to_string(),
+            description: "A short and atmospheric map with story elements and light puzzles. Co-authored by Erik Lindstrand and made in 1 day for Chalmers March GameJam 2024.".to_string(),
             image_src: "/static/doom_projects/whispers_of_change/whispers_of_change_1.png".to_string(),
             image_alt: Some("Whispers of Change".to_string()),
             additional_images: vec![
@@ -84,7 +85,7 @@ pub fn doom_projects() -> Html {
         },
         Project {
             title: "SWEDEN".to_string(),
-            description: "An adventure map that has nothing to do with Sweden.".to_string(),
+            description: "An adventure map that has nothing to do with Sweden. Explore the demonic presence aroused in the ruins by human interference.".to_string(),
             image_src: "/static/doom_projects/sweden/sweden_1.png".to_string(),
             image_alt: Some("SWEDEN".to_string()),
             additional_images: vec![
@@ -100,7 +101,7 @@ pub fn doom_projects() -> Html {
         },
         Project {
             title: "ΣΣΑΣ".to_string(),
-            description: "A map that is definitely not inspired by a real military base.".to_string(),
+            description: "A map that is definitely not inspired by a real military base. Discover the hellish secrets buried beneath military inefficiency and bureaucracy!".to_string(),
             image_src: "/static/doom_projects/ssas/ssas_1.png".to_string(),
             image_alt: Some("ΣΣΑΣ".to_string()),
             additional_images: vec![
@@ -127,22 +128,12 @@ pub fn doom_projects() -> Html {
         <main class="min-h-screen text-white pt-8 pb-24"> // pb-24 for footer space
             <div class="container mx-auto px-4 max-w-7xl">
                 
-                // page header
-                <div class="text-center mb-12">
-                    <img 
-                        src="/static/DOOM_PROJECTS_3.png" 
-                        alt="Doom Projects"
-                        class="w-auto h-auto mx-auto"
-                    />
-                    <img 
-                        src="/static/DIVIDER_2.png" 
-                        alt="Divider"
-                        class="w-auto h-auto mx-auto mb-4 -mt-6"
-                    />
-                    //<p class="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
-                        //{""}
-                    //</p>
-                </div>
+                // page heading
+                <Heading 
+                    src="/static/DOOM_PROJECTS_3.png" 
+                    alt="Doom Projects"
+                    sub_heading=""              // TODO: why can't this be {None} ?
+                />
 
                 // projects grid
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
