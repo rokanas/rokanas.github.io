@@ -4,12 +4,13 @@ use web_sys::window;
 
 use crate::components::social_buttons::{SocialButtons};
 use crate::components::heading::{Heading};
+use crate::components::education::{Education};
 
 // struct to hold education and experience data
 #[derive(Clone, PartialEq)]
 pub struct Experience {
     pub title: String,
-    pub company: String,
+    pub institution: String,
     pub date: String,
     pub description: Option<Vec<String>>,
     pub icon: String,
@@ -35,36 +36,11 @@ pub fn about() -> Html {
         || {}
     });
 
-    // education data
-    let education: Vec<Experience> = vec![
-        Experience {
-            title: "Software Engineering & Management (BSc)".to_string(),
-            company: "University of Gothenburg, SE".to_string(),
-            date: "2022 - 2025".to_string(),
-            description: None,
-            icon: "/static/U_GOTH.png".to_string(),
-        },
-        Experience {
-            title: "European Law (LLM)".to_string(),
-            company: "Leiden University, NL".to_string(),
-            date: "2015 - 2016".to_string(),
-            description: None,
-            icon: "/static/U_LEID.png".to_string(),
-        },
-        Experience {
-            title: "Law (LLB)".to_string(),
-            company: "University of Reading, UK".to_string(),
-            date: "2012 - 2015".to_string(),
-            description: None,
-            icon: "/static/U_READ.png".to_string(),
-        },
-    ];
-
     // experience data
-    let experiences = vec![
+    let experience = vec![
         Experience {
             title: "Teaching Assistant".to_string(),
-            company: "University of Gothenburg".to_string(),
+            institution: "University of Gothenburg".to_string(),
             date: "2024 - 2025".to_string(),
             description: Some(vec![
                 "TA for Software Architecture, Requirements Engineering and Systems Development.".to_string(),
@@ -75,7 +51,7 @@ pub fn about() -> Html {
         },
         Experience {
             title: "Compliance Officer".to_string(),
-            company: "Huawei Technologies S.A.".to_string(),
+            institution: "Huawei Technologies S.A.".to_string(),
             date: "2019 - 2022".to_string(),
             description: Some(vec![
                 "Legal compliance assessment and risk analysis for all areas of company operations in Athens and Cyprus offices (specialization in Data Protection (GDPR) and Cybersecurity)".to_string(),
@@ -85,7 +61,7 @@ pub fn about() -> Html {
         },
         Experience {
             title: "Intern at Academy of European Public Law".to_string(),
-            company: "European Public Law Organization (EPLO)".to_string(),
+            institution: "European Public Law Organization (EPLO)".to_string(),
             date: "2019".to_string(),
             description: Some(vec![
                 "Assisted in the design, organization and implementation of European and Public Law university programs and summer exchange programs".to_string(),
@@ -96,7 +72,7 @@ pub fn about() -> Html {
         },
         Experience {
             title: "Intern at Greek National Desk".to_string(),
-            company: "Eurojust".to_string(),
+            institution: "Eurojust".to_string(),
             date: "2019 - 2020".to_string(),
             description: Some(vec![
                 "Assisted in administrative functions of the Greek national desk.".to_string(),
@@ -181,75 +157,8 @@ pub fn about() -> Html {
                     </div>
                 </div>
 
-                // education section
-                <div class="mb-16">
-                    // heading
-                    <Heading 
-                        src="/static/EDUCATION_1.png" 
-                        alt="Education"
-                        sub_heading=""             
-                    />
-
-                    // timeline
-                    <div class="max-w-4xl mx-auto">
-                        <div class="relative">
-                            // vertical line
-                            <div class="absolute left-8 md:left-1/2 w-1 bg-red-600 transform md:-translate-x-1/2 top-14 bottom-12 md:top-12 md:bottom-12"></div>
-
-                            { for education.iter().enumerate().map(|(index, exp)| {
-                                let is_even = index % 2 == 0;
-                                html! {
-                                    <div class={format!("relative flex items-center mb-12 {}", 
-                                        if is_even { "md:flex-row" } else { "md:flex-row-reverse" }
-                                    )}>
-                                        // timeline node
-                                        <div class="absolute left-8 md:left-1/2 w-16 h-16 bg-white border-4 border-red-600 rounded-full flex items-center justify-center transform -translate-x-1/2 md:-translate-x-1/2 z-20">
-                                            <img 
-                                                src={exp.icon.clone()} 
-                                                alt="Avatar" 
-                                                class="w-12 h-12 object-contain rounded-full"
-                                            />
-                                        </div>
-
-                                            // date on opposite side
-                                            <div class={format!("hidden md:block absolute top-1/2 transform -translate-y-1/2 {} md:w-5/12", 
-                                                if is_even { "md:ml-8 right-10 pl-5" } else { "md:mr-8 left-10 pr-5 text-right" }
-                                            )}>
-                                                <div class="text-red-600 font-semibold text-l">{&exp.date}</div>
-                                        </div>
-                                        
-                                        // content with HUD-style background
-                                        <div class={format!("ml-24 md:ml-0 {} md:w-5/12", 
-                                            if is_even { "md:mr-8 md:text-right" } else { "md:ml-8" }
-                                        )}>
-                                            <div 
-                                                class="relative text-white flex items-center justify-left text-left p-6 hover:scale-105 transition-transform duration-300"
-                                                style="background-image: url('/static/STBAR7.png'); 
-                                                       background-repeat: no-repeat; 
-                                                       background-size: 100% 100%; 
-                                                       image-rendering: pixelated; 
-                                                       min-height: 120px;"
-                                            >
-
-                                                // inner box
-                                                <div 
-                                                    class="absolute inset-0 m-4 z-5 bg-[#1a1a1a] bg-opacity-60 border-4 border-[#0b0b0a]"
-                                                ></div>
-
-                                                <div class="z-10">
-                                                    <h3 class="text-xl font-bold text-white mb-2 pl-3">{&exp.title}</h3>
-                                                    <div class="text-red-600 font-semibold mb-2 pl-3">{&exp.company}</div>
-                                                    // date shown on mobile only
-                                                    <div class="text-gray-400 text-sm mb-3 md:hidden pl-3">{&exp.date}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                            })}
-                        </div>
-                    </div>
-                </div>
+                // education=
+                <Education/>
 
                 // work experience section
                 <div class="mb-16">
@@ -265,7 +174,7 @@ pub fn about() -> Html {
                     
                             // left sidebar (job titles)
                             <div class="lg:w-1/3 space-y-3">
-                                { for experiences.iter().enumerate().map(|(index, exp)| {
+                                { for experience.iter().enumerate().map(|(index, exp)| {
                                     let is_selected = *selected_job == index; // first item selected by default
                                     let selected_job_clone = selected_job.clone();
                                     let onclick = Callback::from(move |_| {
@@ -284,14 +193,14 @@ pub fn about() -> Html {
                                                 <div class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center">
                                                     <img 
                                                         src={exp.icon.clone()} 
-                                                        alt="Company logo" 
+                                                        alt="Institution logo" 
                                                         class="w-10 h-10 object-contain rounded-full bg-white"
                                                     />
                                                 </div>
                                             </div>
                                             <div class="flex-1">
                                                 <h3 class="text-white font-semibold text-lg mb-1">{&exp.title}</h3>
-                                                <p class="text-gray-400 text-sm">{&exp.company}</p>
+                                                <p class="text-gray-400 text-sm">{&exp.institution}</p>
                                             </div>
                                         </div>
                                     }
@@ -319,21 +228,21 @@ pub fn about() -> Html {
                                             <div class="flex-shrink-0 mr-4">
                                                 <div class="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center">
                                                     <img 
-                                                        src={experiences[*selected_job].icon.clone()}
+                                                        src={experience[*selected_job].icon.clone()}
                                                         alt="Company logo" 
                                                         class="w-13 h-13 object-contain rounded-full bg-white"
                                                     />
                                                 </div>
                                             </div>
                                             <div>
-                                                <h2 class="text-2xl font-bold text-white mb-2">{&experiences[*selected_job].title}</h2>
-                                                <p class="text-red-600 text-lg mb-1">{&experiences[*selected_job].company}</p>
-                                                <p class="text-gray-400 text-sm">{&experiences[*selected_job].date}</p>
+                                                <h2 class="text-2xl font-bold text-white mb-2">{&experience[*selected_job].title}</h2>
+                                                <p class="text-red-600 text-lg mb-1">{&experience[*selected_job].institution}</p>
+                                                <p class="text-gray-400 text-sm">{&experience[*selected_job].date}</p>
                                             </div>
                                         </div>
 
                                         <div class="space-y-4">                                        
-                                            if let Some(description) = &experiences[*selected_job].description {
+                                            if let Some(description) = &experience[*selected_job].description {
                                                 { for description.iter().map(|point| {
                                                     html! {
                                                         <li class="flex items-start">
