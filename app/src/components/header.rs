@@ -8,8 +8,6 @@ use crate::router::Route;
 pub struct HeaderProps {
     #[prop_or(true)]  // header visible by default on all pages
     pub show: bool,
-    #[prop_or(false)] // flag for doom projects page behavior
-    pub is_doom_projects_page: bool,
 }
 
 #[hook]
@@ -24,27 +22,27 @@ fn use_navigation() -> Callback<Route> {
 #[function_component(Header)]
 pub fn header(props: &HeaderProps) -> Html {
     let navigate = use_navigation();
-    let is_visible = use_state(|| !props.is_doom_projects_page);
+    let is_visible = use_state(|| false);
     let current_route = use_route::<Route>();
 
     // animate header entrance when show prop changes
     {
         let is_visible = is_visible.clone();
-        use_effect_with(props.is_doom_projects_page, move |is_doom_page| {
-            if *is_doom_page {
-                is_visible.set(false);
-            } else {
+        use_effect_with(props.show, move |show| {
+            if *show {
                 let is_visible_clone = is_visible.clone();
                 gloo_timers::callback::Timeout::new(50, move || {
                     is_visible_clone.set(true);
                 }).forget();
-            }
+            } else {
+                is_visible.set(false);
+            } 
             || {}
         });
     }
 
     // only render if show prop is true
-    if props.is_doom_projects_page  {
+    if !props.show  {
         return html! {};
     }
 

@@ -56,10 +56,7 @@ pub fn app_content() -> Html {
     html! {
         <>
             // header visible in all pages except doom projects
-            <Header 
-                show={true}
-                is_doom_projects_page={is_doom_projects}
-            />
+            <Header show={!is_doom_projects} />
             
             <main class={if is_doom_projects { "" } else { "pt-20" }} style="background-image: url('/static/FLOOR4_9.png'); background-repeat: repeat; background-size: 290px; image-rendering: pixelated;">
                 <div key={format!("{:?}", route)}>      // key forces remount on route change, triggering use_effect in pages (yew doesn't unmount/remount on route change by default)
