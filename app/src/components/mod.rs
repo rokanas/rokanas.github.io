@@ -2,6 +2,7 @@ pub mod footer;
 pub mod header;
 pub mod heading;
 pub mod hud_section;
+pub mod hud_button;
 pub mod project_item;
 pub mod doom_project_item;
 pub mod fade_wrapper;
