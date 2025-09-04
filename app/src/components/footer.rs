@@ -142,19 +142,19 @@ pub fn footer(props: &FooterProps) -> Html {
                     background_image="/static/STBAR1.png"
                     background_width=48
                     background_height=32
-                    text_color="text-red-400">
+                    text_color="text-red-600">
                     <button 
                         onclick={navigate.reform(|_| Route::Home)} 
                         class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none"> // group class allows child elements to react to hover state of parent
                         <img 
-                            src="/static/HOME1.png" 
+                            src="/static/footer/HOME_SR_W.png" 
                             alt="Home"
-                            class="block transition-opacity duration-200 ease-in-out group-hover:opacity-0"
+                            class="w-4/5 h-auto block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-opacity duration-0 ease-in-out group-hover:opacity-0"
                         />
                         <img 
-                            src="/static/HOME2.png" 
-                            alt="Home Hover"
-                            class="block absolute opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100"
+                            src="/static/footer/HOME_SR_R.png" 
+                            alt="Home"
+                            class="w-4/5 h-auto block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
                         />
                     </button>
                 </HudSection>
@@ -164,19 +164,19 @@ pub fn footer(props: &FooterProps) -> Html {
                     background_image="/static/STBAR2.png"
                     background_width=58
                     background_height=32
-                    text_color="text-red-400">
+                    text_color="text-red-600">
                     <button 
                         onclick={navigate.reform(|_| Route::Projects)}
                         class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
                         <img 
-                            src="/static/PROJECTS_1.png" 
+                            src="/static/footer/PROJECTS_SR_W.png" 
                             alt="Projects"
-                            class="w-4/5 h-auto block transition-opacity duration-0 ease-in-out group-hover:opacity-0"
+                            class="w-4/5 h-auto block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-opacity duration-0 ease-in-out group-hover:opacity-0"
                         />
                         <img 
-                            src="/static/PROJECTS_2.png" 
-                            alt="Projects Hover"
-                            class="w-4/5 h-auto block absolute opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
+                            src="/static/footer/PROJECTS_SR_R.png" 
+                            alt="Projects"
+                            class="w-4/5 h-auto block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
                         />
                     </button>
                 </HudSection>
@@ -191,14 +191,14 @@ pub fn footer(props: &FooterProps) -> Html {
                         onclick={navigate.reform(|_| Route::About)}
                         class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
                         <img 
-                            src="/static/ABOUT1.png" 
+                            src="/static/footer/ABOUT_SR_W.png" 
                             alt="About"
-                            class="w-4/5 h-auto block transition-opacity duration-0 ease-in-out group-hover:opacity-0"
+                            class="w-4/5 h-auto block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-opacity duration-0 ease-in-out group-hover:opacity-0"
                         />
                         <img 
-                            src="/static/ABOUT2.png" 
-                            alt="About Hover"
-                            class="w-4/5 h-auto block absolute opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
+                            src="/static/footer/ABOUT_SR_R.png" 
+                            alt="About"
+                            class="w-4/5 h-auto block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
                         />
                     </button>
                 </HudSection>
@@ -219,7 +219,7 @@ pub fn footer(props: &FooterProps) -> Html {
                         />
                         <img 
                             src={get_avatar_image(mouse_col, mouse_row, true)}
-                            alt="Avatar Hover"
+                            alt="Avatar"
                             class="w-4/5 block absolute opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100"
                         />
                     </button>
@@ -235,14 +235,14 @@ pub fn footer(props: &FooterProps) -> Html {
                         onclick={navigate.reform(|_| Route::DoomProjects)}
                         class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
                         <img 
-                            src="/static/DOOM_PROJECTS_1.png" 
+                            src="/static/footer/DOOM_PROJECTS_SR_W.png" 
                             alt="Doom Projects"
-                            class="w-4/5 h-auto block transition-opacity duration-0 ease-in-out group-hover:opacity-0"
+                            class="w-4/5 h-auto block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-opacity duration-0 ease-in-out group-hover:opacity-0"
                         />
                         <img 
-                            src="/static/DOOM_PROJECTS_2.png" 
-                            alt="Doom Projects Hover"
-                            class="w-4/5 h-auto block absolute opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
+                            src="/static/footer/DOOM_PROJECTS_SR_R.png" 
+                            alt="Doom Projects"
+                            class="w-4/5 h-auto block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
                         />
                     </button>
                 </HudSection>
@@ -269,14 +269,14 @@ pub fn footer(props: &FooterProps) -> Html {
                         //onclick={navigate.reform(|_| Route::Contact)}
                         class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
                         <img 
-                            src="/static/CONTACT1.png" 
+                            src="/static/footer/CONTACT_SR_W.png" 
                             alt="Contact"
-                            class="block transition-opacity duration-0 ease-in-out group-hover:opacity-0"
+                            class="w-4/5 h-auto block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-opacity duration-0 ease-in-out group-hover:opacity-0"
                         />
                         <img 
-                            src="/static/CONTACT2.png" 
-                            alt="Contact Hover"
-                            class="block absolute opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
+                            src="/static/footer/CONTACT_SR_R.png" 
+                            alt="Contact"
+                            class="w-4/5 h-auto block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
                         />
                     </button>
                 </HudSection>
