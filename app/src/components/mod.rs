@@ -1,4 +1,4 @@
-pub mod footer;
+pub mod hud;
 pub mod header;
 pub mod heading;
 pub mod hud_section;

@@ -11,7 +11,7 @@ use crate::components::hud_button::HudButton;
 
 // props to control footer visibility and animation
 #[derive(Properties, PartialEq)]
-pub struct FooterProps {
+pub struct HudProps {
     #[prop_or(false)]
     pub show: bool,
 }
@@ -100,8 +100,8 @@ fn use_navigation() -> Callback<Route> {        // returns callback that takes a
     })
 }
 
-#[function_component(Footer)]   // declare function as footer component
-pub fn footer(props: &FooterProps) -> Html {
+#[function_component(Hud)]   // declare function as footer component
+pub fn hud(props: &HudProps) -> Html {
     let (mouse_col, mouse_row) = use_mouse_grid();     // destructure tuple returned by hook to two variables (column, row)
     let is_visible = use_state(|| false);
 
@@ -144,7 +144,7 @@ pub fn footer(props: &FooterProps) -> Html {
                     background_height=32
                     text_color="text-red-600">
                     <HudButton
-                        src="/static/footer/HOME_SR"
+                        src="/static/hud/HOME_SR"
                         alt_text="Home"
                         route={Route::Home}
                         disabled=false>
@@ -158,7 +158,7 @@ pub fn footer(props: &FooterProps) -> Html {
                     background_height=32
                     text_color="text-red-600">
                     <HudButton
-                        src="/static/footer/PROJECTS_SR"
+                        src="/static/hud/PROJECTS_SR"
                         alt_text="Projects"
                         route={Route::Projects}
                         disabled=false>
@@ -172,7 +172,7 @@ pub fn footer(props: &FooterProps) -> Html {
                     background_height=32
                     text_color="text-yellow-600">
                     <HudButton
-                        src="/static/footer/ABOUT_SR"
+                        src="/static/hud/ABOUT_SR"
                         alt_text="About"
                         route={Route::About}
                         disabled=false>
@@ -208,7 +208,7 @@ pub fn footer(props: &FooterProps) -> Html {
                     background_height=32
                     text_color="text-red-600">
                     <HudButton
-                        src="/static/footer/DOOM_PROJECTS_SR"
+                        src="/static/hud/DOOM_PROJECTS_SR"
                         alt_text="Doom Projects"
                         route={Route::DoomProjects}
                         disabled=false>
@@ -234,7 +234,7 @@ pub fn footer(props: &FooterProps) -> Html {
                     background_height=32
                     text_color="text-blue-600">
                     <HudButton
-                        src="/static/footer/CONTACT_SR"
+                        src="/static/hud/CONTACT_SR"
                         alt_text="Contact"
                         route={Route::Home}
                         disabled=true>

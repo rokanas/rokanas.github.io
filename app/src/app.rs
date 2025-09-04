@@ -7,7 +7,7 @@ use crate::pages::about::About;
 use crate::pages::projects::Projects;
 use crate::pages::doom_projects::DoomProjects;
 use crate::components::header::Header;
-use crate::components::footer::Footer;
+use crate::components::hud::Hud;
 use crate::components::fade_wrapper::FadeWrapper;
 
 fn switch(routes: Route) -> Html {
@@ -65,7 +65,7 @@ pub fn app_content() -> Html {
             </main>
 
             // footer only visible in doom projects page
-            <Footer show={is_doom_projects} />
+            <Hud show={is_doom_projects} />
         </>
         }
 }
