@@ -1,22 +1,17 @@
-// components/header.rs
 use yew::prelude::*;
 use yew_router::prelude::*;
-
 use crate::router::Route;
 
 #[derive(Properties, PartialEq)]
 pub struct HeaderProps {
-    #[prop_or(true)]  // header visible by default on all pages
+    #[prop_or(true)]
     pub show: bool,
 }
 
 #[hook]
 fn use_navigation() -> Callback<Route> {
     let navigator = use_navigator().unwrap();
-    
-    Callback::from(move |route: Route| {
-        navigator.push(&route);
-    })
+    Callback::from(move |route: Route| navigator.push(&route))
 }
 
 #[function_component(Header)]
@@ -25,195 +20,130 @@ pub fn header(props: &HeaderProps) -> Html {
     let is_visible = use_state(|| false);
     let current_route = use_route::<Route>();
 
-    // animate header entrance when show prop changes
     {
         let is_visible = is_visible.clone();
         use_effect_with(props.show, move |show| {
             if *show {
                 let is_visible_clone = is_visible.clone();
-                gloo_timers::callback::Timeout::new(50, move || {
-                    is_visible_clone.set(true);
-                }).forget();
+                gloo_timers::callback::Timeout::new(50, move || is_visible_clone.set(true)).forget();
             } else {
                 is_visible.set(false);
-            } 
+            }
             || {}
         });
     }
 
-    // only render if show prop is true
-    if !props.show  {
+    if !props.show {
         return html! {};
     }
 
+    // header slides in
     let header_class = if *is_visible {
-        "fixed top-0 left-0 right-0 w-full z-40 transform -translate-y-0 transition-transform duration-500 ease-out"
+        "fixed top-0 left-0 right-0 w-full z-40 transform -translate-y-0 transition-transform duration-500 ease-out overflow-visible"
     } else {
-        "fixed top-0 left-0 right-0 w-full z-40 transform -translate-y-full transition-transform duration-500 ease-out"
+        "fixed top-0 left-0 right-0 w-full z-40 transform -translate-y-full transition-transform duration-500 ease-out overflow-visible"
     };
 
-    // helper to get correct CSS class for a button
+    // button styles
     let get_button_class = |route: Route| -> String {
-        let base_class = "font-medium transition-colors duration-200 px-4 py-2 rounded-md cursor-pointer text-sm uppercase tracking-wide";
-        let active_class = "text-red-600 bg-black/50 border-2 border-red-600/50";
-        let inactive_class = "text-gray-300 hover:text-red-600 hover:bg-black/30 border-2 border-transparent hover:border-red-600/30";
-        
+        let base = "relative group px-2 py-1.5 flex items-center justify-center rounded-md cursor-pointer transition-all duration-200";
+        let active = "bg-black/50 border-2 border-red-600/50";
+        let inactive = "hover:bg-black/30 border-2 border-transparent hover:border-red-600/30";
         if let Some(current) = &current_route {
-            if *current == route {
-                return format!("{} {}", base_class, active_class);
-            }
+            if *current == route { return format!("{base} {active}"); }
         }
-        format!("{} {}", base_class, inactive_class)
+        format!("{base} {inactive}")
     };
 
     html! {
-        <header class={header_class} style="background-image: url('/static/SHAWN_2.png'); background-repeat: repeat; background-size: 60px;">
-            <div class="relative container mx-auto px-6 py-4">
-                <div class="flex items-center justify-between relative">
-                    
-                    // left navigation
-                    <nav class="hidden md:flex items-center space-x-16 flex-1 justify-end pr-36">
-                        <button
-                            onclick={navigate.reform(|_| Route::Home)}
-                            class={get_button_class(Route::Home)}
-                        >
-                            {"Home"}
-                        </button>
+        <header class={header_class}
+            style="background-image:url('/static/SHAWN_2.png');background-repeat:repeat;background-size:60px;">
+            <div class="w-full px-2 sm:px-4 lg:px-8 pt-0 pb-1">
+                <div class="w-full max-w-screen-2xl mx-auto">
+                    <div class="flex items-center justify-between w-full relative min-h-[56px] sm:min-h-[62px]">
 
-                        <button
-                            onclick={navigate.reform(|_| Route::About)}
-                            class={get_button_class(Route::About)}
-                        >
-                            {"About"}
-                        </button>
-
-                        <button
-                            onclick={navigate.reform(|_| Route::Projects)}
-                            class={get_button_class(Route::Projects)}
-                        >
-                            {"Projects"}
-                        </button>
-                    </nav>
-
-                    // center logo section with inverted trapezoid/pentagon shape
-                    <div class="absolute left-1/2 transform -translate-x-1/2 z-10">
-                        <div class="relative">
-                            // inverted trapezoid shape - wide at top, angled sides, flat bottom
-                            <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-56 h-32">
-                            // border layer
-                            <div 
-                                class="absolute inset-0"
-                                style="background: #c20000ff;
-                                    clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 15% 100%);">
-                            </div>
-                            // content layer
-                            <div 
-                                class="absolute inset-1"
-                                style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%);
-                                    clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 15% 100%);
-                                    box-shadow: 0 0 20px rgba(74, 222, 128, 0.3), 
-                                                inset 0 0 20px rgba(0, 0, 0, 0.5);">
-                            </div>
-                        </div>
-                            
-                            // logo container
-                            <button 
-                                onclick={navigate.reform(|_| Route::Home)} 
-                                class="relative z-20 w-56 h-32 flex items-center justify-center cursor-pointer bg-transparent border-none group">
-                                <img 
-                                    src="/static/KR_1.png" 
-                                    alt="Home"
-                                    class="transition-all duration-300 group-hover:scale-110 group-hover:brightness-125 drop-shadow-lg pt-5"
-                                />
+                        // left nav
+                        <div class="hidden md:flex items-center gap-2 lg:gap-4 flex-1 justify-start">
+                            <button onclick={navigate.reform(|_| Route::Home)} class={get_button_class(Route::Home)}>
+                                <img src="/static/header/HOME_SRB_W.png"  alt="Home" class="h-5 sm:h-6 lg:h-7 transition-opacity duration-200 ease-in-out group-hover:opacity-0"/>
+                                <img src="/static/header/HOME_SRB_R.png"  alt="Home Active" class="h-5 sm:h-6 lg:h-7 absolute inset-0 m-auto opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100"/>
                             </button>
 
-                            // divider below logo
-                            // <div 
-                            //     class="absolute bottom-0 left-1/2 transform -translate-x-1/2 overflow-hidden h-2.5"
-                            //     style="background: url('/static/DIVIDER_3B.png') repeat-x top left; 
-                            //            background-size: auto 100%;
-                            //            width: 70%;">
-                            // </div>
+                            <button onclick={navigate.reform(|_| Route::About)} class={get_button_class(Route::About)}>
+                                <img src="/static/header/ABOUT_SRB_W.png" alt="About" class="h-5 sm:h-6 lg:h-7 transition-opacity duration-200 ease-in-out group-hover:opacity-0"/>
+                                <img src="/static/header/ABOUT_SRB_R.png" alt="About Active" class="h-5 sm:h-6 lg:h-7 absolute inset-0 m-auto opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100"/>
+                            </button>
+
+                            <button onclick={navigate.reform(|_| Route::Projects)} class={get_button_class(Route::Projects)}>
+                                <img src="/static/header/PROJECTS_SRB_W.png" alt="Projects" class="h-5 sm:h-6 lg:h-7 transition-opacity duration-200 ease-in-out group-hover:opacity-0"/>
+                                <img src="/static/header/PROJECTS_SRB_R.png" alt="Projects Active" class="h-5 sm:h-6 lg:h-7 absolute inset-0 m-auto opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100"/>
+                            </button>
                         </div>
-                    </div>
 
-                    // right navigation
-                    <nav class="hidden md:flex items-center space-x-20 flex-1 pl-36">
-                        <button
-                            onclick={navigate.reform(|_| Route::DoomProjects)}
-                            class={get_button_class(Route::DoomProjects)}
-                        >
-                            {"Doom Projects"}
-                        </button>
+                        // center logo
+                        <div class="flex-0 flex justify-center items-start z-50 -mt-1 -mb-4 sm:-mb-5">
+                            <div class="relative w-36 sm:w-44 lg:w-52 h-18 sm:h-22 lg:h-26">
+                                // border
+                                <div class="absolute inset-0"
+                                    style="background:#c20000ff;
+                                            clip-path:polygon(0% 0%,100% 0%,85% 100%,15% 100%);">
+                                </div>
+                                // background
+                                <div class="absolute inset-1"
+                                    style="background:linear-gradient(135deg,#1a1a1a 0%,#2a2a2a 50%,#1a1a1a 100%);
+                                            clip-path:polygon(0% 0%,100% 0%,85% 100%,15% 100%);
+                                            box-shadow:0 0 20px rgba(74,222,128,.3),
+                                                    inset 0 0 20px rgba(0,0,0,.5);">
+                                </div>
+                                // logo image
+                                <button onclick={navigate.reform(|_| Route::Home)}
+                                        class="absolute inset-0 flex items-center justify-center cursor-pointer">
+                                    <img src="/static/KR_1.png" alt="Home"
+                                        class="max-h-14 sm:max-h-18 lg:max-h-22 transition-transform duration-300 drop-shadow-lg hover:scale-110 hover:brightness-125"/>
+                                </button>
+                            </div>
+                        </div>
 
-                        <button
-                            class="text-gray-500 cursor-not-allowed font-medium px-4 py-2 rounded-md text-sm uppercase tracking-wide"
-                            disabled={true}
-                        >
-                            {"Contact"}
-                        </button>
-                    </nav>
+                        // right nav
+                        <div class="hidden md:flex items-center gap-2 lg:gap-4 flex-1 justify-end">
+                            <button onclick={navigate.reform(|_| Route::DoomProjects)} class={get_button_class(Route::DoomProjects)}>
+                                <img src="/static/header/DOOM_PROJECTS_SRB_W.png" alt="Doom Projects" class="h-5 sm:h-6 lg:h-7 transition-opacity duration-200 ease-in-out group-hover:opacity-0"/>
+                                <img src="/static/header/DOOM_PROJECTS_SRB_R.png" alt="Doom Projects Active" class="h-5 sm:h-6 lg:h-7 absolute inset-0 m-auto opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100"/>
+                            </button>
 
-                    // mobile menu button
-                    <div class="md:hidden ml-auto">
-                        <button
-                            class="text-gray-300 hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-inset p-2 rounded-md"
-                            onclick={Callback::from(|_| {
-                                web_sys::console::log_1(&"Mobile menu clicked".into());
-                            })}
-                        >
-                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                            </svg>
-                        </button>
+                            <button class="relative group px-2 py-1.5 flex items-center justify-center rounded-md text-gray-500 cursor-not-allowed opacity-50 transition-all duration-200" disabled=true>
+                                <img src="/static/header/CONTACT_SRB_W.png" alt="Contact" class="h-4 sm:h-5 lg:h-6"/>
+                            </button>
+                        </div>
+
+                        // mobile menu button
+                        <div class="md:hidden absolute right-4">
+                            <button
+                                class="text-gray-300 hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-inset p-2 rounded-md"
+                                onclick={Callback::from(|_| web_sys::console::log_1(&"Mobile menu clicked".into()))}>
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                // mobile menu (hidden by default)
-                <div class="md:hidden mt-4 pt-4 border-t border-gray-600 hidden">
+                // mobile menu
+                <div class="md:hidden mt-3 pt-3 border-t border-gray-600 hidden">
                     <div class="flex flex-col space-y-2">
-                        <button
-                            onclick={navigate.reform(|_| Route::Home)}
-                            class="text-left text-gray-300 hover:text-green-400 font-medium transition-colors duration-200 px-3 py-2 rounded-md hover:bg-black/30"
-                        >
-                            {"Home"}
-                        </button>
-
-                        <button
-                            onclick={navigate.reform(|_| Route::About)}
-                            class="text-left text-gray-300 hover:text-green-400 font-medium transition-colors duration-200 px-3 py-2 rounded-md hover:bg-black/30"
-                        >
-                            {"About"}
-                        </button>
-
-                        <button
-                            onclick={navigate.reform(|_| Route::Projects)}
-                            class="text-left text-gray-300 hover:text-green-400 font-medium transition-colors duration-200 px-3 py-2 rounded-md hover:bg-black/30"
-                        >
-                            {"Projects"}
-                        </button>
-
-                        <button
-                            onclick={navigate.reform(|_| Route::DoomProjects)}
-                            class="text-left text-gray-300 hover:text-green-400 font-medium transition-colors duration-200 px-3 py-2 rounded-md hover:bg-black/30"
-                        >
-                            {"Doom Projects"}
-                        </button>
-
-                        <button
-                            class="text-left text-gray-500 cursor-not-allowed font-medium px-3 py-2 rounded-md"
-                            disabled={true}
-                        >
-                            {"Contact"}
-                        </button>
+                        <button onclick={navigate.reform(|_| Route::Home)} class="text-left text-gray-300 hover:text-green-400 font-medium transition-colors duration-200 px-3 py-2 rounded-md hover:bg-black/30">{"Home"}</button>
+                        <button onclick={navigate.reform(|_| Route::About)} class="text-left text-gray-300 hover:text-green-400 font-medium transition-colors duration-200 px-3 py-2 rounded-md hover:bg-black/30">{"About"}</button>
+                        <button onclick={navigate.reform(|_| Route::Projects)} class="text-left text-gray-300 hover:text-green-400 font-medium transition-colors duration-200 px-3 py-2 rounded-md hover:bg-black/30">{"Projects"}</button>
+                        <button onclick={navigate.reform(|_| Route::DoomProjects)} class="text-left text-gray-300 hover:text-green-400 font-medium transition-colors duration-200 px-3 py-2 rounded-md hover:bg-black/30">{"Doom Projects"}</button>
+                        <button class="text-left text-gray-500 cursor-not-allowed font-medium px-3 py-2 rounded-md" disabled=true>{"Contact"}</button>
                     </div>
                 </div>
             </div>
-            
-            // bottom divider line
-            <div 
-                class="absolute top-full left-0 right-0 overflow-hidden h-2.5"
-                style="background: url('/static/DIVIDER_3B.png') repeat-x top left; background-size: auto 100%;">
+
+            // bottom divider
+            <div class="absolute top-full left-0 right-0 overflow-hidden h-2.5 z-10"
+                 style="background:url('/static/DIVIDER_3B.png') repeat-x top left; background-size:auto 100%;">
             </div>
         </header>
     }
