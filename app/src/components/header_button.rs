@@ -1,15 +1,16 @@
-// components/hud_button.rs
 use yew::prelude::*;
 use yew_router::prelude::*;
 use crate::router::Route;
 
+// TODO: merge hud_button and header_button components
+
 #[derive(Properties, PartialEq)]
-pub struct HudButtonProps {
-    pub src: String,                    // base filepath
-    pub alt_text: String,               
-    pub route: Route,                   
+pub struct HeaderButtonProps {
+    pub src: String,        // base filepath
+    pub alt_text: String, 
+    pub route: Route,       
     #[prop_or(false)]
-    pub disabled: bool,                 // for disabled buttons
+    pub disabled: bool,     // for disabled buttons
 }
 
 #[hook]
@@ -21,33 +22,30 @@ fn use_navigation() -> Callback<Route> {
     })
 }
 
-#[function_component(HudButton)]
-pub fn hud_button(props: &HudButtonProps) -> Html {
+#[function_component(HeaderButton)]
+pub fn header_button(props: &HeaderButtonProps) -> Html {
     let navigate = use_navigation();
     let current_route = use_route::<Route>();
 
-    // helper function to check if this button's route is currently active
     let is_active = if let Some(current) = &current_route {
         *current == props.route
     } else {
         false
     };
 
-    // construct image paths
     let normal_img = format!("{}_W.png", props.src);
     let active_img = format!("{}_R.png", props.src);
-    let disabled_img = format!("{}_G.png", props.src);
 
     html! {
         if props.disabled {
             // disabled state
             <button 
-                class="group w-full h-full flex items-center justify-center bg-transparent border-none"
+                class="relative group px-2 py-1.5 flex items-center justify-center rounded-md text-gray-500 cursor-not-allowed opacity-50 transition-all duration-200"
                 disabled={true}>
                 <img 
-                    src={disabled_img} 
+                    src={normal_img} 
                     alt={props.alt_text.clone()}
-                    class="w-4/5 h-auto block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-opacity duration-0 ease-in-out cursor-not-allowed"
+                    class="h-5 sm:h-6 lg:h-7"
                 />
             </button>
 
@@ -55,11 +53,11 @@ pub fn hud_button(props: &HudButtonProps) -> Html {
             // active state - red
             <button 
                 onclick={navigate.reform({let route = props.route.clone(); move |_| route.clone()})}
-                class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
+                class="relative group px-2 py-1.5 flex items-center justify-center rounded-md cursor-pointer transition-all duration-200 bg-black/50 border-2 border-red-600/50">
                 <img 
                     src={active_img} 
                     alt={props.alt_text.clone()}
-                    class="w-4/5 h-auto block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                    class="h-5 sm:h-6 lg:h-7"
                 />
             </button>
             
@@ -67,19 +65,18 @@ pub fn hud_button(props: &HudButtonProps) -> Html {
             // normal state - show hover effect
             <button 
                 onclick={navigate.reform({let route = props.route.clone(); move |_| route.clone()})}
-                class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
+                class="relative group px-2 py-1.5 flex items-center justify-center rounded-md cursor-pointer transition-all duration-200 hover:bg-black/30 border-2 border-transparent hover:border-red-600/30">
                 <img 
                     src={normal_img} 
                     alt={props.alt_text.clone()}
-                    class="w-4/5 h-auto block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-opacity duration-0 ease-in-out group-hover:opacity-0"
+                    class="h-5 sm:h-6 lg:h-7 transition-opacity duration-200 ease-in-out group-hover:opacity-0"
                 />
                 <img 
                     src={active_img} 
                     alt={props.alt_text.clone()}
-                    class="w-4/5 h-auto block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
+                    class="h-5 sm:h-6 lg:h-7 absolute inset-0 m-auto opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100"
                 />
             </button>
-            
         }
     }
 }

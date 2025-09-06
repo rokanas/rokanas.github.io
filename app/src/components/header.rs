@@ -1,6 +1,8 @@
 use yew::prelude::*;
 use yew_router::prelude::*;
+
 use crate::router::Route;
+use crate::components::header_button::HeaderButton;
 
 #[derive(Properties, PartialEq)]
 pub struct HeaderProps {
@@ -18,7 +20,6 @@ fn use_navigation() -> Callback<Route> {
 pub fn header(props: &HeaderProps) -> Html {
     let navigate = use_navigation();
     let is_visible = use_state(|| false);
-    let current_route = use_route::<Route>();
 
     {
         let is_visible = is_visible.clone();
@@ -44,17 +45,6 @@ pub fn header(props: &HeaderProps) -> Html {
         "fixed top-0 left-0 right-0 w-full z-40 transform -translate-y-full transition-transform duration-500 ease-out overflow-visible"
     };
 
-    // button styles
-    let get_button_class = |route: Route| -> String {
-        let base = "relative group px-2 py-1.5 flex items-center justify-center rounded-md cursor-pointer transition-all duration-200";
-        let active = "bg-black/50 border-2 border-red-600/50";
-        let inactive = "hover:bg-black/30 border-2 border-transparent hover:border-red-600/30";
-        if let Some(current) = &current_route {
-            if *current == route { return format!("{base} {active}"); }
-        }
-        format!("{base} {inactive}")
-    };
-
     html! {
         <header class={header_class}
             style="background-image:url('/static/SHAWN_2.png');background-repeat:repeat;background-size:60px;">
@@ -64,20 +54,9 @@ pub fn header(props: &HeaderProps) -> Html {
 
                         // left nav
                         <div class="hidden md:flex items-center gap-2 lg:gap-4 flex-1 justify-start">
-                            <button onclick={navigate.reform(|_| Route::Home)} class={get_button_class(Route::Home)}>
-                                <img src="/static/header/HOME_SRB_W.png"  alt="Home" class="h-5 sm:h-6 lg:h-7 transition-opacity duration-200 ease-in-out group-hover:opacity-0"/>
-                                <img src="/static/header/HOME_SRB_R.png"  alt="Home Active" class="h-5 sm:h-6 lg:h-7 absolute inset-0 m-auto opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100"/>
-                            </button>
-
-                            <button onclick={navigate.reform(|_| Route::About)} class={get_button_class(Route::About)}>
-                                <img src="/static/header/ABOUT_SRB_W.png" alt="About" class="h-5 sm:h-6 lg:h-7 transition-opacity duration-200 ease-in-out group-hover:opacity-0"/>
-                                <img src="/static/header/ABOUT_SRB_R.png" alt="About Active" class="h-5 sm:h-6 lg:h-7 absolute inset-0 m-auto opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100"/>
-                            </button>
-
-                            <button onclick={navigate.reform(|_| Route::Projects)} class={get_button_class(Route::Projects)}>
-                                <img src="/static/header/PROJECTS_SRB_W.png" alt="Projects" class="h-5 sm:h-6 lg:h-7 transition-opacity duration-200 ease-in-out group-hover:opacity-0"/>
-                                <img src="/static/header/PROJECTS_SRB_R.png" alt="Projects Active" class="h-5 sm:h-6 lg:h-7 absolute inset-0 m-auto opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100"/>
-                            </button>
+                            <HeaderButton src="/static/header/HOME_SRB" alt_text="Home" route={Route::Home} />
+                            <HeaderButton src="/static/header/ABOUT_SRB" alt_text="About" route={Route::About} />
+                            <HeaderButton src="/static/header/PROJECTS_SRB" alt_text="Projects" route={Route::Projects} />
                         </div>
 
                         // center logo
@@ -106,14 +85,8 @@ pub fn header(props: &HeaderProps) -> Html {
 
                         // right nav
                         <div class="hidden md:flex items-center gap-2 lg:gap-4 flex-1 justify-end">
-                            <button onclick={navigate.reform(|_| Route::DoomProjects)} class={get_button_class(Route::DoomProjects)}>
-                                <img src="/static/header/DOOM_PROJECTS_SRB_W.png" alt="Doom Projects" class="h-5 sm:h-6 lg:h-7 transition-opacity duration-200 ease-in-out group-hover:opacity-0"/>
-                                <img src="/static/header/DOOM_PROJECTS_SRB_R.png" alt="Doom Projects Active" class="h-5 sm:h-6 lg:h-7 absolute inset-0 m-auto opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100"/>
-                            </button>
-
-                            <button class="relative group px-2 py-1.5 flex items-center justify-center rounded-md text-gray-500 cursor-not-allowed opacity-50 transition-all duration-200" disabled=true>
-                                <img src="/static/header/CONTACT_SRB_W.png" alt="Contact" class="h-4 sm:h-5 lg:h-6"/>
-                            </button>
+                            <HeaderButton src="/static/header/DOOM_PROJECTS_SRB" alt_text="Doom Projects" route={Route::DoomProjects} />
+                            <HeaderButton src="/static/header/CONTACT_SRB" alt_text="Contact" route={Route::Home} disabled={true} />
                         </div>
 
                         // mobile menu button

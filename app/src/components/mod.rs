@@ -1,5 +1,6 @@
 pub mod hud;
 pub mod header;
+pub mod header_button;
 pub mod heading;
 pub mod hud_section;
 pub mod hud_button;
