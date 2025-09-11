@@ -142,7 +142,8 @@ pub fn hud(props: &HudProps) -> Html {
                     background_image="/static/STBAR1.png"
                     background_width=48
                     background_height=32
-                    text_color="text-red-600">
+                    text_color="text-red-600"
+                    route={Route::Home}>
                     <HudButton
                         src="/static/hud/HOME_SR"
                         alt_text="Home"
@@ -156,7 +157,8 @@ pub fn hud(props: &HudProps) -> Html {
                     background_image="/static/STBAR2.png"
                     background_width=58
                     background_height=32
-                    text_color="text-red-600">
+                    text_color="text-red-600"
+                    route={Route::Projects}>
                     <HudButton
                         src="/static/hud/PROJECTS_SR"
                         alt_text="Projects"
@@ -170,7 +172,8 @@ pub fn hud(props: &HudProps) -> Html {
                     background_image="/static/STBAR3.png"
                     background_width=36
                     background_height=32
-                    text_color="text-yellow-600">
+                    text_color="text-yellow-600"
+                    route={Route::About}>
                     <HudButton
                         src="/static/hud/ABOUT_SR"
                         alt_text="About"
@@ -206,7 +209,8 @@ pub fn hud(props: &HudProps) -> Html {
                     background_image="/static/STBAR5.png"
                     background_width=57
                     background_height=32
-                    text_color="text-red-600">
+                    text_color="text-red-600"
+                    route={Route::DoomProjects}>
                     <HudButton
                         src="/static/hud/DOOM_PROJECTS_SR"
                         alt_text="Doom Projects"
@@ -232,7 +236,8 @@ pub fn hud(props: &HudProps) -> Html {
                     background_image="/static/STBAR7.png"
                     background_width=71
                     background_height=32
-                    text_color="text-blue-600">
+                    text_color="text-blue-600"
+                    route={Route::Home}>
                     <HudButton
                         src="/static/hud/CONTACT_SR"
                         alt_text="Contact"
