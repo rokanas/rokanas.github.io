@@ -65,14 +65,14 @@ pub fn header_button(props: &HeaderButtonProps) -> Html {
             // normal state - show hover effect
             <button 
                 onclick={navigate.reform({let route = props.route.clone(); move |_| route.clone()})}
-                class="relative group px-2 py-1.5 flex items-center justify-center rounded-md cursor-pointer transition-all duration-200 hover:bg-black/30 border-2 border-transparent hover:border-red-600/30">
+                class="relative group px-2 py-1.5 flex items-center justify-center rounded-md cursor-pointer transition-all duration-200 hover:bg-black/30 border-2 border-transparent hover:border-white/30">
                 <img 
-                    src={normal_img} 
+                    src={normal_img.clone()} 
                     alt={props.alt_text.clone()}
                     class="h-5 sm:h-6 lg:h-7 transition-opacity duration-200 ease-in-out group-hover:opacity-0"
                 />
                 <img 
-                    src={active_img} 
+                    src={normal_img.clone()} 
                     alt={props.alt_text.clone()}
                     class="h-5 sm:h-6 lg:h-7 absolute inset-0 m-auto opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100"
                 />
