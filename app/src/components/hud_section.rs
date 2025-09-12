@@ -43,12 +43,12 @@ pub fn hud_section(props: &HudSectionProps) -> Html {
             )}
         >
             // darkening overlay when route is active
-            if is_active {
-                <div class="w-[90%] h-[80%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/40 z-5
-                              shadow-inner shadow-black-900/50
-                              border-2 border-black/40">
-                </div>
-            }
+            // if is_active {
+            //     <div class="w-[90%] h-[80%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/30 z-5
+            //                   shadow-inner shadow-black-900/50
+            //                   border-white/40">
+            //     </div>
+            // }
             
             <div class="z-10">
                 { for props.children.iter() }   

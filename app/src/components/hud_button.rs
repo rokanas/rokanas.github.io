@@ -76,10 +76,15 @@ pub fn hud_button(props: &HudButtonProps) -> Html {
                 <img 
                     src={active_img} 
                     alt={props.alt_text.clone()}
-                    class="w-4/5 h-auto block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
+                    class="w-4/5 h-auto block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100 z-10"
                 />
+                // // darkening overlay when route is active
+                // <div class="w-[90%] h-[80%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/30 z-5
+                //                 shadow-inner shadow-black-900/50
+                //                 border-white/40
+                //                 opacity-0 group-hover:opacity-100 z-5">
+                // </div>
             </button>
-            
         }
     }
 }
