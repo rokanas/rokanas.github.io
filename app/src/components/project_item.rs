@@ -133,7 +133,7 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
                     // content
                     <div class="relative z-10 p-6 h-full flex flex-col">
                         // project image
-                        <div class="aspect-video bg-gray-800 overflow-hidden rounded mb-4">
+                        <div class="aspect-video bg-[#2b2b2b] overflow-hidden rounded mb-4">
                             <img 
                                 src={props.image_src.clone()}
                                 alt={alt_text}
@@ -175,7 +175,7 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
                             // more info
                             <button 
                                 onclick={more_info_click}
-                                class="group w-full bg-[#1a1a1a] hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-2 px-4 rounded transition-all duration-200 cursor-pointer font-mono text-sm">
+                                class="group w-full bg-[#2b2b2b] hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-2 px-4 rounded transition-all duration-200 cursor-pointer font-mono text-sm">
                                 <div class="flex items-center justify-center gap-2">    
                                     <span>{"MORE INFO"}</span>
                                     <span class="text-xs group-hover:translate-x-1 transition-transform duration-200">{"→"}</span>
@@ -184,7 +184,7 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
                             // github
                             <button 
                                 onclick={github_click.clone()}
-                                class="group w-full bg-[#1a1a1a] hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-2 px-4 rounded transition-all duration-200 cursor-pointer font-mono text-sm">
+                                class="group w-full bg-[#2b2b2b] hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-2 px-4 rounded transition-all duration-200 cursor-pointer font-mono text-sm">
                                 <div class="flex items-center justify-center gap-2">    
                                     <span>{"GITHUB"}</span>
                                     <span class="text-xs group-hover:translate-x-1 transition-transform duration-200">{"→"}</span>
@@ -195,15 +195,15 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
                 </div>
             </div>
 
-            // modal (unchanged)
+            // modal
             if *modal_open {
                 <div class="fixed inset-0 backdrop-blur-lg bg-black/50 bg-opacity-75 flex items-center justify-center p-4 z-50" onclick={close_modal.clone()}>
                     <div 
-                        class="bg-gray-900 border-2 border-red-600 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+                        class="bg-[#1a1a1a] border-3 border-red-600 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto"
                         onclick={Callback::from(|e: MouseEvent| e.stop_propagation())}
                     >
                         // modal header
-                        <div class="flex justify-between items-center p-6 border-b border-gray-700">
+                        <div class="flex justify-between items-center p-6 border-b border-gray-400/50">
                             <h2 class="text-2xl font-bold text-red-600 font-mono">{&props.title}</h2>
                             <button 
                                 onclick={close_modal}
@@ -214,9 +214,18 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
 
                         // modal content
                         <div class="p-6 space-y-6">
+                        
+                            // detailed description
+                            if let Some(detailed_desc) = &props.detailed_description {
+                                <div>
+                                    // <h3 class="text-lg font-bold text-red-600 font-mono mb-2">{"DESCRIPTION"}</h3>
+                                    <p class="text-gray-300 leading-relaxed">{detailed_desc}</p>
+                                </div>
+                            }
+
                             // project image with navigation
                             <div class="relative">
-                                <div class="aspect-video bg-gray-800 rounded-lg overflow-hidden">
+                                <div class="aspect-video bg-[#2b2b2b] rounded-lg overflow-hidden">
                                     <img 
                                         src={current_image_src}
                                         // alt={alt_text.clone()} TODO: FIX
@@ -255,21 +264,13 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
                                 }
                             </div>
 
-                            // detailed description
-                            if let Some(detailed_desc) = &props.detailed_description {
-                                <div>
-                                    <h3 class="text-lg font-bold text-red-600 font-mono mb-2">{"DESCRIPTION"}</h3>
-                                    <p class="text-gray-300 leading-relaxed">{detailed_desc}</p>
-                                </div>
-                            }
-
                             // technologies used
                             if !props.technologies_used.is_empty() {
                                 <div>
                                     <h3 class="text-lg font-bold text-red-600 font-mono mb-2">{"TECHNOLOGIES"}</h3>
                                     <div class="flex flex-wrap gap-2">
                                         { for props.technologies_used.iter().map(|tech| html! {
-                                            <span class="px-3 py-1 bg-gray-800 border border-red-600 text-red-600 rounded font-mono text-sm">
+                                            <span class="px-3 py-1 bg-[#2b2b2b] border border-red-600 text-red-600 rounded font-mono text-sm">
                                                 {tech}
                                             </span>
                                         })}
@@ -296,14 +297,14 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
                             <div class="flex gap-4 pt-4 border-t border-gray-700">
                                 <button 
                                     onclick={github_click.clone()}
-                                    class="flex-1 bg-gray-800 hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-3 px-6 rounded cursor-pointer transition-all duration-200 font-mono"
+                                    class="flex-1 bg-[#2b2b2b] hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-3 px-6 rounded cursor-pointer transition-all duration-200 font-mono"
                                 >
                                     {"GITHUB REPO"}
                                 </button>
                                 if props.wiki_url.is_some() {
                                     <button 
                                         onclick={wiki_click}
-                                        class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded cursor-pointer transition-all duration-200 font-mono"
+                                        class="flex-1 bg-[#2b2b2b] hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-3 px-6 rounded cursor-pointer transition-all duration-200 font-mono"
                                     >
                                         {"PROJECT WIKI"}
                                     </button>

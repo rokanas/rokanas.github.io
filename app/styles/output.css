@@ -11,7 +11,6 @@
     --color-red-400: oklch(70.4% 0.191 22.216);
     --color-red-500: oklch(63.7% 0.237 25.331);
     --color-red-600: oklch(57.7% 0.245 27.325);
-    --color-red-700: oklch(50.5% 0.213 27.518);
     --color-red-900: oklch(39.6% 0.141 25.723);
     --color-orange-500: oklch(70.5% 0.213 47.604);
     --color-yellow-400: oklch(85.2% 0.199 91.936);
@@ -718,6 +717,12 @@
   .border-gray-200 {
     border-color: var(--color-gray-200);
   }
+  .border-gray-400\/50 {
+    border-color: color-mix(in srgb, oklch(70.7% 0.022 261.325) 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--color-gray-400) 50%, transparent);
+    }
+  }
   .border-gray-500 {
     border-color: var(--color-gray-500);
   }
@@ -744,6 +749,9 @@
   }
   .bg-\[\#1a1a1a\] {
     background-color: #1a1a1a;
+  }
+  .bg-\[\#2b2b2b\] {
+    background-color: #2b2b2b;
   }
   .bg-black\/50 {
     background-color: color-mix(in srgb, #000 50%, transparent);
@@ -1225,13 +1233,6 @@
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-red-600);
-      }
-    }
-  }
-  .hover\:bg-red-700 {
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-red-700);
       }
     }
   }
