@@ -94,7 +94,7 @@ pub fn experience() -> Html {
                     })}
                 </div>
 
-                // right content (job details))
+                // right content (job details)
                 <div class="lg:w-2/3">
                     <div 
                         class="relative p-8"                                                 
@@ -133,7 +133,7 @@ pub fn experience() -> Html {
                                     { for description.iter().map(|point| {
                                         html! {
                                             <li class="flex items-start">
-                                                <div class="flex-shrink-0 w-2 h-2 bg-red-500 rounded-full mt-2 mr-3"></div>
+                                                <div class="flex-shrink-0 w-2 h-2 bg-red-600 rounded-full mt-2 mr-3"></div>
                                                 <p class="text-gray-300 leading-relaxed mb-2">{point}</p>
                                             </li>
                                         }
