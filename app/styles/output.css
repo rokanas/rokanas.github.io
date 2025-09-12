@@ -950,6 +950,9 @@
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
   }
+  .whitespace-pre-line {
+    white-space: pre-line;
+  }
   .text-blue-400 {
     color: var(--color-blue-400);
   }

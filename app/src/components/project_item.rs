@@ -219,7 +219,7 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
                             if let Some(detailed_desc) = &props.detailed_description {
                                 <div>
                                     // <h3 class="text-lg font-bold text-red-600 font-mono mb-2">{"DESCRIPTION"}</h3>
-                                    <p class="text-gray-300 leading-relaxed">{detailed_desc}</p>
+                                    <p class="text-gray-300 leading-relaxed whitespace-pre-line">{detailed_desc}</p>
                                 </div>
                             }
 
