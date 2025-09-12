@@ -197,7 +197,7 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
 
             // modal
             if *modal_open {
-                <div class="fixed inset-0 backdrop-blur-lg bg-black/50 bg-opacity-75 flex items-center justify-center p-4 z-50" onclick={close_modal.clone()}>
+                <div class="fixed inset-0 backdrop-blur-lg bg-black/60 bg-opacity-75 flex items-center justify-center p-4 z-50" onclick={close_modal.clone()}>
                     <div 
                         class="bg-[#1a1a1a] border-3 border-red-600 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto"
                         onclick={Callback::from(|e: MouseEvent| e.stop_propagation())}
