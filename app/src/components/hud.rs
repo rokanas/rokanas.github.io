@@ -7,10 +7,11 @@ use wasm_bindgen::JsCast;               // import trait for convering between Ja
 
 use crate::router::Route;               // import route enum for page navigation
 use crate::components::hud_section::HudSection;
+use crate::components::hud_button::HudButton;
 
 // props to control footer visibility and animation
 #[derive(Properties, PartialEq)]
-pub struct FooterProps {
+pub struct HudProps {
     #[prop_or(false)]
     pub show: bool,
 }
@@ -99,10 +100,9 @@ fn use_navigation() -> Callback<Route> {        // returns callback that takes a
     })
 }
 
-#[function_component(Footer)]   // declare function as footer component
-pub fn footer(props: &FooterProps) -> Html {
+#[function_component(Hud)]   // declare function as footer component
+pub fn hud(props: &HudProps) -> Html {
     let (mouse_col, mouse_row) = use_mouse_grid();     // destructure tuple returned by hook to two variables (column, row)
-    let navigate = use_navigation();            // get navigation callback from hook
     let is_visible = use_state(|| false);
 
     // animate footer entrance when show prop changes
@@ -142,65 +142,44 @@ pub fn footer(props: &FooterProps) -> Html {
                     background_image="/static/STBAR1.png"
                     background_width=48
                     background_height=32
-                    text_color="text-red-400">
-                    <button 
-                        onclick={navigate.reform(|_| Route::Home)} 
-                        class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none"> // group class allows child elements to react to hover state of parent
-                        <img 
-                            src="/static/HOME1.png" 
-                            alt="Home"
-                            class="block transition-opacity duration-200 ease-in-out group-hover:opacity-0"
-                        />
-                        <img 
-                            src="/static/HOME2.png" 
-                            alt="Home Hover"
-                            class="block absolute opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100"
-                        />
-                    </button>
-                </HudSection>
-
-                // projects
-                <HudSection
-                    background_image="/static/STBAR2.png"
-                    background_width=58
-                    background_height=32
-                    text_color="text-red-400">
-                    <button 
-                        onclick={navigate.reform(|_| Route::Projects)}
-                        class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
-                        <img 
-                            src="/static/PROJECTS_1.png" 
-                            alt="Projects"
-                            class="w-4/5 h-auto block transition-opacity duration-0 ease-in-out group-hover:opacity-0"
-                        />
-                        <img 
-                            src="/static/PROJECTS_2.png" 
-                            alt="Projects Hover"
-                            class="w-4/5 h-auto block absolute opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
-                        />
-                    </button>
+                    text_color="text-red-600"
+                    route={Route::Home}>
+                    <HudButton
+                        src="/static/hud/HOME_SR"
+                        alt_text="Home"
+                        route={Route::Home}
+                        disabled=false>
+                    </HudButton>
                 </HudSection>
 
                 // about
                 <HudSection
-                    background_image="/static/STBAR3.png"
+                    background_image="/static/STBAR2B.png"
                     background_width=36
                     background_height=32
-                    text_color="text-yellow-400">
-                    <button 
-                        onclick={navigate.reform(|_| Route::About)}
-                        class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
-                        <img 
-                            src="/static/ABOUT1.png" 
-                            alt="About"
-                            class="w-4/5 h-auto block transition-opacity duration-0 ease-in-out group-hover:opacity-0"
-                        />
-                        <img 
-                            src="/static/ABOUT2.png" 
-                            alt="About Hover"
-                            class="w-4/5 h-auto block absolute opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
-                        />
-                    </button>
+                    text_color="text-red-600"
+                    route={Route::Projects}>
+                    <HudButton
+                        src="/static/hud/ABOUT_SR"
+                        alt_text="Projects"
+                        route={Route::Projects}
+                        disabled=false>
+                    </HudButton>
+                </HudSection>
+
+                // projects
+                <HudSection
+                    background_image="/static/STBAR3B.png"
+                    background_width=58
+                    background_height=32
+                    text_color="text-yellow-600"
+                    route={Route::About}>
+                    <HudButton
+                        src="/static/hud/PROJECTS_SR"
+                        alt_text="About"
+                        route={Route::About}
+                        disabled=false>
+                    </HudButton>
                 </HudSection>
 
                 // avatar
@@ -219,7 +198,7 @@ pub fn footer(props: &FooterProps) -> Html {
                         />
                         <img 
                             src={get_avatar_image(mouse_col, mouse_row, true)}
-                            alt="Avatar Hover"
+                            alt="Avatar"
                             class="w-4/5 block absolute opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100"
                         />
                     </button>
@@ -230,21 +209,14 @@ pub fn footer(props: &FooterProps) -> Html {
                     background_image="/static/STBAR5.png"
                     background_width=57
                     background_height=32
-                    text_color="text-red-400">
-                    <button 
-                        onclick={navigate.reform(|_| Route::DoomProjects)}
-                        class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
-                        <img 
-                            src="/static/DOOM_PROJECTS_1.png" 
-                            alt="Doom Projects"
-                            class="w-4/5 h-auto block transition-opacity duration-0 ease-in-out group-hover:opacity-0"
-                        />
-                        <img 
-                            src="/static/DOOM_PROJECTS_2.png" 
-                            alt="Doom Projects Hover"
-                            class="w-4/5 h-auto block absolute opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
-                        />
-                    </button>
+                    text_color="text-red-600"
+                    route={Route::DoomProjects}>
+                    <HudButton
+                        src="/static/hud/DOOM_PROJECTS_SR"
+                        alt_text="Doom Projects"
+                        route={Route::DoomProjects}
+                        disabled=false>
+                    </HudButton>
                 </HudSection>
 
                 // keys section
@@ -252,10 +224,8 @@ pub fn footer(props: &FooterProps) -> Html {
                     background_image="/static/STBAR6.png"
                     background_width=13 
                     background_height=32
-                    text_color="text-red-400">
+                    text_color="text-red-600">
                     <div class="flex flex-col">
-                        <span class="text-2xl font-bold">{format!("0%")}</span>
-                        <span class="text-xs">{"KEYS"}</span>
                     </div>
                 </HudSection>
 
@@ -264,21 +234,14 @@ pub fn footer(props: &FooterProps) -> Html {
                     background_image="/static/STBAR7.png"
                     background_width=71
                     background_height=32
-                    text_color="text-blue-400">
-                    <button 
-                        //onclick={navigate.reform(|_| Route::Contact)}
-                        class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
-                        <img 
-                            src="/static/CONTACT1.png" 
-                            alt="Contact"
-                            class="block transition-opacity duration-0 ease-in-out group-hover:opacity-0"
-                        />
-                        <img 
-                            src="/static/CONTACT2.png" 
-                            alt="Contact Hover"
-                            class="block absolute opacity-0 transition-opacity duration-0 ease-in-out group-hover:opacity-100"
-                        />
-                    </button>
+                    text_color="text-blue-600"
+                    route={Route::Home}>
+                    <HudButton
+                        src="/static/hud/CONTACT_SR"
+                        alt_text="Contact"
+                        route={Route::Home}
+                        disabled=true>
+                    </HudButton>
                 </HudSection>
             </div>
         </footer>

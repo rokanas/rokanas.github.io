@@ -126,7 +126,7 @@ pub fn doom_projects() -> Html {
 
     html! {
         <main class="min-h-screen text-white pt-8 pb-24"> // pb-24 for footer space
-            <div class="container mx-auto px-4 max-w-7xl">
+            <div class="container mx-auto pt-4 px-4 max-w-7xl">
                 
                 // page heading
                 <Heading 
