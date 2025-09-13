@@ -84,18 +84,6 @@ pub fn about() -> Html {
                     </div>
                 </div>
 
-                // education
-                <div class="mb-16">
-                    // heading
-                    <Heading 
-                        src="/static/EDUCATION_1.png" 
-                        alt="Education"
-                        sub_heading=""             
-                    />
-                    // component
-                    <Education/>
-                </div>
-
                 // work experience section
                 <div class="mb-16">
                     // heading
@@ -108,11 +96,23 @@ pub fn about() -> Html {
                     <Experience/>
                 </div>
 
-                // skills section
+                // education
                 <div class="mb-16">
                     // heading
                     <Heading 
-                        src="/static/SKILLS_1.png" 
+                        src="/static/EDUCATION_1.png" 
+                        alt="Education"
+                        sub_heading=""             
+                    />
+                    // component
+                    <Education/>
+                </div>
+
+                // technologies section
+                <div class="mb-16">
+                    // heading
+                    <Heading 
+                        src="/static/TECHNOLOGIES_1.png" 
                         alt="Skills"
                         sub_heading=""             
                     />
