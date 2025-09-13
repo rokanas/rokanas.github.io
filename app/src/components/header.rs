@@ -53,14 +53,14 @@ pub fn header(props: &HeaderProps) -> Html {
                     <div class="flex items-center justify-between w-full relative min-h-[56px] sm:min-h-[62px]">
 
                         // left nav
-                        <div class="hidden md:flex items-center gap-2 lg:gap-4 flex-1 justify-start">
+                        <div class="hidden md:flex items-center gap-2 lg:gap-8 flex-1 justify-start">
                             <HeaderButton src="/static/header/HOME_SRB" alt_text="Home" route={Route::Home} />
                             <HeaderButton src="/static/header/ABOUT_SRB" alt_text="About" route={Route::About} />
                             <HeaderButton src="/static/header/PROJECTS_SRB" alt_text="Projects" route={Route::Projects} />
                         </div>
 
                         // center logo
-                         <div class="flex-1 md:flex-0 flex justify-center items-start z-50 -mt-1 -mb-4 sm:-mb-5">
+                         <div class="flex-1 md:flex-0 flex justify-center items-start z-50 -mt-1 -mb-4 sm:-mb-5 pl-3 pr-3">
                             <div class="relative w-40 sm:w-44 lg:w-52 h-20 sm:h-22 lg:h-26">
                                 // border
                                 <div class="absolute inset-0"
