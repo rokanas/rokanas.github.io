@@ -1,6 +1,6 @@
 // components/hud_section.rs
 use yew::prelude::*;
-use yew_router::prelude::*;
+// use yew_router::prelude::*;
 use crate::router::Route;
 
 #[derive(Properties, PartialEq)]        
@@ -16,15 +16,15 @@ pub struct HudSectionProps {
 
 #[function_component(HudSection)]       
 pub fn hud_section(props: &HudSectionProps) -> Html {   
-    let current_route = use_route::<Route>();
+    // let current_route = use_route::<Route>();
     let flex_style = format!("flex: {};", props.background_width);
 
     // check if this section's route is currently active
-    let is_active = if let (Some(current), Some(section_route)) = (&current_route, &props.route) {
-        *current == *section_route
-    } else {
-        false
-    };
+    // let is_active = if let (Some(current), Some(section_route)) = (&current_route, &props.route) {
+    //     *current == *section_route
+    // } else {
+    //     false
+    // };
 
     html! {                   
         <div
