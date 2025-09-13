@@ -152,30 +152,30 @@ pub fn hud(props: &HudProps) -> Html {
                     </HudButton>
                 </HudSection>
 
-                // projects
+                // about
                 <HudSection
-                    background_image="/static/STBAR2.png"
-                    background_width=58
+                    background_image="/static/STBAR2B.png"
+                    background_width=36
                     background_height=32
                     text_color="text-red-600"
                     route={Route::Projects}>
                     <HudButton
-                        src="/static/hud/PROJECTS_SR"
+                        src="/static/hud/ABOUT_SR"
                         alt_text="Projects"
                         route={Route::Projects}
                         disabled=false>
                     </HudButton>
                 </HudSection>
 
-                // about
+                // projects
                 <HudSection
-                    background_image="/static/STBAR3.png"
-                    background_width=36
+                    background_image="/static/STBAR3B.png"
+                    background_width=58
                     background_height=32
                     text_color="text-yellow-600"
                     route={Route::About}>
                     <HudButton
-                        src="/static/hud/ABOUT_SR"
+                        src="/static/hud/PROJECTS_SR"
                         alt_text="About"
                         route={Route::About}
                         disabled=false>
@@ -226,8 +226,6 @@ pub fn hud(props: &HudProps) -> Html {
                     background_height=32
                     text_color="text-red-600">
                     <div class="flex flex-col">
-                        <span class="text-2xl font-bold">{format!("0%")}</span>
-                        <span class="text-xs">{"KEYS"}</span>
                     </div>
                 </HudSection>
 
