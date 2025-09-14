@@ -235,12 +235,11 @@ pub fn hud(props: &HudProps) -> Html {
                     background_width=71
                     background_height=32
                     text_color="text-blue-600"
-                    route={Route::Home}>
+                    route={Route::Contact}>
                     <HudButton
                         src="/static/hud/CONTACT_SR"
                         alt_text="Contact"
-                        route={Route::Home}
-                        disabled=true>
+                        route={Route::Contact}>
                     </HudButton>
                 </HudSection>
             </div>

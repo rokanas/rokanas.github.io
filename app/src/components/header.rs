@@ -86,7 +86,7 @@ pub fn header(props: &HeaderProps) -> Html {
                         // right nav
                         <div class="hidden md:flex items-center gap-2 lg:gap-4 flex-1 justify-end">
                             <HeaderButton src="/static/header/DOOM_PROJECTS_SRB" alt_text="Doom Projects" route={Route::DoomProjects} />
-                            <HeaderButton src="/static/header/CONTACT_SRB" alt_text="Contact" route={Route::Home} disabled={true} />
+                            <HeaderButton src="/static/header/CONTACT_SRB" alt_text="Contact" route={Route::Contact} />
                         </div>
 
                         // mobile menu button

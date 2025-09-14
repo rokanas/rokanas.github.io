@@ -12,8 +12,8 @@ pub enum Route {
     //Avatar,
     #[at("/doom-projects")]
     DoomProjects,
-    //#[at("/contact")]
-    //Contact,
+    #[at("/contact")]
+    Contact,
     #[not_found]
     #[at("/404")]
     NotFound
