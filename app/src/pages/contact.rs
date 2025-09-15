@@ -1,5 +1,6 @@
 // src/pages/contact.rs
 use yew::prelude::*;
+use web_sys::window;
 use gloo_net::http::Request;
 use serde::{Deserialize, Serialize};
 use web_sys::HtmlInputElement;
@@ -22,6 +23,14 @@ struct FormResponse {
 
 #[function_component(Contact)]
 pub fn contact() -> Html {
+    use_effect_with((), |_| {
+        // scroll to top when component mounts
+        if let Some(window) = window() {
+            window.scroll_to_with_x_and_y(0.0, 0.0);
+        }
+        || {}
+    });
+
     let form_data = use_state(|| FormData {
         name: String::new(),
         email: String::new(),
