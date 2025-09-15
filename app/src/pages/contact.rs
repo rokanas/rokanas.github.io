@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 use web_sys::HtmlInputElement;
 
 use crate::components::social_buttons::SocialButtons;
+use crate::components::heading::Heading;
 
 #[derive(Serialize, Deserialize, Clone)]
 struct FormData {
@@ -113,19 +114,20 @@ pub fn contact() -> Html {
     };
 
     html! {
-        <div class="min-h-screen pt-20 pb-16" >
+        <div class="min-h-screen pt-15 pb-16" >
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 
                 // main contact card
-                <div class="bg-gradient-to-br from-gray-900 to-black rounded-lg border-2 border-red-600 p-8 mb-8 relative overflow-hidden">                    
+                <div class="rounded-lg border-2 border-red-600 p-8 mb-8 relative overflow-hidden"
+                    // style="background-image: url('/static/contact/ADEL_V99.png'); background-repeat: repeat; background-size: 310px; image-rendering: pixelated;">                    
+                    style="background:linear-gradient(135deg,#1a1a1a 0%,#2a2a2a 50%,#1a1a1a 100%);"
+                >
                     <div class="relative z-10">
-                        <h1 class="text-4xl lg:text-5xl font-bold text-red-500 mb-6 text-center">
-                            {"Get In Touch"}
-                        </h1>
-                        
-                        <p class="text-xl text-gray-300 text-center mb-12 max-w-2xl mx-auto">
-                            {"Want to drop a message? Collaborate? Ask a question?"}
-                        </p>
+                        <Heading 
+                            src = "/static/CONTACT_1.png"
+                            alt = "Contact"
+                            sub_heading = "Want to drop a message? Collaborate? Ask a question?"
+                        ></Heading>
                         
                         // contact form
                         <div class="max-w-2xl mx-auto mb-12">
