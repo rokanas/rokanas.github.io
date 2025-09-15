@@ -251,7 +251,9 @@ pub fn contact() -> Html {
 
                         <SocialButtons
                             button_size={12}
-                            svg_size={8}>
+                            svg_size={8}
+                            professional=false
+                        >
                         </SocialButtons>
                         
                         // additional info
