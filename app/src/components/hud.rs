@@ -161,8 +161,8 @@ pub fn hud(props: &HudProps) -> Html {
                     route={Route::Projects}>
                     <HudButton
                         src="/static/hud/ABOUT_SR"
-                        alt_text="Projects"
-                        route={Route::Projects}
+                        alt_text="About"
+                        route={Route::About}
                         disabled=false>
                     </HudButton>
                 </HudSection>
@@ -176,8 +176,8 @@ pub fn hud(props: &HudProps) -> Html {
                     route={Route::About}>
                     <HudButton
                         src="/static/hud/PROJECTS_SR"
-                        alt_text="About"
-                        route={Route::About}
+                        alt_text="Projects"
+                        route={Route::Projects}
                         disabled=false>
                     </HudButton>
                 </HudSection>
