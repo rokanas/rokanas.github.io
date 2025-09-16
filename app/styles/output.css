@@ -372,9 +372,6 @@
   .mt-10 {
     margin-top: calc(var(--spacing) * 10);
   }
-  .mt-12 {
-    margin-top: calc(var(--spacing) * 12);
-  }
   .mt-16 {
     margin-top: calc(var(--spacing) * 16);
   }
@@ -434,9 +431,6 @@
   }
   .hidden {
     display: none;
-  }
-  .inline-block {
-    display: inline-block;
   }
   .aspect-square {
     aspect-ratio: 1 / 1;
@@ -1450,6 +1444,11 @@
   .focus\:border-red-500 {
     &:focus {
       border-color: var(--color-red-500);
+    }
+  }
+  .focus\:border-red-600 {
+    &:focus {
+      border-color: var(--color-red-600);
     }
   }
   .focus\:ring-1 {

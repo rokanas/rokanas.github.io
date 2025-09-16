@@ -127,7 +127,7 @@ pub fn contact() -> Html {
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 
                 // main contact card
-                <div class="rounded-lg border-2 border-red-600 p-8 mb-8 relative overflow-hidden"
+                <div class="rounded-lg border-3 border-red-600 p-8 mb-8 relative overflow-hidden"
                     // style="background-image: url('/static/contact/ADEL_V99.png'); background-repeat: repeat; background-size: 310px; image-rendering: pixelated;">                    
                     style="background:linear-gradient(135deg,#1a1a1a 0%,#2a2a2a 50%,#1a1a1a 100%);"
                 >
@@ -156,7 +156,7 @@ pub fn contact() -> Html {
                                             required=true
                                             disabled={*is_submitting}
                                             class="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg 
-                                                   text-white placeholder-gray-400 focus:border-red-500 focus:ring-1 
+                                                   text-white placeholder-gray-400 focus:border-red-600 focus:ring-1 
                                                    focus:ring-red-500 focus:outline-none transition-colors
                                                    disabled:opacity-50 disabled:cursor-not-allowed"
                                             placeholder="Your name"
@@ -186,7 +186,7 @@ pub fn contact() -> Html {
                                 // subject
                                 <div>
                                     <label for="subject" class="block text-sm font-medium text-gray-300 mb-2">
-                                        {"Subject *"}
+                                        {"Subject"}
                                     </label>
                                     <input
                                         type="text"
@@ -194,7 +194,7 @@ pub fn contact() -> Html {
                                         name="subject"
                                         value={form_data.subject.clone()}
                                         onchange={on_subject_change}
-                                        required=true
+                                        required=false
                                         disabled={*is_submitting}
                                         class="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg 
                                                text-white placeholder-gray-400 focus:border-red-500 focus:ring-1 
@@ -204,7 +204,7 @@ pub fn contact() -> Html {
                                     />
                                 </div>
                                 
-                                // Message
+                                // message
                                 <div>
                                     <label for="message" class="block text-sm font-medium text-gray-300 mb-2">
                                         {"Message *"}
@@ -225,7 +225,7 @@ pub fn contact() -> Html {
                                     />
                                 </div>
                                 
-                                // Submit button
+                                // submit button
                                 <div class="text-center">
                                     <button
                                         type="submit"
@@ -239,7 +239,7 @@ pub fn contact() -> Html {
                                     </button>
                                 </div>
                                 
-                                // Status message
+                                // status message
                                 {if let Some(ref status) = *submission_status {
                                     let (bg_color, text_color, border_color) = if status.contains("successfully") {
                                         ("bg-green-900/20", "text-green-400", "border-green-500")
@@ -264,15 +264,6 @@ pub fn contact() -> Html {
                             professional=false
                         >
                         </SocialButtons>
-                        
-                        // additional info
-                        <div class="mt-12 text-center">
-                            <div class="inline-block px-6 py-3 bg-gray-800 rounded-lg border border-gray-600">
-                                <p class="text-gray-300">
-                                    {"Response time: "}<span class="text-green-400 font-semibold">{"Usually within 24 hours"}</span>
-                                </p>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -281,10 +272,9 @@ pub fn contact() -> Html {
 }
 
 async fn submit_form(form_data: FormData) -> Result<FormResponse, String> {
-    // Replace with your actual FormEasy Google Apps Script URL
     let url = "https://script.google.com/macros/s/AKfycbwLckDBcah084esScg4oIG0IvmgCb_KPfsjPS979BxWQj8fFVvP6Ia_AF2gbOUHgWgajw/exec";
     
-    // Convert form data to JSON string manually to match FormEasy expectations
+    // convert form data to JSON string manually to match FormEasy expectations
     let json_body = serde_json::to_string(&form_data)
         .map_err(|e| format!("Failed to serialize form data: {:?}", e))?;
     
@@ -295,21 +285,21 @@ async fn submit_form(form_data: FormData) -> Result<FormResponse, String> {
         .send()
         .await
         .map_err(|e| {
-            // More detailed error handling
+            // more detailed error handling
             let error_msg = format!("{:?}", e);
             if error_msg.contains("CORS") || error_msg.contains("Failed to fetch") {
-                "CORS error: Make sure your Google Apps Script is properly configured and deployed as a web app with 'Anyone' access.".to_string()
+                "CORS error: Make sure Google Apps Script is properly configured and deployed as a web app with 'Anyone' access.".to_string()
             } else {
                 format!("Network error: {}", error_msg)
             }
         })?;
 
     if response.ok() {
-        // Try to parse as JSON, but handle cases where it might not be JSON
+        // try parse as JSON, but handle cases where it might not be JSON
         match response.json::<FormResponse>().await {
             Ok(form_response) => Ok(form_response),
             Err(_) => {
-                // If JSON parsing fails, assume success if we got a 200 response
+                // if JSON parsing fails, assume success if we got 200 response
                 Ok(FormResponse {
                     result: "success".to_string()
                 })
