@@ -6,6 +6,7 @@ use crate::pages::home::Home;
 use crate::pages::about::About;
 use crate::pages::projects::Projects;
 use crate::pages::doom_projects::DoomProjects;
+use crate::pages::contact::Contact;
 use crate::components::header::Header;
 use crate::components::hud::Hud;
 use crate::components::fade_wrapper::FadeWrapper;
@@ -33,7 +34,11 @@ fn switch(routes: Route) -> Html {
                 <DoomProjects /> 
             </FadeWrapper>
         },
-        //Route::Contact => html! { <Contact /> },
+        Route::Contact => html! { 
+            <FadeWrapper>
+                <Contact /> 
+            </FadeWrapper>
+         },
         Route::NotFound => html! { 
             <FadeWrapper>
                 <div>{"404 - Page not found"}</div> 

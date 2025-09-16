@@ -71,7 +71,7 @@ pub fn header(props: &HeaderProps) -> Html {
                                 <div class="absolute inset-1"
                                     style="background:linear-gradient(135deg,#1a1a1a 0%,#2a2a2a 50%,#1a1a1a 100%);
                                             clip-path:polygon(0% 0%,100% 0%,85% 100%,15% 100%);
-                                            box-shadow:0 0 20px rgba(74,222,128,.3),
+                                            box-shadow:0 0 20px rgba(255, 40, 40, 0.3),
                                                     inset 0 0 20px rgba(0,0,0,.5);">
                                 </div>
                                 // logo image
@@ -86,7 +86,7 @@ pub fn header(props: &HeaderProps) -> Html {
                         // right nav
                         <div class="hidden md:flex items-center gap-2 lg:gap-4 flex-1 justify-end">
                             <HeaderButton src="/static/header/DOOM_PROJECTS_SRB" alt_text="Doom Projects" route={Route::DoomProjects} />
-                            <HeaderButton src="/static/header/CONTACT_SRB" alt_text="Contact" route={Route::Home} disabled={true} />
+                            <HeaderButton src="/static/header/CONTACT_SRB" alt_text="Contact" route={Route::Contact} />
                         </div>
 
                         // mobile menu button

@@ -53,6 +53,7 @@ pub fn about() -> Html {
                             <SocialButtons 
                                 button_size={12}
                                 svg_size={8}
+                                professional=true
                             />
                         </div>
                             
@@ -123,6 +124,7 @@ pub fn about() -> Html {
                 <SocialButtons 
                     button_size={12 }
                     svg_size={8}
+                    professional=true
                 />
 
             </div>
