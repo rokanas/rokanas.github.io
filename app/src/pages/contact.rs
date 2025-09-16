@@ -155,7 +155,7 @@ pub fn contact() -> Html {
                                             onchange={on_name_change}
                                             required=true
                                             disabled={*is_submitting}
-                                            class="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg 
+                                            class="w-full px-4 py-3 bg-[#1a1a1a] border border-gray-600 rounded-lg 
                                                    text-white placeholder-gray-400 focus:border-red-600 focus:ring-1 
                                                    focus:ring-red-500 focus:outline-none transition-colors
                                                    disabled:opacity-50 disabled:cursor-not-allowed"
@@ -174,7 +174,7 @@ pub fn contact() -> Html {
                                             onchange={on_email_change}
                                             required=true
                                             disabled={*is_submitting}
-                                            class="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg 
+                                            class="w-full px-4 py-3 bg-[#1a1a1a] border border-gray-600 rounded-lg 
                                                    text-white placeholder-gray-400 focus:border-red-500 focus:ring-1 
                                                    focus:ring-red-500 focus:outline-none transition-colors
                                                    disabled:opacity-50 disabled:cursor-not-allowed"
@@ -196,7 +196,7 @@ pub fn contact() -> Html {
                                         onchange={on_subject_change}
                                         required=false
                                         disabled={*is_submitting}
-                                        class="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg 
+                                        class="w-full px-4 py-3 bg-[#1a1a1a] border border-gray-600 rounded-lg 
                                                text-white placeholder-gray-400 focus:border-red-500 focus:ring-1 
                                                focus:ring-red-500 focus:outline-none transition-colors
                                                disabled:opacity-50 disabled:cursor-not-allowed"
@@ -217,7 +217,7 @@ pub fn contact() -> Html {
                                         onchange={on_message_change}
                                         required=true
                                         disabled={*is_submitting}
-                                        class="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg 
+                                        class="w-full px-4 py-3 bg-[#1a1a1a] border border-gray-600 rounded-lg 
                                                text-white placeholder-gray-400 focus:border-red-500 focus:ring-1 
                                                focus:ring-red-500 focus:outline-none transition-colors resize-vertical
                                                disabled:opacity-50 disabled:cursor-not-allowed"
