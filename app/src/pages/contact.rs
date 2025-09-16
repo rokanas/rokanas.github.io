@@ -2,6 +2,7 @@
 use yew::prelude::*;
 use web_sys::window;
 use gloo_net::http::Request;
+use wasm_bindgen::JsCast;
 use serde::{Deserialize, Serialize};
 use web_sys::HtmlInputElement;
 
@@ -14,6 +15,8 @@ struct FormData {
     email: String,
     subject: String,
     message: String,
+    #[serde(rename = "g-recaptcha-response")]
+    recaptcha_response: String,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -24,9 +27,17 @@ struct FormResponse {
 #[function_component(Contact)]
 pub fn contact() -> Html {
     use_effect_with((), |_| {
-        // scroll to top when component mounts
-        if let Some(window) = window() {
-            window.scroll_to_with_x_and_y(0.0, 0.0);
+        if let Some(document) = web_sys::window().and_then(|w| w.document()) {
+            if document.query_selector("script[src*='recaptcha']").unwrap().is_none() {
+                let script = document.create_element("script").unwrap();
+                script.set_attribute("src", "https://www.google.com/recaptcha/api.js").unwrap();
+                script.set_attribute("async", "").unwrap();
+                script.set_attribute("defer", "").unwrap();
+                
+                if let Some(head) = document.head() {
+                    head.append_child(&script).unwrap();
+                }
+            }
         }
         || {}
     });
@@ -36,6 +47,7 @@ pub fn contact() -> Html {
         email: String::new(),
         subject: String::new(),
         message: String::new(),
+        recaptcha_response: String::new(),
     });
     
     let is_submitting = use_state(|| false);
@@ -90,10 +102,33 @@ pub fn contact() -> Html {
             e.prevent_default();
             
             if !*is_submitting {
+                // Get reCAPTCHA response using DOM query
+                let recaptcha_response = if let Some(window) = web_sys::window() {
+                    if let Some(document) = window.document() {
+                        if let Ok(Some(textarea)) = document.query_selector("textarea[name='g-recaptcha-response']") {
+                            let textarea: web_sys::HtmlTextAreaElement = textarea.dyn_into().unwrap();
+                            textarea.value()
+                        } else {
+                            String::new()
+                        }
+                    } else {
+                        String::new()
+                    }
+                } else {
+                    String::new()
+                };
+                
+                if recaptcha_response.is_empty() {
+                    submission_status.set(Some("Please complete the reCAPTCHA verification.".to_string()));
+                    return;
+                }
+                
                 is_submitting.set(true);
                 submission_status.set(None);
                 
-                let data = (*form_data).clone();
+                let mut data = (*form_data).clone();
+                data.recaptcha_response = recaptcha_response;
+                
                 let is_submitting_clone = is_submitting.clone();
                 let submission_status_clone = submission_status.clone();
                 let form_data_clone = form_data.clone();
@@ -104,17 +139,41 @@ pub fn contact() -> Html {
                     
                     match result {
                         Ok(_) => {
-                            submission_status_clone.set(Some("Message sent successfully! I'll get back to you soon.".to_string()));
+                            submission_status_clone.set(Some("Message submitted successfully. I'll get back to you soon.".to_string()));
                             // Reset form
                             form_data_clone.set(FormData {
                                 name: String::new(),
                                 email: String::new(),
                                 subject: String::new(),
                                 message: String::new(),
+                                recaptcha_response: String::new(),
                             });
+                            
+                            // Reset reCAPTCHA by calling the global reset function if available
+                            // Reset reCAPTCHA on error too
+                            if let Some(window) = web_sys::window() {
+                                if let Ok(grecaptcha) = js_sys::Reflect::get(&window, &"grecaptcha".into()) {
+                                    if let Ok(reset_fn) = js_sys::Reflect::get(&grecaptcha, &"reset".into()) {
+                                        if let Ok(reset_fn) = reset_fn.dyn_into::<js_sys::Function>() {
+                                            let _ = reset_fn.call0(&js_sys::Object::new());
+                                        }
+                                    }
+                                }
+                            }
                         }
                         Err(err) => {
                             submission_status_clone.set(Some(format!("Error sending message: {}", err)));
+                            
+                            // Reset reCAPTCHA on error too
+                            if let Some(window) = web_sys::window() {
+                                if let Ok(grecaptcha) = js_sys::Reflect::get(&window, &"grecaptcha".into()) {
+                                    if let Ok(reset_fn) = js_sys::Reflect::get(&grecaptcha, &"reset".into()) {
+                                        if let Ok(reset_fn) = reset_fn.dyn_into::<js_sys::Function>() {
+                                            let _ = reset_fn.call0(&js_sys::Object::new());
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 });
@@ -224,9 +283,17 @@ pub fn contact() -> Html {
                                         placeholder="What's on your mind?"
                                     />
                                 </div>
-                                
-                                // submit button
-                                <div class="text-center">
+
+                                // submit button + recaptcha row
+                                <div class="flex flex-col sm:flex-row items-center justify-center gap-15">
+                                    // recaptcha container
+                                        <div 
+                                            class="g-recaptcha transform scale-90 sm:scale-100" 
+                                            data-sitekey="6LfHdcsrAAAAAA4ndXu6pT_KvO1sdOxdPIRX3q12"
+                                            data-theme="dark"
+                                        ></div>
+                                    
+                                    // submit button
                                     <button
                                         type="submit"
                                         disabled={*is_submitting}
@@ -235,7 +302,7 @@ pub fn contact() -> Html {
                                                disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer
                                                focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-900"
                                     >
-                                        {if *is_submitting { "Sending..." } else { "Send Message" }}
+                                        {if *is_submitting { "Submitting..." } else { "Submit Message" }}
                                     </button>
                                 </div>
                                 
@@ -262,8 +329,7 @@ pub fn contact() -> Html {
                             button_size={12}
                             svg_size={8}
                             professional=false
-                        >
-                        </SocialButtons>
+                        > </SocialButtons>
                     </div>
                 </div>
             </div>
