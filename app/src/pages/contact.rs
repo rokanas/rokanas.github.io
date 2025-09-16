@@ -1,6 +1,5 @@
 // src/pages/contact.rs
 use yew::prelude::*;
-use web_sys::window;
 use gloo_net::http::Request;
 use wasm_bindgen::JsCast;
 use serde::{Deserialize, Serialize};
