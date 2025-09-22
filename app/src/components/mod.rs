@@ -11,3 +11,5 @@ pub mod social_buttons;
 pub mod education;
 pub mod experience;
 pub mod skills;
+// pub mod automap;
+pub mod model_viewer;
