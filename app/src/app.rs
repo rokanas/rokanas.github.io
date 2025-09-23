@@ -59,7 +59,7 @@ pub fn app_content() -> Html {
     let mut main_classes = String::new();
 
     if is_home {
-        main_classes.push_str("h-screen overflow-hidden ");
+        main_classes.push_str("h-screen overflow-hidden");
     } else if !is_doom_projects {
         main_classes.push_str("pt-20");
     }
