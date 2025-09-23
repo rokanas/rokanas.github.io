@@ -1000,6 +1000,9 @@
   .pt-20 {
     padding-top: calc(var(--spacing) * 20);
   }
+  .pt-40 {
+    padding-top: calc(var(--spacing) * 40);
+  }
   .pr-3 {
     padding-right: calc(var(--spacing) * 3);
   }

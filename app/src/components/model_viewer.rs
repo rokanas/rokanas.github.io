@@ -1,3 +1,4 @@
+// components/model_viewer.rs
 use yew::prelude::*;
 use web_sys::{HtmlCanvasElement, console};
 use wasm_bindgen::prelude::*;
@@ -63,9 +64,9 @@ pub fn model_viewer(props: &ModelViewerProps) -> Html {
                 style={format!("width: {}px; height: {}px; background: transparent;", props.width, props.height)}
                 id="threejs-canvas"
             />
-            <p style="color: white; margin-top: 10px;">
-                {format!("Loading model: {}", obj_path)}
-            </p>
+            // <p style="color: white; margin-top: 10px;">
+            //     {format!("Loading model: {}", obj_path)}
+            // </p>
         </div>
     }
 }
