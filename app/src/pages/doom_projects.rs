@@ -122,7 +122,7 @@ pub fn doom_projects() -> Html {
                 <Heading 
                     src="/static/DOOM_PROJECTS_3.png" 
                     alt="Doom Projects"
-                    sub_heading=""              // TODO: why can't this be {None} ?
+                    sub_heading="All maps made for limit-removing source ports and tested in GZDoom."
                 />
 
                 // projects grid
