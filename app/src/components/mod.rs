@@ -12,3 +12,4 @@ pub mod education;
 pub mod experience;
 pub mod skills;
 pub mod model_viewer;
+pub mod navbar_toggle;

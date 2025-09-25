@@ -9,6 +9,7 @@ use crate::pages::doom_projects::DoomProjects;
 use crate::pages::contact::Contact;
 use crate::components::header::Header;
 use crate::components::hud::Hud;
+use crate::components::navbar_toggle::NavbarToggle;
 use crate::components::fade_wrapper::FadeWrapper;
 
 fn switch(routes: Route) -> Html {
@@ -55,6 +56,17 @@ pub fn app_content() -> Html {
     let is_home = matches!(route, Route::Home);
     let is_doom_projects = matches!(route, Route::DoomProjects);
 
+    // state tracking navbar style
+    let is_default_navbar = use_state(||true);
+    
+    // toggle navbar function
+    let toggle_navbar = {
+        let is_default_navbar = is_default_navbar.clone();
+        Callback::from(move |_| {
+            is_default_navbar.set(!*is_default_navbar);
+        })
+    };
+
     // special styles for specific pages
     let mut main_classes = String::new();
 
@@ -67,7 +79,12 @@ pub fn app_content() -> Html {
     html! {
         <>
             // header visible in all pages except doom projects
-            <Header show={ !is_doom_projects} />
+            <Header show={*is_default_navbar} />
+
+            <NavbarToggle 
+                is_default_navbar={*is_default_navbar} 
+                on_toggle={toggle_navbar} 
+            />
             
             // add padding to the top to compensate for header (unless home or doom projects pages)
             <main 
@@ -80,7 +97,7 @@ pub fn app_content() -> Html {
             </main>
 
             // footer only visible in doom projects page
-            <Hud show={is_doom_projects} />
+            <Hud show={!*is_default_navbar} />
         </>
         }
 }
