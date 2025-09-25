@@ -82,20 +82,24 @@ pub fn app_content() -> Html {
     // special styles for specific pages
     let mut main_classes = String::new();
 
-    if *is_default_navbar {
-        main_classes.push_str("pt-20");
-    } else {
-        main_classes.push_str("pb-35");
-    }
-    
     if is_home {
-        main_classes = "h-screen overflow-hidden".to_string();
+        main_classes.push_str("h-screen overflow-hidden ");
+    } else {
+        // smooth transition when navbar changes
+        main_classes.push_str("transition-all duration-500 ease-in-out ");
+
+        // padding top/bottom depending on navbar style
+        if *is_default_navbar {
+            main_classes.push_str("pt-20");
+        } else {
+            main_classes.push_str("pb-35");
+        }
     }
 
     html! {
         <ContextProvider<NavbarContext> context={navbar_context}>
-            // header visible in all pages except doom projects
             <Header show={*is_default_navbar} />
+            <Hud show={!*is_default_navbar} />
 
             <NavbarToggle 
                 is_default_navbar={*is_default_navbar} 
@@ -111,9 +115,6 @@ pub fn app_content() -> Html {
                     <Switch<Route> render={switch} />
                 </div>
             </main>
-
-            // footer only visible in doom projects page
-            <Hud show={!*is_default_navbar} />
         </ContextProvider<NavbarContext>>
         }
 }

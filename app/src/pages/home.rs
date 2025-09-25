@@ -21,7 +21,7 @@ pub fn home() -> Html {
 
     html! {
         <div class={format!(
-            "h-screen flex items-center justify-center {}",
+            "h-screen flex items-center justify-center transition-all duration-500 ease-in-out {}",
             if navbar_context.is_default_navbar { "pt-40" } else { "pb-15" }
         )}>
 
