@@ -342,9 +342,6 @@
   .m-4 {
     margin: calc(var(--spacing) * 4);
   }
-  .m-auto {
-    margin: auto;
-  }
   .mx-auto {
     margin-inline: auto;
   }
@@ -483,8 +480,14 @@
   .h-full {
     height: 100%;
   }
+  .h-screen {
+    height: 100vh;
+  }
   .max-h-14 {
     max-height: calc(var(--spacing) * 14);
+  }
+  .max-h-32 {
+    max-height: calc(var(--spacing) * 32);
   }
   .max-h-35 {
     max-height: calc(var(--spacing) * 35);
@@ -537,6 +540,9 @@
   .w-64 {
     width: calc(var(--spacing) * 64);
   }
+  .w-\[25vw\] {
+    width: 25vw;
+  }
   .w-\[90\%\] {
     width: 90%;
   }
@@ -557,6 +563,9 @@
   }
   .max-w-7xl {
     max-width: var(--container-7xl);
+  }
+  .max-w-32 {
+    max-width: calc(var(--spacing) * 32);
   }
   .max-w-35 {
     max-width: calc(var(--spacing) * 35);
@@ -617,6 +626,9 @@
   }
   .cursor-pointer {
     cursor: pointer;
+  }
+  .resize {
+    resize: both;
   }
   .grid-cols-1 {
     grid-template-columns: repeat(1, minmax(0, 1fr));
@@ -969,6 +981,9 @@
   .pt-20 {
     padding-top: calc(var(--spacing) * 20);
   }
+  .pt-40 {
+    padding-top: calc(var(--spacing) * 40);
+  }
   .pr-3 {
     padding-right: calc(var(--spacing) * 3);
   }
@@ -1224,6 +1239,16 @@
     &:is(:where(.group):hover *) {
       @media (hover: hover) {
         opacity: 100%;
+      }
+    }
+  }
+  .hover\:scale-103 {
+    &:hover {
+      @media (hover: hover) {
+        --tw-scale-x: 103%;
+        --tw-scale-y: 103%;
+        --tw-scale-z: 103%;
+        scale: var(--tw-scale-x) var(--tw-scale-y);
       }
     }
   }

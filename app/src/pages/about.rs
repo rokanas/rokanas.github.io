@@ -70,7 +70,7 @@ pub fn about() -> Html {
                                 {"🎓 I'm a recent software engineering graduate eager to begin a career in tech."}
                             </p>
                             <p class="text-gray-300 text-lg lg:text-lg leading-relaxed mt-5">
-                                {"🛠 I want to build intuitive software solutions that make your jobs and lives easier, saving you time and effort. Currently learning Rust and about AI agent workflow automation."}
+                                {"🛠 I want to build intuitive software solutions that make your jobs and lives easier, saving you time and effort. Currently learning Rust, Solidity smart contracts and agentic AI implementations."}
                             </p>
                             <p class="text-gray-300 text-lg lg:text-lg leading-relaxed mt-5">
                                 {"⚖️ Formerly a legal professional with a focus on personal data and cybersecurity policy compliance and experience both in international organizations and in the private sector."}

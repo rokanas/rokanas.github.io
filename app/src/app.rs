@@ -52,18 +52,28 @@ fn switch(routes: Route) -> Html {
 #[function_component(AppContent)]
 pub fn app_content() -> Html {
     let route = use_route::<Route>().unwrap_or(Route::Home);
+    let is_home = matches!(route, Route::Home);
     let is_doom_projects = matches!(route, Route::DoomProjects);
-    
-    // TODO: remove debug logs
-    // web_sys::console::log_1(&format!("Current route: {:?}", route).into());
-    // web_sys::console::log_1(&format!("Is doom projects: {}", is_doom_projects).into());
+
+    // special styles for specific pages
+    let mut main_classes = String::new();
+
+    if is_home {
+        main_classes.push_str("h-screen overflow-hidden");
+    } else if !is_doom_projects {
+        main_classes.push_str("pt-20");
+    }
 
     html! {
         <>
             // header visible in all pages except doom projects
-            <Header show={!is_doom_projects} />
+            <Header show={ !is_doom_projects} />
             
-            <main class={if is_doom_projects { "" } else { "pt-20" }} style="background-image: url('/static/FLOOR4_9.png'); background-repeat: repeat; background-size: 290px; image-rendering: pixelated;">
+            // add padding to the top to compensate for header (unless home or doom projects pages)
+            <main 
+                class={main_classes} 
+                style="background-image: url('/static/FLOOR4_9.png'); background-repeat: repeat; background-size: 290px; image-rendering: pixelated;"
+            >
                 <div key={format!("{:?}", route)}>      // key forces remount on route change, triggering use_effect in pages (yew doesn't unmount/remount on route change by default)
                     <Switch<Route> render={switch} />
                 </div>
