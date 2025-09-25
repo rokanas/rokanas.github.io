@@ -24,7 +24,7 @@ pub fn navbar_toggle(props: &NavbarToggleProps) -> Html {
                 if props.is_default_navbar {
                     "bottom-4 right-4"  // bottom right when header is at top
                 } else {
-                    "top-4 right-4"  // top right when HUD is at bottom
+                    "top-4 right-4"     // top right when HUD is at bottom
                 }
             )}
             title={if props.is_default_navbar { "Switch to HUD" } else { "Switch to Header" }}

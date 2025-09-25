@@ -54,7 +54,6 @@ fn switch(routes: Route) -> Html {
 pub fn app_content() -> Html {
     let route = use_route::<Route>().unwrap_or(Route::Home);
     let is_home = matches!(route, Route::Home);
-    let is_doom_projects = matches!(route, Route::DoomProjects);
 
     // state tracking navbar style
     let is_default_navbar = use_state(||true);
@@ -70,10 +69,14 @@ pub fn app_content() -> Html {
     // special styles for specific pages
     let mut main_classes = String::new();
 
-    if is_home {
-        main_classes.push_str("h-screen overflow-hidden");
-    } else if !is_doom_projects {
+    if *is_default_navbar {
         main_classes.push_str("pt-20");
+    } else {
+        main_classes.push_str("pb-35");
+    }
+    
+    if is_home {
+        main_classes = "h-screen overflow-hidden".to_string();
     }
 
     html! {

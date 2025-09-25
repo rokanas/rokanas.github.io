@@ -125,7 +125,7 @@ pub fn doom_projects() -> Html {
     ];
 
     html! {
-        <main class="min-h-screen text-white pt-8 pb-24"> // pb-24 for footer space
+        <main class="min-h-screen text-white pt-8 pb-10">
             <div class="container mx-auto pt-4 px-4 max-w-7xl">
                 
                 // page heading
@@ -149,7 +149,7 @@ pub fn doom_projects() -> Html {
                 </div>
 
                 // footer note
-                <div class="text-center mt-16 text-gray-500">
+                <div class="text-center mt-10 text-gray-500">
                     <p class="font-mono text-sm">
                         {"More projects available on my "} 
                         <a 

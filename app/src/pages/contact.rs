@@ -181,11 +181,11 @@ pub fn contact() -> Html {
     };
 
     html! {
-        <div class="min-h-screen pt-15 pb-16" >
+        <div class="min-h-screen pt-15 pb-10" >
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 
                 // main contact card
-                <div class="rounded-lg border-3 border-red-600 p-8 mb-8 relative overflow-hidden"
+                <div class="rounded-lg border-3 border-red-600 p-8 relative overflow-hidden"
                     // style="background-image: url('/static/contact/ADEL_V99.png'); background-repeat: repeat; background-size: 310px; image-rendering: pixelated;">                    
                     style="background:linear-gradient(135deg,#1a1a1a 0%,#2a2a2a 50%,#1a1a1a 100%);"
                 >
