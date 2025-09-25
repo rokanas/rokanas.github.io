@@ -12,6 +12,13 @@ use crate::components::hud::Hud;
 use crate::components::navbar_toggle::NavbarToggle;
 use crate::components::fade_wrapper::FadeWrapper;
 
+// context for navbar style
+#[derive(Clone, PartialEq)]
+pub struct NavbarContext {
+    pub is_default_navbar: bool,
+    pub toggle: Callback<()>,
+}
+
 fn switch(routes: Route) -> Html {
     match routes {
         Route::Home => html! { 
@@ -66,6 +73,12 @@ pub fn app_content() -> Html {
         })
     };
 
+    // create context value
+    let navbar_context = NavbarContext {
+        is_default_navbar: *is_default_navbar,
+        toggle: toggle_navbar.clone(),
+    };
+
     // special styles for specific pages
     let mut main_classes = String::new();
 
@@ -80,7 +93,7 @@ pub fn app_content() -> Html {
     }
 
     html! {
-        <>
+        <ContextProvider<NavbarContext> context={navbar_context}>
             // header visible in all pages except doom projects
             <Header show={*is_default_navbar} />
 
@@ -101,7 +114,7 @@ pub fn app_content() -> Html {
 
             // footer only visible in doom projects page
             <Hud show={!*is_default_navbar} />
-        </>
+        </ContextProvider<NavbarContext>>
         }
 }
 
