@@ -456,6 +456,9 @@
   .h-13 {
     height: calc(var(--spacing) * 13);
   }
+  .h-14 {
+    height: calc(var(--spacing) * 14);
+  }
   .h-16 {
     height: calc(var(--spacing) * 16);
   }
@@ -524,6 +527,9 @@
   }
   .w-13 {
     width: calc(var(--spacing) * 13);
+  }
+  .w-14 {
+    width: calc(var(--spacing) * 14);
   }
   .w-16 {
     width: calc(var(--spacing) * 16);
@@ -917,6 +923,9 @@
   }
   .object-contain {
     object-fit: contain;
+  }
+  .p-1 {
+    padding: calc(var(--spacing) * 1);
   }
   .p-2 {
     padding: calc(var(--spacing) * 2);
@@ -1344,6 +1353,13 @@
     &:hover {
       @media (hover: hover) {
         background-color: #5865F2;
+      }
+    }
+  }
+  .hover\:bg-\[\#444544\] {
+    &:hover {
+      @media (hover: hover) {
+        background-color: #444544;
       }
     }
   }

@@ -20,7 +20,7 @@ pub fn navbar_toggle(props: &NavbarToggleProps) -> Html {
         <button
             onclick={on_click}
             class={format!(
-                "fixed z-50 bg-gray-800 hover:bg-gray-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 {}",
+                "fixed z-20 bg-[#2b2b2b] hover:bg-[#444544] text-white p-1 rounded-full shadow-lg transition-all duration-300 cursor-pointer border-2 border-red-600 {}",
                 if props.is_default_navbar {
                     "bottom-4 right-4"  // bottom right when header is at top
                 } else {
@@ -30,9 +30,11 @@ pub fn navbar_toggle(props: &NavbarToggleProps) -> Html {
             title={if props.is_default_navbar { "Switch to HUD Navbar" } else { "Switch to Header Navbar" }}
         >
             // icon or text for button
-            <span class="text-sm font-bold">
-                {if props.is_default_navbar { "🔝" } else { "🎮" }}
-            </span>
+            <img 
+                src="static/NAV_TOGGLE.png"
+                alt="Toggle" 
+                class="w-14 h-14 object-contain rounded-full"
+            />
         </button>
     }
 }
