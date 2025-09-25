@@ -17,22 +17,12 @@ pub struct Project {
 // TODO: make smaller thumbnails if page loads slowly (involves refactoring image_src to thumbnail_src)
 #[function_component(DoomProjects)]
 pub fn doom_projects() -> Html {
-    let show_footer = use_state(|| false);
-
     use_effect_with((), {
-        let show_footer = show_footer.clone();
         move |_| {
             // scroll to top when component mounts
             if let Some(window) = window() {
                 window.scroll_to_with_x_and_y(0.0, 0.0);
             }
-
-            // show footer with delay
-            let show_footer_clone = show_footer.clone();
-            gloo_timers::callback::Timeout::new(100, move || {
-                show_footer_clone.set(true);
-            }).forget();
-
             || {}
         }
     });

@@ -1,5 +1,6 @@
 // src/pages/contact.rs
 use yew::prelude::*;
+use web_sys::window;
 use gloo_net::http::Request;
 use wasm_bindgen::JsCast;
 use serde::{Deserialize, Serialize};
@@ -26,6 +27,11 @@ struct FormResponse {
 #[function_component(Contact)]
 pub fn contact() -> Html {
     use_effect_with((), |_| {
+        // scroll to top when page mounts
+        if let Some(window) = window() {
+            window.scroll_to_with_x_and_y(0.0, 0.0);
+        }
+
         if let Some(document) = web_sys::window().and_then(|w| w.document()) {
             if document.query_selector("script[src*='recaptcha']").unwrap().is_none() {
                 let script = document.create_element("script").unwrap();
