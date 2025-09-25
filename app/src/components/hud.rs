@@ -136,9 +136,9 @@ pub fn hud(props: &HudProps) -> Html {
     }
 
     let footer_classes = if *is_visible {
-        "fixed bottom-0 left-0 right-0 w-full z-40 transform translate-y-0 transition-transform duration-500 ease-out"
+        "fixed bottom-0 left-0 right-0 w-full z-40 transform translate-y-0 transition-transform duration-500 ease-out hidden sm:block"
     } else {
-        "fixed bottom-0 left-0 right-0 w-full z-40 transform translate-y-full transition-transform duration-500 ease-out"
+        "fixed bottom-0 left-0 right-0 w-full z-40 transform translate-y-full transition-transform duration-500 ease-out hidden sm:block"
     };
 
     html! { // macro to create html structure                       // start html block

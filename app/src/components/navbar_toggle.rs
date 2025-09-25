@@ -4,7 +4,7 @@ use yew::prelude::*;
 #[derive(Properties, PartialEq)]
 pub struct NavbarToggleProps {
     pub is_default_navbar: bool,
-    pub on_toggle: Callback<()>,
+    pub on_toggle: Callback<()>,         // hide or show depending on screen size
 }
 
 #[function_component(NavbarToggle)]
@@ -20,7 +20,8 @@ pub fn navbar_toggle(props: &NavbarToggleProps) -> Html {
         <button
             onclick={on_click}
             class={format!(
-                "fixed z-20 bg-[#2b2b2b] hover:bg-[#444544] text-white p-1 rounded-full shadow-lg transition-all duration-300 cursor-pointer border-2 border-red-600 {}",
+                "fixed z-20 bg-[#2b2b2b] hover:bg-[#444544] text-white p-1 rounded-full shadow-lg border-2 border-red-600
+                transition-all duration-300 cursor-pointer hidden sm:block {}",
                 if props.is_default_navbar {
                     "bottom-4 right-4"  // bottom right when header is at top
                 } else {

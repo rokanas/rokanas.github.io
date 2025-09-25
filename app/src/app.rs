@@ -1,6 +1,8 @@
 // app/src/app.rs
 use yew::prelude::*;
 use yew_router::prelude::*; 
+use web_sys::{window}; 
+use gloo_events::EventListener;
 use crate::router::Route;
 use crate::pages::home::Home;
 use crate::pages::about::About;
@@ -96,17 +98,41 @@ pub fn app_content() -> Html {
         }
     }
 
+    // detect if mobile / small screen size
+    let is_mobile = use_state(|| {
+        window()
+            .and_then(|w| w.inner_width().ok())
+            .and_then(|w| w.as_f64())
+            .map(|w| w < 640.0)
+            .unwrap_or(false)
+    });
+
+    // Listen for screen resize
+    {
+        let is_mobile = is_mobile.clone();
+        use_effect_with((), move |_| {
+            let window_obj = window().unwrap();
+            let listener = EventListener::new(&window_obj, "resize", move |_| {
+                let width = window() // This is the function call
+                    .and_then(|w| w.inner_width().ok())
+                    .and_then(|w| w.as_f64())
+                    .unwrap_or(1024.0);
+                is_mobile.set(width < 640.0);
+            });
+            move || drop(listener)
+        });
+    }
+
     html! {
         <ContextProvider<NavbarContext> context={navbar_context}>
-            <Header show={*is_default_navbar} />
-            <Hud show={!*is_default_navbar} />
+            <Header show={*is_mobile || *is_default_navbar} />  // header always shown if mobile
+            <Hud show={!*is_default_navbar}   />                
 
             <NavbarToggle 
                 is_default_navbar={*is_default_navbar} 
                 on_toggle={toggle_navbar} 
             />
             
-            // add padding to the top to compensate for header (unless home or doom projects pages)
             <main 
                 class={main_classes} 
                 style="background-image: url('/static/FLOOR4_9.png'); background-repeat: repeat; background-size: 290px; image-rendering: pixelated;"

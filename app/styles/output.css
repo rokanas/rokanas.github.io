@@ -1567,6 +1567,11 @@
       margin-bottom: calc(var(--spacing) * -5);
     }
   }
+  .sm\:block {
+    @media (width >= 40rem) {
+      display: block;
+    }
+  }
   .sm\:h-6 {
     @media (width >= 40rem) {
       height: calc(var(--spacing) * 6);

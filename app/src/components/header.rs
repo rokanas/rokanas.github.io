@@ -1,6 +1,5 @@
 use yew::prelude::*;
 use yew_router::prelude::*;
-
 use crate::router::Route;
 use crate::components::header_button::HeaderButton;
 
@@ -52,9 +51,9 @@ pub fn header(props: &HeaderProps) -> Html {
 
     // header slides in
     let header_class = if *is_visible {
-        "fixed top-0 left-0 right-0 w-full z-40 transform -translate-y-0 transition-transform duration-500 ease-out overflow-visible"
+        "fixed top-0 left-0 right-0 w-full z-40 transform -translate-y-0 transition-transform duration-500 ease-out overflow-visible block sm:block"
     } else {
-        "fixed top-0 left-0 right-0 w-full z-40 transform -translate-y-[120%] transition-transform duration-500 ease-out overflow-visible" // translate-y-120% because of extra content (divider and central logo)
+        "fixed top-0 left-0 right-0 w-full z-40 transform -translate-y-[120%] transition-transform duration-500 ease-out overflow-visible block sm:block" // translate-y-120% because of extra content (divider and central logo)
     };
 
     html! {
