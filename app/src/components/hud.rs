@@ -104,33 +104,41 @@ fn use_navigation() -> Callback<Route> {        // returns callback that takes a
 pub fn hud(props: &HudProps) -> Html {
     let (mouse_col, mouse_row) = use_mouse_grid();     // destructure tuple returned by hook to two variables (column, row)
     let is_visible = use_state(|| false);
+    let should_render = use_state(|| props.show);
 
-    // animate footer entrance when show prop changes
+    // animate hud entrance/exit when show prop changes
     {
         let is_visible = is_visible.clone();
+        let should_render = should_render.clone();
         use_effect_with(props.show, move |show| {
-            if *show {                                              // when true, footer renders but is off-screen
-                // small delay for smooth animation
+            if *show {
+                // show: first render component, then slide it in
+                should_render.set(true);
                 let is_visible_clone = is_visible.clone();
-                gloo_timers::callback::Timeout::new(50, move || {   // after 50ms delay, is_visible becomes true (controls CSS animation)
+                gloo_timers::callback::Timeout::new(50, move || {
                     is_visible_clone.set(true);
                 }).forget();
             } else {
-                is_visible.set(false);                              // when false, footer slides offscreen
+                // hide first slide out, then stop rendering
+                is_visible.set(false);
+                let should_render_clone = should_render.clone();
+                gloo_timers::callback::Timeout::new(500, move || { // Wait for animation to complete
+                    should_render_clone.set(false);
+                }).forget();
             }
             || {}
         });
     }
 
-    // only render if show prop is true
-    if !props.show {
+    // don't render if should_render is false
+    if !*should_render {
         return html! {};
     }
 
     let footer_classes = if *is_visible {
-        "fixed bottom-0 left-0 right-0 w-full z-40 transform translate-y-0 transition-transform duration-500 ease-out"
+        "fixed bottom-0 left-0 right-0 w-full z-40 transform translate-y-0 transition-transform duration-500 ease-out hidden sm:block"
     } else {
-        "fixed bottom-0 left-0 right-0 w-full z-40 transform translate-y-full transition-transform duration-500 ease-out"
+        "fixed bottom-0 left-0 right-0 w-full z-40 transform translate-y-full transition-transform duration-500 ease-out hidden sm:block"
     };
 
     html! { // macro to create html structure                       // start html block

@@ -251,7 +251,7 @@ pub fn projects() -> Html {
                 </div>
 
                 // footer note                                       // TODO: add padding so footer doesn't overlap
-                <div class="text-center mt-16 text-gray-500">
+                <div class="text-center mt-10 text-gray-500">
                     <p class="font-mono text-sm">
                         {"More projects available on my "} 
                         <a 

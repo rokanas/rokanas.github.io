@@ -17,22 +17,12 @@ pub struct Project {
 // TODO: make smaller thumbnails if page loads slowly (involves refactoring image_src to thumbnail_src)
 #[function_component(DoomProjects)]
 pub fn doom_projects() -> Html {
-    let show_footer = use_state(|| false);
-
     use_effect_with((), {
-        let show_footer = show_footer.clone();
         move |_| {
             // scroll to top when component mounts
             if let Some(window) = window() {
                 window.scroll_to_with_x_and_y(0.0, 0.0);
             }
-
-            // show footer with delay
-            let show_footer_clone = show_footer.clone();
-            gloo_timers::callback::Timeout::new(100, move || {
-                show_footer_clone.set(true);
-            }).forget();
-
             || {}
         }
     });
@@ -125,14 +115,14 @@ pub fn doom_projects() -> Html {
     ];
 
     html! {
-        <main class="min-h-screen text-white pt-8 pb-24"> // pb-24 for footer space
+        <main class="min-h-screen text-white pt-8 pb-10">
             <div class="container mx-auto pt-4 px-4 max-w-7xl">
                 
                 // page heading
                 <Heading 
                     src="/static/DOOM_PROJECTS_3.png" 
                     alt="Doom Projects"
-                    sub_heading=""              // TODO: why can't this be {None} ?
+                    sub_heading="All maps made for limit-removing source ports and tested in GZDoom."
                 />
 
                 // projects grid
@@ -149,7 +139,7 @@ pub fn doom_projects() -> Html {
                 </div>
 
                 // footer note
-                <div class="text-center mt-16 text-gray-500">
+                <div class="text-center mt-10 text-gray-500">
                     <p class="font-mono text-sm">
                         {"More projects available on my "} 
                         <a 

@@ -1,6 +1,8 @@
 // app/src/app.rs
 use yew::prelude::*;
 use yew_router::prelude::*; 
+use web_sys::{window}; 
+use gloo_events::EventListener;
 use crate::router::Route;
 use crate::pages::home::Home;
 use crate::pages::about::About;
@@ -9,7 +11,15 @@ use crate::pages::doom_projects::DoomProjects;
 use crate::pages::contact::Contact;
 use crate::components::header::Header;
 use crate::components::hud::Hud;
+use crate::components::navbar_toggle::NavbarToggle;
 use crate::components::fade_wrapper::FadeWrapper;
+
+// context for navbar style
+#[derive(Clone, PartialEq)]
+pub struct NavbarContext {
+    pub is_default_navbar: bool,
+    pub toggle: Callback<()>,
+}
 
 fn switch(routes: Route) -> Html {
     match routes {
@@ -53,23 +63,76 @@ fn switch(routes: Route) -> Html {
 pub fn app_content() -> Html {
     let route = use_route::<Route>().unwrap_or(Route::Home);
     let is_home = matches!(route, Route::Home);
-    let is_doom_projects = matches!(route, Route::DoomProjects);
+
+    // state tracking navbar style
+    let is_default_navbar = use_state(||true);
+    
+    // toggle navbar function
+    let toggle_navbar = {
+        let is_default_navbar = is_default_navbar.clone();
+        Callback::from(move |_| {
+            is_default_navbar.set(!*is_default_navbar);
+        })
+    };
+
+    // create context value
+    let navbar_context = NavbarContext {
+        is_default_navbar: *is_default_navbar,
+        toggle: toggle_navbar.clone(),
+    };
 
     // special styles for specific pages
     let mut main_classes = String::new();
 
     if is_home {
-        main_classes.push_str("h-screen overflow-hidden");
-    } else if !is_doom_projects {
-        main_classes.push_str("pt-20");
+        main_classes.push_str("h-screen overflow-hidden ");
+    } else {
+        // smooth transition when navbar changes
+        main_classes.push_str("transition-all duration-500 ease-in-out ");
+
+        // padding top/bottom depending on navbar style
+        if *is_default_navbar {
+            main_classes.push_str("pt-20");
+        } else {
+            main_classes.push_str("pb-35");
+        }
+    }
+
+    // detect if mobile / small screen size
+    let is_mobile = use_state(|| {
+        window()
+            .and_then(|w| w.inner_width().ok())
+            .and_then(|w| w.as_f64())
+            .map(|w| w < 640.0)
+            .unwrap_or(false)
+    });
+
+    // Listen for screen resize
+    {
+        let is_mobile = is_mobile.clone();
+        use_effect_with((), move |_| {
+            let window_obj = window().unwrap();
+            let listener = EventListener::new(&window_obj, "resize", move |_| {
+                let width = window() // This is the function call
+                    .and_then(|w| w.inner_width().ok())
+                    .and_then(|w| w.as_f64())
+                    .unwrap_or(1024.0);
+                is_mobile.set(width < 640.0);
+            });
+            move || drop(listener)
+        });
     }
 
     html! {
-        <>
-            // header visible in all pages except doom projects
-            <Header show={ !is_doom_projects} />
+        <ContextProvider<NavbarContext> context={navbar_context}>
+            <Header show={*is_mobile || *is_default_navbar} />  // header always shown if mobile
+            <Hud show={!*is_default_navbar}   />                
+
+            <NavbarToggle 
+                is_default_navbar={*is_default_navbar} 
+                on_toggle={toggle_navbar} 
+            />
             
-            // add padding to the top to compensate for header (unless home or doom projects pages)
             <main 
                 class={main_classes} 
                 style="background-image: url('/static/FLOOR4_9.png'); background-repeat: repeat; background-size: 290px; image-rendering: pixelated;"
@@ -78,10 +141,7 @@ pub fn app_content() -> Html {
                     <Switch<Route> render={switch} />
                 </div>
             </main>
-
-            // footer only visible in doom projects page
-            <Hud show={is_doom_projects} />
-        </>
+        </ContextProvider<NavbarContext>>
         }
 }
 

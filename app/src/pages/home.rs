@@ -2,6 +2,7 @@ use yew::prelude::*;
 use yew_router::prelude::*;
 use crate::router::Route;
 use crate::components::model_viewer::ModelViewer;
+use crate::app::NavbarContext;
 
 #[hook]
 fn use_navigation() -> Callback<Route> {
@@ -16,8 +17,13 @@ fn use_navigation() -> Callback<Route> {
 pub fn home() -> Html {
     let navigate = use_navigation();
 
+    let navbar_context = use_context::<NavbarContext>().expect("NavbarContext not found");
+
     html! {
-        <div class="h-screen flex items-center justify-center pt-40">
+        <div class={format!(
+            "h-screen flex items-center justify-center transition-all duration-500 ease-in-out {}",
+            if navbar_context.is_default_navbar { "pt-40" } else { "pb-15" }
+        )}>
 
             // model canvas is button to doom projects
             <button
@@ -35,8 +41,10 @@ pub fn home() -> Html {
             <img 
                 src="/static/cathedral/MODEL_MADE.png" 
                 alt="Model made using Ultimate Doom Builder + Blender"
-                class="absolute bottom-2 left-2 w-[25vw] h-auto  text-red-600" // max-w-32 max-h-32 TODO: use max if necessary for larger screens
-            />
+                class={format!(
+                    "absolute {} left-2 w-[25vw] h-auto  text-red-600", // max-w-32 max-h-32 TODO: use max if necessary for larger screens
+                    if navbar_context.is_default_navbar { "bottom-2" } else { "top-2" }
+            )}/>
         </div>
     }
 }
