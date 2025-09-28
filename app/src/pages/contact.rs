@@ -197,7 +197,7 @@ pub fn contact() -> Html {
                 >
                     <div class="relative z-10">
                         <Heading 
-                            src = "/static/CONTACT_1.png"
+                            src = "/static/contact/CONTACT_1.png"
                             alt = "Contact"
                             sub_heading = "Want to drop a message? Collaborate? Ask a question?"
                         ></Heading>
@@ -221,7 +221,7 @@ pub fn contact() -> Html {
                                             disabled={*is_submitting}
                                             class="w-full px-4 py-3 bg-[#1a1a1a] border border-gray-600 rounded-lg 
                                                    text-white placeholder-gray-400 focus:border-red-600 focus:ring-1 
-                                                   focus:ring-red-500 focus:outline-none transition-colors
+                                                   focus:ring-red-600 focus:outline-none transition-colors
                                                    disabled:opacity-50 disabled:cursor-not-allowed"
                                             placeholder="Your name"
                                         />
@@ -239,8 +239,8 @@ pub fn contact() -> Html {
                                             required=true
                                             disabled={*is_submitting}
                                             class="w-full px-4 py-3 bg-[#1a1a1a] border border-gray-600 rounded-lg 
-                                                   text-white placeholder-gray-400 focus:border-red-500 focus:ring-1 
-                                                   focus:ring-red-500 focus:outline-none transition-colors
+                                                   text-white placeholder-gray-400 focus:border-red-600 focus:ring-1 
+                                                   focus:ring-red-600 focus:outline-none transition-colors
                                                    disabled:opacity-50 disabled:cursor-not-allowed"
                                             placeholder="your.email@example.com"
                                         />
@@ -261,8 +261,8 @@ pub fn contact() -> Html {
                                         required=false
                                         disabled={*is_submitting}
                                         class="w-full px-4 py-3 bg-[#1a1a1a] border border-gray-600 rounded-lg 
-                                               text-white placeholder-gray-400 focus:border-red-500 focus:ring-1 
-                                               focus:ring-red-500 focus:outline-none transition-colors
+                                               text-white placeholder-gray-400 focus:border-red-600 focus:ring-1 
+                                               focus:ring-red-600 focus:outline-none transition-colors
                                                disabled:opacity-50 disabled:cursor-not-allowed"
                                         placeholder="What's this about?"
                                     />
@@ -282,8 +282,8 @@ pub fn contact() -> Html {
                                         required=true
                                         disabled={*is_submitting}
                                         class="w-full px-4 py-3 bg-[#1a1a1a] border border-gray-600 rounded-lg 
-                                               text-white placeholder-gray-400 focus:border-red-500 focus:ring-1 
-                                               focus:ring-red-500 focus:outline-none transition-colors resize-vertical
+                                               text-white placeholder-gray-400 focus:border-red-600 focus:ring-1 
+                                               focus:ring-red-600 focus:outline-none transition-colors resize-vertical
                                                disabled:opacity-50 disabled:cursor-not-allowed"
                                         placeholder="What's on your mind?"
                                     />
@@ -305,7 +305,7 @@ pub fn contact() -> Html {
                                         class="px-8 py-3 bg-red-600 hover:bg-red-700 disabled:bg-gray-600 
                                                text-white font-semibold rounded-lg transition-colors duration-200
                                                disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer
-                                               focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+                                               focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-gray-900"
                                     >
                                         {if *is_submitting { "Submitting..." } else { "Submit Message" }}
                                     </button>
@@ -316,7 +316,7 @@ pub fn contact() -> Html {
                                     let (bg_color, text_color, border_color) = if status.contains("successfully") {
                                         ("bg-green-900/20", "text-green-400", "border-green-500")
                                     } else {
-                                        ("bg-red-900/20", "text-red-400", "border-red-500")
+                                        ("bg-red-900/20", "text-red-400", "border-red-600")
                                     };
                                     
                                     html! {

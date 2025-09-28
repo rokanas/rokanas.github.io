@@ -67,27 +67,27 @@ fn use_mouse_grid() -> (i32, i32) {         // return tuple of signed integers (
 fn get_avatar_image(col: i32, row: i32, is_hover: bool) -> String { // take grid position and hover state, return image path
     if is_hover {
         // single hover image regardless of grid position
-        return "/static/AVATAR_2.png".to_string();
+        return "/static/hud/avatar/AVATAR_4.png".to_string();
     }
     
     // map grid positions to corresponding avatar image
     match (col, row) {
         // top row (row 0)
-        (0, 0) => "/static/AVATAR_TOP_LEFT.png".to_string(),
-        (1, 0) => "/static/AVATAR_TOP_CENTER_LEFT.png".to_string(),
-        (2, 0) => "/static/AVATAR_TOP_CENTER.png".to_string(),
-        (3, 0) => "/static/AVATAR_TOP_CENTER_RIGHT.png".to_string(),
-        (4, 0) => "/static/AVATAR_TOP_RIGHT.png".to_string(),
+        (0, 0) => "/static/hud/avatar/AVATAR_TOP_LEFT.png".to_string(),
+        (1, 0) => "/static/hud/avatar/AVATAR_TOP_CENTER_LEFT.png".to_string(),
+        (2, 0) => "/static/hud/avatar/AVATAR_TOP_CENTER.png".to_string(),
+        (3, 0) => "/static/hud/avatar/AVATAR_TOP_CENTER_RIGHT.png".to_string(),
+        (4, 0) => "/static/hud/avatar/AVATAR_TOP_RIGHT.png".to_string(),
         
         // bottom row (row 1)
-        (0, 1) => "/static/AVATAR_BOTTOM_LEFT.png".to_string(),
-        (1, 1) => "/static/AVATAR_BOTTOM_CENTER_LEFT.png".to_string(),
-        (2, 1) => "/static/AVATAR_BOTTOM_CENTER.png".to_string(),
-        (3, 1) => "/static/AVATAR_BOTTOM_CENTER_RIGHT.png".to_string(),
-        (4, 1) => "/static/AVATAR_BOTTOM_RIGHT.png".to_string(),
+        (0, 1) => "/static/hud/avatar/AVATAR_BOTTOM_LEFT.png".to_string(),
+        (1, 1) => "/static/hud/avatar/AVATAR_BOTTOM_CENTER_LEFT.png".to_string(),
+        (2, 1) => "/static/hud/avatar/AVATAR_BOTTOM_CENTER.png".to_string(),
+        (3, 1) => "/static/hud/avatar/AVATAR_BOTTOM_CENTER_RIGHT.png".to_string(),
+        (4, 1) => "/static/hud/avatar/AVATAR_BOTTOM_RIGHT.png".to_string(),
         
         // fallback
-        _ => "/static/AVATAR_1.png".to_string(),    // _ is catch-all pattern for any other value
+        _ => "/static/hud/avatar/AVATAR_1.png".to_string(),    // _ is catch-all pattern for any other value
     }
 }
 
@@ -147,13 +147,13 @@ pub fn hud(props: &HudProps) -> Html {
                 
                 // home
                 <HudSection 
-                    background_image="/static/STBAR1.png"
+                    background_image="/static/hud/section/STBAR1.png"
                     background_width=48
                     background_height=32
                     text_color="text-red-600"
                     route={Route::Home}>
                     <HudButton
-                        src="/static/hud/HOME_SR"
+                        src="/static/hud/button/HOME_SR"
                         alt_text="Home"
                         route={Route::Home}
                         disabled=false>
@@ -162,13 +162,13 @@ pub fn hud(props: &HudProps) -> Html {
 
                 // about
                 <HudSection
-                    background_image="/static/STBAR2B.png"
+                    background_image="/static/hud/section/STBAR2B.png"
                     background_width=36
                     background_height=32
                     text_color="text-red-600"
                     route={Route::Projects}>
                     <HudButton
-                        src="/static/hud/ABOUT_SR"
+                        src="/static/hud/button/ABOUT_SR"
                         alt_text="About"
                         route={Route::About}
                         disabled=false>
@@ -177,13 +177,13 @@ pub fn hud(props: &HudProps) -> Html {
 
                 // projects
                 <HudSection
-                    background_image="/static/STBAR3B.png"
+                    background_image="/static/hud/section/STBAR3B.png"
                     background_width=58
                     background_height=32
                     text_color="text-yellow-600"
                     route={Route::About}>
                     <HudButton
-                        src="/static/hud/PROJECTS_SR"
+                        src="/static/hud/button/PROJECTS_SR"
                         alt_text="Projects"
                         route={Route::Projects}
                         disabled=false>
@@ -192,7 +192,7 @@ pub fn hud(props: &HudProps) -> Html {
 
                 // avatar
                 <HudSection
-                    background_image="/static/STBAR4.png"
+                    background_image="/static/hud/section/STBAR4.png"
                     background_width=37
                     background_height=32
                     text_color="text-white">
@@ -214,13 +214,13 @@ pub fn hud(props: &HudProps) -> Html {
 
                 // doom projects
                 <HudSection
-                    background_image="/static/STBAR5.png"
+                    background_image="/static/hud/section/STBAR5.png"
                     background_width=57
                     background_height=32
                     text_color="text-red-600"
                     route={Route::DoomProjects}>
                     <HudButton
-                        src="/static/hud/DOOM_PROJECTS_SR"
+                        src="/static/hud/button/DOOM_PROJECTS_SR"
                         alt_text="Doom Projects"
                         route={Route::DoomProjects}
                         disabled=false>
@@ -229,7 +229,7 @@ pub fn hud(props: &HudProps) -> Html {
 
                 // keys section
                 <HudSection
-                    background_image="/static/STBAR6.png"
+                    background_image="/static/hud/section/STBAR6.png"
                     background_width=13 
                     background_height=32
                     text_color="text-red-600">
@@ -239,13 +239,13 @@ pub fn hud(props: &HudProps) -> Html {
 
                 // contact
                 <HudSection
-                    background_image="/static/STBAR7.png"
+                    background_image="/static/hud/section/STBAR7.png"
                     background_width=71
                     background_height=32
                     text_color="text-blue-600"
                     route={Route::Contact}>
                     <HudButton
-                        src="/static/hud/CONTACT_SR"
+                        src="/static/hud/button/CONTACT_SR"
                         alt_text="Contact"
                         route={Route::Contact}>
                     </HudButton>
