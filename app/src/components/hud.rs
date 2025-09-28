@@ -105,6 +105,7 @@ pub fn hud(props: &HudProps) -> Html {
     let (mouse_col, mouse_row) = use_mouse_grid();     // destructure tuple returned by hook to two variables (column, row)
     let is_visible = use_state(|| false);
     let should_render = use_state(|| props.show);
+    let navigate = use_navigation();
 
     // animate hud entrance/exit when show prop changes
     {
@@ -197,7 +198,7 @@ pub fn hud(props: &HudProps) -> Html {
                     background_height=32
                     text_color="text-white">
                     <button 
-                        //onclick={navigate.reform(|_| Route::Avatar)}
+                        onclick={navigate.reform(|_| Route::Home)}
                         class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
                         <img 
                             src={get_avatar_image(mouse_col, mouse_row, false)}
