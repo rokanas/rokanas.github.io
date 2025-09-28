@@ -2,6 +2,7 @@
 use yew::prelude::*;
 use web_sys::{HtmlCanvasElement, console};
 use wasm_bindgen::prelude::*;
+use wasm_bindgen::JsCast;
 
 // JavaScript bindings for Three.js
 #[wasm_bindgen]
@@ -23,6 +24,7 @@ pub struct ModelViewerProps {
 #[function_component(ModelViewer)]
 pub fn model_viewer(props: &ModelViewerProps) -> Html {
     let canvas_ref = use_node_ref();
+    let loading = use_state(|| true);
     let obj_path = if props.obj_path.is_empty() {
         "/static/cathedral/cathedral.obj".to_string()
     } else {
@@ -32,18 +34,30 @@ pub fn model_viewer(props: &ModelViewerProps) -> Html {
     {
         let canvas_ref = canvas_ref.clone();
         let obj_path = obj_path.clone();
+        let loading = loading.clone();
         
         use_effect_with((), move |_| {
             let canvas_ref = canvas_ref.clone();
             let obj_path = obj_path.clone();
+            let loading = loading.clone();
             
-            console::log_1(&format!("Setting up effect with obj_path: {}", obj_path).into());
+            // Callback from JS -> Rust
+            let callback = {
+                let loading = loading.clone();
+                wasm_bindgen::closure::Closure::wrap(Box::new(move || {
+                    console::log_1(&"Model loading complete callback triggered!".into());
+                    loading.set(false);
+                }) as Box<dyn Fn()>)
+            };
+
+            let window = web_sys::window().unwrap();
+            let js_callback = callback.as_ref().unchecked_ref::<js_sys::Function>();
+            js_sys::Reflect::set(&window, &"modelLoadComplete".into(), js_callback).unwrap();
+
             
-            // Small delay to ensure canvas is mounted
+            // small delay to ensure canvas is mounted
             let timeout = gloo_timers::callback::Timeout::new(100, move || {
-                console::log_1(&"Timeout callback executing".into());
                 if let Some(canvas) = canvas_ref.cast::<HtmlCanvasElement>() {
-                    console::log_1(&format!("Canvas found, initializing with path: {}", obj_path).into());
                     init_threejs_scene(&canvas, &obj_path);
                 } else {
                     console::error_1(&"Canvas element not found".into());
@@ -51,12 +65,14 @@ pub fn model_viewer(props: &ModelViewerProps) -> Html {
             });
             timeout.forget();
 
+            // keep closure alive for JS to call
+            callback.forget();
             || ()
         });
     }
 
     html! {
-        <div class="model-viewer-container">
+        <div class="model-viewer-container relative     ">
             <canvas 
                 ref={canvas_ref}
                 width={props.width.to_string()}
@@ -64,9 +80,14 @@ pub fn model_viewer(props: &ModelViewerProps) -> Html {
                 style={format!("width: {}px; height: {}px; background: transparent;", props.width, props.height)}
                 id="threejs-canvas"
             />
-            // <p style="color: white; margin-top: 10px;">
-            //     {format!("Loading model: {}", obj_path)}
-            // </p>
+            if *loading {
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="text-red-600 text-center">
+                        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto mb-2"></div>
+                        <div class="text-xl">{"Loading 3D Model..."}</div>
+                    </div>
+                </div>
+            }
         </div>
     }
 }
