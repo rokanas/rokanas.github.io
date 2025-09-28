@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Konstantinos Rokanas</title>
+    <link rel="stylesheet" href="/personal-web-page/output-34217f14306e9902.css" integrity="sha384-lkUcw5ce7XR8sDameRmJveClM/vJ+XBU/qjjuTMxAVpkqC5GtovOyJpv8YrFOaQ/"/>
+    
+    
+    <!-- Load Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Use reliable CDN for OBJLoader -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js"></script>
+    
+    <!-- Simple scene initialization -->
+    <script>
+      window.initThreeJsScene = function(canvas, objPath) {
+          console.log('Starting Three.js initialization...');
+          
+          // Check if OBJLoader is available
+          if (typeof THREE.OBJLoader === 'undefined') {
+              console.error('OBJLoader not available, creating fallback cube');
+              createFallbackCube();
+              return;
+          }
+          
+          const scene = new THREE.Scene();
+          // No background color - use transparent canvas instead
+
+          const camera = new THREE.PerspectiveCamera(75, canvas.width / canvas.height, 0.1, 1000);
+          camera.position.set(0, 0, 10); // Back to center to show middle section
+
+          const renderer = new THREE.WebGLRenderer({ 
+              canvas: canvas, 
+              antialias: true,
+              alpha: true // Enable transparency
+          });
+          renderer.setSize(canvas.width, canvas.height);
+          renderer.setClearColor(0x000000, 0); // Transparent background
+
+          // Good lighting for textures
+          const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+          scene.add(ambientLight);
+
+          const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+          directionalLight.position.set(5, 5, 5);
+          scene.add(directionalLight);
+
+          const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.3);
+          directionalLight2.position.set(-5, -2, -5);
+          scene.add(directionalLight2);
+
+          let model = null;
+
+          function createFallbackCube() {
+              console.log('Creating fallback cube');
+              const geometry = new THREE.BoxGeometry(2, 2, 2);
+              const material = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
+              const cube = new THREE.Mesh(geometry, material);
+              model = cube;
+              scene.add(cube);
+          }
+
+          // Check if OBJLoader is available
+          if (typeof THREE.OBJLoader === 'undefined') {
+              console.error('OBJLoader not available, creating fallback cube');
+              createFallbackCube();
+              animate();
+              return;
+          }
+
+          console.log('Loading OBJ...');
+          const loader = new THREE.OBJLoader();
+          
+          loader.load(
+              objPath,
+              function(object) {
+                  console.log('OBJ loaded successfully with', object.children.length, 'meshes');
+                  
+                  if (object.children.length === 0) {
+                      console.error('No meshes found, using fallback');
+                      createFallbackCube();
+                      return;
+                  }
+                  
+                  // Apply textures based on mesh names
+                  object.traverse(function(child) {
+                      if (child.isMesh) {
+                          const meshName = child.name;
+                          console.log('Processing mesh:', meshName);
+                          
+                          // Extract texture name from mesh name
+                          // e.g., "MAP01_MAP01_FIREBLU2_FIREBLU2" -> "FIREBLU2"
+                          let textureName = null;
+                          if (meshName && meshName.includes('_')) {
+                              const parts = meshName.split('_');
+                              if (parts.length >= 3 && parts[0] === 'MAP01' && parts[1] === 'MAP01') {
+                                  // Remove MAP01_MAP01_ prefix
+                                  const remainingParts = parts.slice(2);
+                                  // If it's duplicated (e.g., FIREBLU2_FIREBLU2), use just one
+                                  if (remainingParts.length === 2 && remainingParts[0] === remainingParts[1]) {
+                                      textureName = remainingParts[0];
+                                  } else {
+                                      // Join remaining parts (e.g., PNTWLL_G stays as PNTWLL_G)
+                                      textureName = remainingParts.join('_');
+                                  }
+                              }
+                          }
+                          
+                          // Create base material with transparency support
+                          child.material = new THREE.MeshPhongMaterial({
+                              color: 0xffffff, // White base for textures
+                              side: THREE.DoubleSide,
+                              transparent: true,  // Enable transparency
+                              alphaTest: 0.1      // Discard pixels below this alpha threshold
+                          });
+                          
+                          // Try to load texture
+                          if (textureName && textureName !== 'undefined') {
+                              console.log('Attempting to load texture:', textureName);
+                              
+                              const textureLoader = new THREE.TextureLoader();
+                              const texturePath = `static/cathedral/textures/${textureName}.png`;
+                              
+                              textureLoader.load(
+                                  texturePath,
+                                  function(texture) {
+                                      console.log('Successfully loaded texture:', texturePath);
+                                      
+                                      // Set texture filtering for crisp pixel art
+                                      texture.magFilter = THREE.NearestFilter; // No blurring when zooming in
+                                      texture.minFilter = THREE.NearestFilter; // No blurring when zooming out
+                                      texture.wrapS = THREE.RepeatWrapping;    // Allow texture repetition
+                                      texture.wrapT = THREE.RepeatWrapping;
+                                      
+                                      child.material.map = texture;
+                                      child.material.needsUpdate = true;
+                                  },
+                                  undefined,
+                                  function(error) {
+                                      console.log('Failed to load texture:', texturePath);
+                                      // Apply fallback color based on texture name
+                                      applyFallbackColor(child, textureName);
+                                  }
+                              );
+                          } else {
+                              console.log('No texture name found for mesh:', meshName);
+                              child.material.color.setHex(0xcccccc); // Default gray
+                          }
+                      }
+                  });
+                  
+                  // Scale and center
+                  const box = new THREE.Box3().setFromObject(object);
+                  const center = box.getCenter(new THREE.Vector3());
+                  const size = box.getSize(new THREE.Vector3());
+                  const maxDim = Math.max(size.x, size.y, size.z);
+                  
+                  if (maxDim > 0) {
+                      const scale = 10 / maxDim; // Increased from 6 to 10 for larger model
+                      object.scale.setScalar(scale);
+                      
+                      // Position the model so the top is cropped out
+                      const scaledCenter = center.clone().multiplyScalar(scale);
+                      object.position.sub(scaledCenter);
+                      
+                      // Move the model up so the top portion is above the frame
+                      object.position.y += 1.5; // Adjust this value to control how much is cropped
+                  }
+                  
+                  model = object;
+                  scene.add(object);
+                  console.log('Model added successfully');
+              },
+              function(progress) {
+                  if (progress.lengthComputable) {
+                      console.log('Loading:', Math.round(progress.loaded / progress.total * 100) + '%');
+                  }
+              },
+              function(error) {
+                  console.error('Failed to load OBJ:', error);
+                  createFallbackCube();
+              }
+          );
+
+          function applyFallbackColor(mesh, textureName) {
+              const name = textureName.toLowerCase();
+              let color = 0xcccccc;
+              
+              if (name.includes('fire') && name.includes('blu')) {
+                  color = 0x4444ff; // Blue
+              } else if (name.includes('fire') && name.includes('lav')) {
+                  color = 0xff4400; // Orange lava
+              } else if (name.includes('fire')) {
+                  color = 0xff8800; // Orange fire
+              } else if (name.includes('wood')) {
+                  color = 0x996633; // Brown wood
+              } else if (name.includes('metal')) {
+                  color = 0xaaaacc; // Metallic
+              } else if (name.includes('stone') || name.includes('rock')) {
+                  color = 0x888866; // Stone
+              } else if (name.includes('door')) {
+                  color = 0x663311; // Dark wood
+              } else if (name.includes('wall')) {
+                  color = 0xccbbaa; // Wall
+              } else if (name.includes('grey') || name.includes('gray')) {
+                  color = 0x777777; // Gray
+              }
+              
+              mesh.material.color.setHex(color);
+              console.log('Applied fallback color', color.toString(16), 'to', textureName);
+          }
+
+          function animate() {
+              requestAnimationFrame(animate);
+              if (model) {
+                  model.rotation.y += 0.002;
+              }
+              renderer.render(scene, camera);
+          }
+
+          // Start animation
+          animate();
+          console.log('Scene initialized');
+      };
+    </script>
+  <link rel="modulepreload" href="/personal-web-page/app-86b3dbb9c43faeed.js" crossorigin="anonymous" integrity="sha384-bpsXGOKSx05dIevE+LOn7N877zwW15OateraL7JqpkOpmD+kbKRJZaIUyaqkeJN0"><link rel="preload" href="/personal-web-page/app-86b3dbb9c43faeed_bg.wasm" crossorigin="anonymous" integrity="sha384-RWXc3EW/PtYi6fUr5/aaTjDKcuuZG9AAu2QVOeFX8/j0sxewBJFdC5QRgJ9zm3Qj" as="fetch" type="application/wasm"></head>
+  <body>
+    <div id="app"></div>
+  
+<script type="module">
+import init, * as bindings from '/personal-web-page/app-86b3dbb9c43faeed.js';
+const wasm = await init({ module_or_path: '/personal-web-page/app-86b3dbb9c43faeed_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script></body>
+</html>
