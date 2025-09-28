@@ -148,9 +148,9 @@ pub fn app_content() -> Html {
 #[function_component(App)]
 pub fn app() -> Html {
     html! {
-        <BrowserRouter>
+        <HashRouter>
             <AppContent />
-        </BrowserRouter>
+        </HashRouter>
     }
 }
 
