@@ -43,9 +43,9 @@ pub fn about() -> Html {
                         <div class="flex-shrink-0 w-full lg:w-auto flex flex-col items-center">
                             <div class="w-64 h-64 lg:w-80 lg:h-80 rounded-full bg-[#1a1a1a] flex items-center justify-center text-6xl lg:text-8xl shadow-2xl border-8 border-[#0b0b0a] hover:scale-105 transition-transform duration-300">
                                 <img 
-                                    src="/static/hud/avatar/AVATAR_1.png" 
+                                    src="/static/about/AVATAR.png" 
                                     alt="Avatar" 
-                                    class="w-full h-full object-contain"
+                                    class="w-full h-full object-cover rounded-full"
                                 />
                             </div>
 
