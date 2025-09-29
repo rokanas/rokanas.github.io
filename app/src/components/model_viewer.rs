@@ -72,7 +72,7 @@ pub fn model_viewer(props: &ModelViewerProps) -> Html {
     }
 
     html! {
-        <div class="model-viewer-container relative     ">
+        <div class="model-viewer-container relative">
             <canvas 
                 ref={canvas_ref}
                 width={props.width.to_string()}
