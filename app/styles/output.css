@@ -653,6 +653,9 @@
   .animate-spin {
     animation: var(--animate-spin);
   }
+  .cursor-grab {
+    cursor: grab;
+  }
   .cursor-not-allowed {
     cursor: not-allowed;
   }
@@ -1054,8 +1057,8 @@
   .pb-10 {
     padding-bottom: calc(var(--spacing) * 10);
   }
-  .pb-12 {
-    padding-bottom: calc(var(--spacing) * 12);
+  .pb-13 {
+    padding-bottom: calc(var(--spacing) * 13);
   }
   .pb-15 {
     padding-bottom: calc(var(--spacing) * 15);
@@ -1352,6 +1355,13 @@
       }
     }
   }
+  .hover\:cursor-grab {
+    &:hover {
+      @media (hover: hover) {
+        cursor: grab;
+      }
+    }
+  }
   .hover\:border-\[\#5865F2\] {
     &:hover {
       @media (hover: hover) {
@@ -1618,6 +1628,11 @@
   .focus\:ring-inset {
     &:focus {
       --tw-ring-inset: inset;
+    }
+  }
+  .active\:cursor-grabbing {
+    &:active {
+      cursor: grabbing;
     }
   }
   .disabled\:cursor-not-allowed {

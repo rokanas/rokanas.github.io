@@ -170,7 +170,7 @@ pub fn doom_projects() -> Html {
                 />
 
                 // projects grid
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center pb-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center pb-13">
                     { for maps.iter().map(|map| html! {
                         <DoomMapItem
                             title={map.title.clone()}

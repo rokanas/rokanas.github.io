@@ -15,8 +15,6 @@ fn use_navigation() -> Callback<Route> {
 
 #[function_component(Home)]
 pub fn home() -> Html {
-    let navigate = use_navigation();
-
     let navbar_context = use_context::<NavbarContext>().expect("NavbarContext not found");
 
     html! {
@@ -26,16 +24,15 @@ pub fn home() -> Html {
         )}>
 
             // model canvas is button to doom projects
-            <button
+            <div
                 title = "Cathedral of Charybdis"
-                onclick={Callback::from(move |_| navigate.emit(Route::DoomProjects))}
-                class = "cursor-pointer">
+                class = "cursor-grab hover:cursor-grab active:cursor-grabbing">
                 <ModelViewer 
                     obj_path="/static/cathedral/cathedral.obj"
                     width={650}
                     height={650}
                 />
-            </button>
+            </div>
 
             // model made text anchored to top/bottom left depending on navbar type
             <img 
