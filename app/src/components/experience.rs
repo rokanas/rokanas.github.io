@@ -18,7 +18,7 @@ pub fn experience() -> Html {
                 "Led TA meetings and workshops with students, provided in-person and remote guidance.".to_string(),
                 "Provided support and feedback to professors concerning assignments and course materials.".to_string(),
                 "Graded student assignments and exams.".to_string()]),
-            icon: "/static/U_GOTH.png".to_string(),
+            icon: "/static/about/education/U_GOTH.png".to_string(),
         },
         ExperienceItem {
             title: "Compliance Officer".to_string(),
@@ -28,7 +28,7 @@ pub fn experience() -> Html {
                 "Legal compliance assessment and risk analysis for all areas of company operations in Athens and Cyprus offices (specialization in Data Protection (GDPR) and Cybersecurity)".to_string(),
                 "Legal support to regional offices in Albania, Northern Macedonia and Bulgaria.".to_string(),
                 "Led training sessions for all regional offices on sensitive areas (personal data protection, cybersecurity, anti-bribery).".to_string(),]),
-            icon: "/static/HUAWEI.png".to_string(),
+            icon: "/static/about/experience/HUAWEI.png".to_string(),
         },
         ExperienceItem {
             title: "Intern at Academy of European Public Law".to_string(),
@@ -39,7 +39,7 @@ pub fn experience() -> Html {
                 "Assisted in the administration of the Department of Education.".to_string(),
                 "Drafted reports on EPLO activities and conducted research for various other departments.".to_string(),
                 ]),
-            icon: "/static/EPLO.png".to_string(),
+            icon: "/static/about/experience/EPLO.png".to_string(),
         },
         ExperienceItem {
             title: "Intern at Greek National Desk".to_string(),
@@ -50,7 +50,7 @@ pub fn experience() -> Html {
                 "Composed external and internal communications towards national authorities and national desks.".to_string(),
                 "Legal case file and database management.".to_string(),
                     ]),
-            icon: "/static/EUROJUST.png".to_string(),
+            icon: "/static/about/experience/EUROJUST.png".to_string(),
         },
     ];
 
@@ -98,7 +98,7 @@ pub fn experience() -> Html {
                 <div class="lg:w-2/3">
                     <div 
                         class="relative p-8"                                                 
-                        style="background-image: url('/static/STBAR7.png'); 
+                        style="background-image: url('/static/common/STBAR_BIG.png'); 
                                 background-repeat: no-repeat; 
                                 background-size: 100% 100%; 
                                 image-rendering: pixelated;

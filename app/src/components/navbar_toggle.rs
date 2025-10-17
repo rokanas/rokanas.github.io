@@ -30,9 +30,9 @@ pub fn navbar_toggle(props: &NavbarToggleProps) -> Html {
             )}
             title={if props.is_default_navbar { "Switch to HUD Navbar" } else { "Switch to Header Navbar" }}
         >
-            // icon or text for button
+            // button icon / text
             <img 
-                src="static/NAV_TOGGLE.png"
+                src="static/common/NAV_TOGGLE.png"
                 alt="Toggle" 
                 class="w-14 h-14 object-contain rounded-full"
             />

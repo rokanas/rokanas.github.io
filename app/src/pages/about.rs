@@ -6,7 +6,7 @@ use crate::components::social_buttons::{SocialButtons};
 use crate::components::heading::{Heading};
 use crate::components::education::{Education};
 use crate::components::experience::{Experience};
-use crate::components::skills::{Skills};
+use crate::components::technologies::{Technologies};
 
 // struct to hold education and experience data
 #[derive(Clone, PartialEq)]
@@ -43,9 +43,9 @@ pub fn about() -> Html {
                         <div class="flex-shrink-0 w-full lg:w-auto flex flex-col items-center">
                             <div class="w-64 h-64 lg:w-80 lg:h-80 rounded-full bg-[#1a1a1a] flex items-center justify-center text-6xl lg:text-8xl shadow-2xl border-8 border-[#0b0b0a] hover:scale-105 transition-transform duration-300">
                                 <img 
-                                    src="/static/AVATAR_1.png" 
+                                    src="/static/about/AVATAR.png" 
                                     alt="Avatar" 
-                                    class="w-full h-full object-contain"
+                                    class="w-full h-full object-cover rounded-full"
                                 />
                             </div>
 
@@ -61,7 +61,7 @@ pub fn about() -> Html {
                 <div class="flex-1 text-center lg:text-left">
                     <div class="text-center mb-10 mt-10">
                         <img 
-                            src="/static/KONSTANTINOS_ROKANAS_1.png" 
+                            src="/static/about/KONSTANTINOS_ROKANAS_1.png" 
                             alt="Konstantinos Rokanas"
                             class="w-auto h-auto mx-auto"
                         />
@@ -89,7 +89,7 @@ pub fn about() -> Html {
                 <div class="mb-16">
                     // heading
                     <Heading 
-                        src="/static/EXPERIENCE_1.png" 
+                        src="/static/about/EXPERIENCE_1.png" 
                         alt="Experience"
                         sub_heading=""             
                     />
@@ -101,7 +101,7 @@ pub fn about() -> Html {
                 <div class="mb-16">
                     // heading
                     <Heading 
-                        src="/static/EDUCATION_1.png" 
+                        src="/static/about/EDUCATION_1.png" 
                         alt="Education"
                         sub_heading=""             
                     />
@@ -113,11 +113,11 @@ pub fn about() -> Html {
                 <div class="mb-16">
                     // heading
                     <Heading 
-                        src="/static/TECHNOLOGIES_1.png" 
-                        alt="Skills"
+                        src="/static/about/TECHNOLOGIES_1.png" 
+                        alt="Technologies"
                         sub_heading=""             
                     />
-                    <Skills/>
+                    <Technologies/>
                 </div>
 
                 // social media button links footer

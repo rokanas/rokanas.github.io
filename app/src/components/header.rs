@@ -92,7 +92,7 @@ pub fn header(props: &HeaderProps) -> Html {
     html! {
         <>
             <header class={header_class}
-                style="background-image:url('/static/SHAWN_2.png');background-repeat:repeat;background-size:60px;">
+                style="background-image:url('/static/header/SHAWN_2.png');background-repeat:repeat;background-size:60px;">
                 <div class="w-full px-2 sm:px-4 lg:px-8 pt-0 pb-1">
                     <div class="w-full max-w-screen-2xl mx-auto">
                         <div class="flex items-center justify-between w-full relative min-h-[56px] sm:min-h-[62px]">
@@ -122,7 +122,7 @@ pub fn header(props: &HeaderProps) -> Html {
                                     // logo image
                                     <button onclick={navigate.reform(|_| Route::Home)}
                                             class="absolute inset-0 flex items-center justify-center cursor-pointer">
-                                        <img src="/static/KR_1.png" alt="Home"
+                                        <img src="/static/header/KR_1.png" alt="Home"
                                             class="max-h-14 sm:max-h-18 lg:max-h-22 transition-transform duration-300 drop-shadow-lg hover:scale-110 hover:brightness-125"/>
                                     </button>
                                 </div>
@@ -150,7 +150,7 @@ pub fn header(props: &HeaderProps) -> Html {
 
                 // stationary bottom divider
                 <div class="absolute top-full left-0 right-0 overflow-hidden h-2.5 z-30"
-                    style="background:url('/static/DIVIDER_3B.png') repeat-x top left; background-size:auto 100%;">
+                    style="background:url('/static/header/DIVIDER_2.png') repeat-x top left; background-size:auto 100%;">
                 </div>
             </header>
 
@@ -175,7 +175,7 @@ pub fn header(props: &HeaderProps) -> Html {
 
                 // mobile menu dynamic divider
                 <div class="absolute bottom-0 left-0 right-0 overflow-hidden h-2.5 z-10"
-                     style="background:url('/static/DIVIDER_3B.png') repeat-x top left; background-size:auto 100%; transform: translateY(100%);">
+                     style="background:url('/static/header/DIVIDER_2.png') repeat-x top left; background-size:auto 100%; transform: translateY(100%);">
                 </div>
             </div>
         </>

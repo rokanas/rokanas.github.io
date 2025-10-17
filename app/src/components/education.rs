@@ -12,21 +12,21 @@ pub fn education() -> Html {
             institution: "University of Gothenburg, SE".to_string(),
             date: "2022 - 2025".to_string(),
             description: None,
-            icon: "/static/U_GOTH.png".to_string(),
+            icon: "/static/about/education/U_GOTH.png".to_string(),
         },
         ExperienceItem {
             title: "European Law (LLM)".to_string(),
             institution: "Leiden University, NL".to_string(),
             date: "2015 - 2016".to_string(),
             description: None,
-            icon: "/static/U_LEID.png".to_string(),
+            icon: "/static/about/education/U_LEID.png".to_string(),
         },
         ExperienceItem {
             title: "Law (LLB)".to_string(),
             institution: "University of Reading, UK".to_string(),
             date: "2012 - 2015".to_string(),
             description: None,
-            icon: "/static/U_READ.png".to_string(),
+            icon: "/static/about/education/U_READ.png".to_string(),
         },
     ];
 
@@ -65,7 +65,7 @@ pub fn education() -> Html {
                             )}>
                                 <div 
                                     class="relative text-white flex items-center justify-left text-left p-6 hover:scale-105 transition-transform duration-300"
-                                    style="background-image: url('/static/STBAR7.png'); 
+                                    style="background-image: url('/static/hud/section/STBAR7.png'); 
                                             background-repeat: no-repeat; 
                                             background-size: 100% 100%; 
                                             image-rendering: pixelated; 

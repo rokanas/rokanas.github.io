@@ -5,6 +5,7 @@ use gloo_net::http::Request;
 use wasm_bindgen::JsCast;
 use serde::{Deserialize, Serialize};
 use web_sys::HtmlInputElement;
+use wasm_bindgen::closure::Closure;
 
 use crate::components::social_buttons::SocialButtons;
 use crate::components::heading::Heading;
@@ -27,20 +28,55 @@ struct FormResponse {
 #[function_component(Contact)]
 pub fn contact() -> Html {
     use_effect_with((), |_| {
-        // scroll to top when page mounts
         if let Some(window) = window() {
             window.scroll_to_with_x_and_y(0.0, 0.0);
         }
 
+        // define render function globally so reCAPTCHA can call it
+        let render_recaptcha = Closure::wrap(Box::new(move || {
+            if let Some(window) = web_sys::window() {
+                if let Ok(grecaptcha) = js_sys::Reflect::get(&window, &"grecaptcha".into()) {
+                    if let Ok(render) = js_sys::Reflect::get(&grecaptcha, &"render".into()) {
+                        if let Ok(render) = render.dyn_into::<js_sys::Function>() {
+                            let params = js_sys::Object::new();
+                            js_sys::Reflect::set(&params, &"sitekey".into(), 
+                                &"6LfHdcsrAAAAAA4ndXu6pT_KvO1sdOxdPIRX3q12".into()).unwrap();
+                            js_sys::Reflect::set(&params, &"theme".into(), 
+                                &"dark".into()).unwrap();
+                            
+                            let _ = render.call2(&grecaptcha, &"recaptcha-container".into(), &params);
+                        }
+                    }
+                }
+            }
+        }) as Box<dyn Fn()>);
+
+        if let Some(window) = web_sys::window() {
+            js_sys::Reflect::set(&window, &"renderRecaptcha".into(), 
+                render_recaptcha.as_ref().unchecked_ref()).unwrap();
+        }
+        render_recaptcha.forget();
+
+        // load script if not already present
         if let Some(document) = web_sys::window().and_then(|w| w.document()) {
-            if document.query_selector("script[src*='recaptcha']").unwrap().is_none() {
+            if document.query_selector("script[src*='recaptcha/api.js']").unwrap().is_none() {
                 let script = document.create_element("script").unwrap();
-                script.set_attribute("src", "https://www.google.com/recaptcha/api.js").unwrap();
+                script.set_attribute("src", 
+                    "https://www.google.com/recaptcha/api.js?onload=renderRecaptcha&render=explicit").unwrap();
                 script.set_attribute("async", "").unwrap();
                 script.set_attribute("defer", "").unwrap();
                 
                 if let Some(head) = document.head() {
                     head.append_child(&script).unwrap();
+                }
+            } else {
+                // script already loaded, render immediately
+                if let Some(window) = web_sys::window() {
+                    if let Ok(render_fn) = js_sys::Reflect::get(&window, &"renderRecaptcha".into()) {
+                        if let Ok(render_fn) = render_fn.dyn_into::<js_sys::Function>() {
+                            let _ = render_fn.call0(&js_sys::Object::new());
+                        }
+                    }
                 }
             }
         }
@@ -107,7 +143,7 @@ pub fn contact() -> Html {
             e.prevent_default();
             
             if !*is_submitting {
-                // Get reCAPTCHA response using DOM query
+                // get reCAPTCHA response using DOM query
                 let recaptcha_response = if let Some(window) = web_sys::window() {
                     if let Some(document) = window.document() {
                         if let Ok(Some(textarea)) = document.query_selector("textarea[name='g-recaptcha-response']") {
@@ -145,7 +181,7 @@ pub fn contact() -> Html {
                     match result {
                         Ok(_) => {
                             submission_status_clone.set(Some("Message submitted successfully. I'll get back to you soon.".to_string()));
-                            // Reset form
+                            // reset form
                             form_data_clone.set(FormData {
                                 name: String::new(),
                                 email: String::new(),
@@ -154,8 +190,8 @@ pub fn contact() -> Html {
                                 recaptcha_response: String::new(),
                             });
                             
-                            // Reset reCAPTCHA by calling the global reset function if available
-                            // Reset reCAPTCHA on error too
+                            // reset reCAPTCHA by calling the global reset function if available
+                            // reset on error too
                             if let Some(window) = web_sys::window() {
                                 if let Ok(grecaptcha) = js_sys::Reflect::get(&window, &"grecaptcha".into()) {
                                     if let Ok(reset_fn) = js_sys::Reflect::get(&grecaptcha, &"reset".into()) {
@@ -169,7 +205,7 @@ pub fn contact() -> Html {
                         Err(err) => {
                             submission_status_clone.set(Some(format!("Error sending message: {}", err)));
                             
-                            // Reset reCAPTCHA on error too
+                            // reset reCAPTCHA on error too
                             if let Some(window) = web_sys::window() {
                                 if let Ok(grecaptcha) = js_sys::Reflect::get(&window, &"grecaptcha".into()) {
                                     if let Ok(reset_fn) = js_sys::Reflect::get(&grecaptcha, &"reset".into()) {
@@ -197,7 +233,7 @@ pub fn contact() -> Html {
                 >
                     <div class="relative z-10">
                         <Heading 
-                            src = "/static/CONTACT_1.png"
+                            src = "/static/contact/CONTACT_1.png"
                             alt = "Contact"
                             sub_heading = "Want to drop a message? Collaborate? Ask a question?"
                         ></Heading>
@@ -221,7 +257,7 @@ pub fn contact() -> Html {
                                             disabled={*is_submitting}
                                             class="w-full px-4 py-3 bg-[#1a1a1a] border border-gray-600 rounded-lg 
                                                    text-white placeholder-gray-400 focus:border-red-600 focus:ring-1 
-                                                   focus:ring-red-500 focus:outline-none transition-colors
+                                                   focus:ring-red-600 focus:outline-none transition-colors
                                                    disabled:opacity-50 disabled:cursor-not-allowed"
                                             placeholder="Your name"
                                         />
@@ -239,8 +275,8 @@ pub fn contact() -> Html {
                                             required=true
                                             disabled={*is_submitting}
                                             class="w-full px-4 py-3 bg-[#1a1a1a] border border-gray-600 rounded-lg 
-                                                   text-white placeholder-gray-400 focus:border-red-500 focus:ring-1 
-                                                   focus:ring-red-500 focus:outline-none transition-colors
+                                                   text-white placeholder-gray-400 focus:border-red-600 focus:ring-1 
+                                                   focus:ring-red-600 focus:outline-none transition-colors
                                                    disabled:opacity-50 disabled:cursor-not-allowed"
                                             placeholder="your.email@example.com"
                                         />
@@ -261,8 +297,8 @@ pub fn contact() -> Html {
                                         required=false
                                         disabled={*is_submitting}
                                         class="w-full px-4 py-3 bg-[#1a1a1a] border border-gray-600 rounded-lg 
-                                               text-white placeholder-gray-400 focus:border-red-500 focus:ring-1 
-                                               focus:ring-red-500 focus:outline-none transition-colors
+                                               text-white placeholder-gray-400 focus:border-red-600 focus:ring-1 
+                                               focus:ring-red-600 focus:outline-none transition-colors
                                                disabled:opacity-50 disabled:cursor-not-allowed"
                                         placeholder="What's this about?"
                                     />
@@ -282,8 +318,8 @@ pub fn contact() -> Html {
                                         required=true
                                         disabled={*is_submitting}
                                         class="w-full px-4 py-3 bg-[#1a1a1a] border border-gray-600 rounded-lg 
-                                               text-white placeholder-gray-400 focus:border-red-500 focus:ring-1 
-                                               focus:ring-red-500 focus:outline-none transition-colors resize-vertical
+                                               text-white placeholder-gray-400 focus:border-red-600 focus:ring-1 
+                                               focus:ring-red-600 focus:outline-none transition-colors resize-vertical
                                                disabled:opacity-50 disabled:cursor-not-allowed"
                                         placeholder="What's on your mind?"
                                     />
@@ -293,7 +329,8 @@ pub fn contact() -> Html {
                                 <div class="flex flex-col sm:flex-row items-center justify-center gap-15">
                                     // recaptcha container
                                         <div 
-                                            class="g-recaptcha transform scale-90 sm:scale-100" 
+                                            id="recaptcha-container"
+                                            class="g-recaptcha transform scale-90 sm:scale-100"
                                             data-sitekey="6LfHdcsrAAAAAA4ndXu6pT_KvO1sdOxdPIRX3q12"
                                             data-theme="dark"
                                         ></div>
@@ -305,7 +342,7 @@ pub fn contact() -> Html {
                                         class="px-8 py-3 bg-red-600 hover:bg-red-700 disabled:bg-gray-600 
                                                text-white font-semibold rounded-lg transition-colors duration-200
                                                disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer
-                                               focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+                                               focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-gray-900"
                                     >
                                         {if *is_submitting { "Submitting..." } else { "Submit Message" }}
                                     </button>
@@ -316,7 +353,7 @@ pub fn contact() -> Html {
                                     let (bg_color, text_color, border_color) = if status.contains("successfully") {
                                         ("bg-green-900/20", "text-green-400", "border-green-500")
                                     } else {
-                                        ("bg-red-900/20", "text-red-400", "border-red-500")
+                                        ("bg-red-900/20", "text-red-400", "border-red-600")
                                     };
                                     
                                     html! {

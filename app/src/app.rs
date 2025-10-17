@@ -135,7 +135,7 @@ pub fn app_content() -> Html {
             
             <main 
                 class={main_classes} 
-                style="background-image: url('/static/FLOOR4_9.png'); background-repeat: repeat; background-size: 290px; image-rendering: pixelated;"
+                style="background-image: url('/static/common/FLOOR4_9.png'); background-repeat: repeat; background-size: 290px; image-rendering: pixelated;"
             >
                 <div key={format!("{:?}", route)}>      // key forces remount on route change, triggering use_effect in pages (yew doesn't unmount/remount on route change by default)
                     <Switch<Route> render={switch} />
@@ -148,9 +148,9 @@ pub fn app_content() -> Html {
 #[function_component(App)]
 pub fn app() -> Html {
     html! {
-        <BrowserRouter>
+        <HashRouter>
             <AppContent />
-        </BrowserRouter>
+        </HashRouter>
     }
 }
 

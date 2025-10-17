@@ -14,7 +14,7 @@ pub fn social_buttons(props: &SocialButtonProps) -> Html {
     let download_cv = Callback::from(|_| {
         if let Some(window) = web_sys::window() {
             // direct link to cv file
-            let _ = window.open_with_url_and_target("/static/KR_CV.pdf", "_blank");
+            let _ = window.open_with_url_and_target("/static/about/KR_CV.pdf", "_blank");
         }
     });
     

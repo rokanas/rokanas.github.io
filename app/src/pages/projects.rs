@@ -226,7 +226,7 @@ pub fn projects() -> Html {
                 
                 // page heading
                 <Heading 
-                    src="/static/PROJECTS_1.png" 
+                    src="/static/projects/PROJECTS_1.png" 
                     alt="Projects"
                     sub_heading="A collection of my software projects, both personal and academic."
                 />

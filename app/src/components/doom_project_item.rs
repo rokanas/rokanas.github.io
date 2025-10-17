@@ -83,7 +83,7 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
             <div class="max-w-sm hover:scale-105 transition-all duration-300">
                 <div 
                     class="relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
-                    style="background-image: url('/static/STBAR7.png'); 
+                    style="background-image: url('/static/common/STBAR_MID.png'); 
                             background-repeat: no-repeat; 
                             background-size: 100% 100%; 
                             image-rendering: pixelated;
@@ -148,12 +148,15 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
                     onclick={close_lightbox.clone()}
                 >
                     // close button (top-right)
-                    <button
-                        onclick={close_lightbox.clone()}
-                        class="absolute top-4 right-4 text-white hover:text-red-600 text-4xl font-bold transition-colors duration-200 cursor-pointer z-20 bg-black/50 rounded-full w-12 h-12 flex items-center justify-center"
-                    >
-                        {"×"}
-                    </button>
+                        <button
+                            onclick={close_lightbox.clone()}
+                            class="absolute top-4 right-4 text-white hover:text-red-600 text-4xl font-bold transition-colors duration-200 cursor-pointer z-20 bg-black/50 rounded-full w-12 h-12 flex items-center justify-center leading-none"
+                        >
+                            // svg 'x'
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
 
                     // image container
                     <div 
