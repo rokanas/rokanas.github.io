@@ -153,12 +153,16 @@ pub fn doom_model_item(props: &DoomModelItemProps) -> Html {
                         // modal content
                         <div class="p-6 space-y-6">
                             // 3D model viewer
-                            <div class="flex justify-center items-center bg-[#2b2b2b] rounded-lg p-4">
+                            <div class="relative flex justify-center items-center bg-[#2b2b2b] rounded-lg p-4">
                                 <ModelViewer 
                                     obj_path={props.obj_path.clone()}
                                     width=600
                                     height=400
                                 />
+                                // overlay instructions (attached to outer viewer area)
+                                <div class="absolute bottom-3 right-4 bg-black/60 text-gray-300 text-xs font-mono px-2 py-1 rounded-lg pointer-events-none select-none">
+                                    {"Drag to move, scroll to zoom"}
+                                </div>
                             </div>
 
                             // // detailed description if available

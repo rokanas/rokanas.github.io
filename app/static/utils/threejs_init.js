@@ -16,6 +16,23 @@ window.initThreeJsScene = function(canvas, objPath) {
     renderer.setSize(canvas.width, canvas.height);
     renderer.setClearColor(0x000000, 0); // transparent
 
+    // Create OrbitControls for interaction
+    let controls = null;
+    if (typeof THREE.OrbitControls !== 'undefined') {
+        controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.screenSpacePanning = false;
+        controls.minDistance = 5;
+        controls.maxDistance = 20;
+        controls.maxPolarAngle = Math.PI;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 0.5;
+        console.log('OrbitControls initialized');
+    } else {
+        console.warn('OrbitControls not available - manual control disabled');
+    }
+
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
     scene.add(ambientLight);
 
@@ -168,6 +185,13 @@ window.initThreeJsScene = function(canvas, objPath) {
 
             model = object;
             scene.add(object);
+            
+            // If controls exist, focus them on the model
+            // if (controls) {
+            //     controls.target.set(0, 1.5, 0);
+            //     controls.update();
+            // }
+            
             modelAdded = true;
             console.log('Model added successfully');
 
@@ -225,9 +249,15 @@ window.initThreeJsScene = function(canvas, objPath) {
 
     function animate() {
         requestAnimationFrame(animate);
-        if (model) {
+        
+        // Update controls if they exist
+        if (controls) {
+            controls.update();
+        } else if (model) {
+            // Fallback to simple rotation if no controls
             model.rotation.y += 0.0005;
         }
+        
         renderer.render(scene, camera);
     }
 
