@@ -2,9 +2,10 @@
 use yew::prelude::*;
 use web_sys::window;
 use crate::components::doom_map_item::{DoomMapItem};
+use crate::components::doom_model_item::{DoomModelItem};
 use crate::components::heading::{Heading};
 
-// struct to hold project data
+// struct to hold map data
 #[derive(Clone, PartialEq)]
 pub struct Map {
     pub title: String,
@@ -12,6 +13,18 @@ pub struct Map {
     pub image_src: String,
     pub image_alt: Option<String>,
     pub additional_images: Vec<String>,
+}
+
+// struct to hold 3d model data
+#[derive(Clone, PartialEq)]
+pub struct Model {
+    pub title: String,
+    pub description: String,
+    pub preview_image: String,
+    pub obj_path: String,
+    pub download_url: Option<String>,
+    pub file_size: Option<String>,
+    pub credits: Option<String>,
 }
 
 // TODO: make smaller thumbnails if page loads slowly (involves refactoring image_src to thumbnail_src)
@@ -114,19 +127,50 @@ pub fn doom_projects() -> Html {
         },
     ];
 
+    // 3d model definitions
+    let models = vec![
+        Model {
+            title: "Unholy Cathedral".to_string(),
+            description: "An evil cathedral inspired by the Kölner Dom, originally made for the Cathedral of Charybdis map.".to_string(),
+            preview_image: "/static/doom_models/cathedral_preview.png".to_string(),
+            obj_path: "/static/cathedral/cathedral.obj".to_string(),
+            download_url: None, // Set to Some("/static/downloads/cathedral.zip".to_string()) when ready
+            file_size: Some("12.4 MB".to_string()),
+            credits: Some("Placeholder".to_string()),
+        },
+        Model {
+            title: "Scylla".to_string(),
+            description: "A car inspired by the classic Ford Mustang design, originally made for the Cathedral of Charybdis map.".to_string(),
+            preview_image: "/static/doom_models/jammy_preview.png".to_string(),
+            obj_path: "/static/doom_models/jammy.obj".to_string(),
+            download_url: None,
+            file_size: Some("8.7 MB".to_string()),
+            credits: Some("Placeholder".to_string()),
+        },
+        Model {
+            title: "ΚΑΝΑΔΕΖΑ".to_string(),
+            description: "A doomcute vehicle inspired by the trucks used by the Hellenic military, originally made for the ΣΣΑΣ map.".to_string(),
+            preview_image: "/static/doom_models/ssas_preview.png".to_string(),
+            obj_path: "/static/doom_models/ssas.obj".to_string(),
+            download_url: None,
+            file_size: Some("15.2 MB".to_string()),
+            credits: Some("Placeholder".to_string()),
+        },
+    ];
+
     html! {
         <main class="min-h-screen text-white pt-8 pb-10">
             <div class="container mx-auto pt-4 px-4 max-w-7xl">
                 
                 // page heading
                 <Heading 
-                    src="/static/doom_projects/DOOM_PROJECTS_1.png" 
-                    alt="Doom Projects"
+                    src="/static/doom_projects/DOOM_MAPS_1.png" 
+                    alt="Doom Maps"
                     sub_heading="All maps made for limit-removing source ports and tested in GZDoom."
                 />
 
                 // projects grid
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center pb-12">
                     { for maps.iter().map(|map| html! {
                         <DoomMapItem
                             title={map.title.clone()}
@@ -134,6 +178,27 @@ pub fn doom_projects() -> Html {
                             image_src={map.image_src.clone()}
                             image_alt={map.image_alt.clone()}
                             additional_images={map.additional_images.clone()}
+                        />
+                    })}
+                </div>
+
+                <Heading 
+                    src="/static/doom_projects/DOOM_MODELS_1.png" 
+                    alt="Doom Models"
+                    sub_heading="All models made using Ultimate Doom Builder and Blender."
+                />
+
+                // models grid
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
+                    { for models.iter().map(|model| html! {
+                        <DoomModelItem
+                            title={model.title.clone()}
+                            description={model.description.clone()}
+                            preview_image={model.preview_image.clone()}
+                            obj_path={model.obj_path.clone()}
+                            download_url={model.download_url.clone()}
+                            file_size={model.file_size.clone()}
+                            credits={model.credits.clone()}
                         />
                     })}
                 </div>

@@ -18,6 +18,7 @@
     --color-yellow-600: oklch(68.1% 0.162 75.834);
     --color-green-400: oklch(79.2% 0.209 151.711);
     --color-green-500: oklch(72.3% 0.219 149.579);
+    --color-green-600: oklch(62.7% 0.194 149.214);
     --color-green-900: oklch(39.3% 0.095 152.535);
     --color-cyan-500: oklch(71.5% 0.143 215.221);
     --color-blue-500: oklch(62.3% 0.214 259.815);
@@ -330,6 +331,12 @@
   }
   .z-\[9999\] {
     z-index: 9999;
+  }
+  .col-span-1 {
+    grid-column: span 1 / span 1;
+  }
+  .col-span-3 {
+    grid-column: span 3 / span 3;
   }
   .container {
     width: 100%;
@@ -655,6 +662,9 @@
   .grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+  .grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
   .flex-col {
     flex-direction: column;
   }
@@ -702,6 +712,13 @@
   }
   .gap-15 {
     gap: calc(var(--spacing) * 15);
+  }
+  .space-y-1 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(calc(var(--spacing) * 1) * var(--tw-space-y-reverse));
+      margin-block-end: calc(calc(var(--spacing) * 1) * calc(1 - var(--tw-space-y-reverse)));
+    }
   }
   .space-y-2 {
     :where(& > :not(:last-child)) {
@@ -814,6 +831,9 @@
   }
   .border-green-500 {
     border-color: var(--color-green-500);
+  }
+  .border-green-600 {
+    border-color: var(--color-green-600);
   }
   .border-red-600 {
     border-color: var(--color-red-600);
@@ -1028,6 +1048,9 @@
   .pb-10 {
     padding-bottom: calc(var(--spacing) * 10);
   }
+  .pb-12 {
+    padding-bottom: calc(var(--spacing) * 12);
+  }
   .pb-15 {
     padding-bottom: calc(var(--spacing) * 15);
   }
@@ -1117,6 +1140,9 @@
   }
   .text-green-400 {
     color: var(--color-green-400);
+  }
+  .text-green-600 {
+    color: var(--color-green-600);
   }
   .text-red-400 {
     color: var(--color-red-400);
@@ -1351,6 +1377,13 @@
       }
     }
   }
+  .hover\:border-green-600 {
+    &:hover {
+      @media (hover: hover) {
+        border-color: var(--color-green-600);
+      }
+    }
+  }
   .hover\:border-pink-500 {
     &:hover {
       @media (hover: hover) {
@@ -1441,6 +1474,13 @@
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-gray-700);
+      }
+    }
+  }
+  .hover\:bg-green-600 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-green-600);
       }
     }
   }
