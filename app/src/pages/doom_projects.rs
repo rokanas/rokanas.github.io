@@ -1,12 +1,12 @@
 // pages/doom_projects.rs
 use yew::prelude::*;
 use web_sys::window;
-use crate::components::doom_project_item::{DoomProjectItem};
+use crate::components::doom_map_item::{DoomMapItem};
 use crate::components::heading::{Heading};
 
 // struct to hold project data
 #[derive(Clone, PartialEq)]
-pub struct Project {
+pub struct Map {
     pub title: String,
     pub description: String,
     pub image_src: String,
@@ -27,9 +27,9 @@ pub fn doom_projects() -> Html {
         }
     });
 
-    // project item definitions (temporarily hardcoded, can be moved to db later)
-    let projects = vec![
-        Project {
+    // map item definitions (temporarily hardcoded, can be moved to db later)
+    let maps = vec![
+        Map {
             title: "Cathedral of Charybdis".to_string(),
             description: "A dark and atmospheric map. All are swallowed by the shadow of the cathedral. Can you resist the evil cult of Charybdis?".to_string(),
             image_src: "/static/doom_projects/cathedral_of_charybdis/cathedral_of_charybdis_1.png".to_string(),
@@ -47,7 +47,7 @@ pub fn doom_projects() -> Html {
                 "/static/doom_projects/cathedral_of_charybdis/cathedral_of_charybdis_11.png".to_string(),
             ],
         },
-        Project {
+        Map {
             title: "Jammy".to_string(),
             description: "A gimmicky challenge map involving a lot of scripted terrain transformation and light slaughter. Inspired by Doom64 MAP19. Push through and don't stand still!".to_string(),
             image_src: "/static/doom_projects/jammy/jammy_1.png".to_string(),
@@ -61,7 +61,7 @@ pub fn doom_projects() -> Html {
             ],
 
         },
-        Project {
+        Map {
             title: "Whispers of Change".to_string(),
             description: "A short and atmospheric map with story elements and light puzzles. Co-authored by Erik Lindstrand and made in 1 day for Chalmers March GameJam 2024.".to_string(),
             image_src: "/static/doom_projects/whispers_of_change/whispers_of_change_1.png".to_string(),
@@ -73,7 +73,7 @@ pub fn doom_projects() -> Html {
                 "/static/doom_projects/whispers_of_change/whispers_of_change_5.png".to_string(),
             ],
         },
-        Project {
+        Map {
             title: "SWEDEN".to_string(),
             description: "An adventure map that has nothing to do with Sweden. Explore the demonic presence aroused in the ruins by human interference.".to_string(),
             image_src: "/static/doom_projects/sweden/sweden_1.png".to_string(),
@@ -89,7 +89,7 @@ pub fn doom_projects() -> Html {
             ],
             
         },
-        Project {
+        Map {
             title: "ΣΣΑΣ".to_string(),
             description: "A map that is definitely not inspired by a real military base. Discover the hellish secrets buried beneath military inefficiency and bureaucracy!".to_string(),
             image_src: "/static/doom_projects/ssas/ssas_1.png".to_string(),
@@ -127,13 +127,13 @@ pub fn doom_projects() -> Html {
 
                 // projects grid
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
-                    { for projects.iter().map(|project| html! {
-                        <DoomProjectItem
-                            title={project.title.clone()}
-                            description={project.description.clone()}
-                            image_src={project.image_src.clone()}
-                            image_alt={project.image_alt.clone()}
-                            additional_images={project.additional_images.clone()}
+                    { for maps.iter().map(|map| html! {
+                        <DoomMapItem
+                            title={map.title.clone()}
+                            description={map.description.clone()}
+                            image_src={map.image_src.clone()}
+                            image_alt={map.image_alt.clone()}
+                            additional_images={map.additional_images.clone()}
                         />
                     })}
                 </div>

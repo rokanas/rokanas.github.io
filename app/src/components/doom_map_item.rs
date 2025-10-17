@@ -1,4 +1,4 @@
-// components/doom_project_item.rs
+// components/doom_map_item.rs
 use yew::prelude::*;
 
 #[derive(Properties, PartialEq)]
@@ -12,7 +12,7 @@ pub struct ProjectItemProps {
     pub additional_images: Vec<String>, 
 }
 
-#[function_component(DoomProjectItem)]
+#[function_component(DoomMapItem)]
 pub fn project_item(props: &ProjectItemProps) -> Html {
     let alt_text = props.image_alt.as_ref()
         .unwrap_or(&props.title)
