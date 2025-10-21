@@ -7,7 +7,7 @@ pub struct DoomModelItemProps {
     pub title: String,
     pub description: String,
     pub preview_image: String,
-    pub obj_path: String,
+    pub model_name: String,
     #[prop_or_default]
     pub download_url: Option<String>,
     #[prop_or_default]
@@ -156,7 +156,7 @@ pub fn doom_model_item(props: &DoomModelItemProps) -> Html {
                             <div class="relative flex justify-center items-center bg-[#2b2b2b] rounded-lg p-4">
                                 <div class="cursor-grab hover:cursor-grab active:cursor-grabbing">
                                     <ModelViewer 
-                                        obj_path={props.obj_path.clone()}
+                                        model_name={props.model_name.clone()}
                                         width=800
                                         height=400
                                     />

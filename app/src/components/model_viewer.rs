@@ -14,7 +14,7 @@ extern "C" {
 #[derive(Properties, PartialEq)]
 pub struct ModelViewerProps {
     #[prop_or_default]
-    pub obj_path: String,
+    pub model_name: String,
     #[prop_or(400)]
     pub width: u32,
     #[prop_or(300)]
@@ -25,23 +25,23 @@ pub struct ModelViewerProps {
 pub fn model_viewer(props: &ModelViewerProps) -> Html {
     let canvas_ref = use_node_ref();
     let loading = use_state(|| true);
-    let obj_path = if props.obj_path.is_empty() {
-        "/static/cathedral/cathedral.obj".to_string()
+    let model_name = if props.model_name.is_empty() {
+        "unholy_cathedral".to_string()
     } else {
-        props.obj_path.clone()
+        props.model_name.clone()
     };
 
     {
         let canvas_ref = canvas_ref.clone();
-        let obj_path = obj_path.clone();
+        let model_name = model_name.clone();
         let loading = loading.clone();
         
         use_effect_with((), move |_| {
             let canvas_ref = canvas_ref.clone();
-            let obj_path = obj_path.clone();
+            let model_name = model_name.clone();
             let loading = loading.clone();
             
-            // Callback from JS -> Rust
+            // callback from js -> rust
             let callback = {
                 let loading = loading.clone();
                 wasm_bindgen::closure::Closure::wrap(Box::new(move || {
@@ -58,7 +58,7 @@ pub fn model_viewer(props: &ModelViewerProps) -> Html {
             // small delay to ensure canvas is mounted
             let timeout = gloo_timers::callback::Timeout::new(100, move || {
                 if let Some(canvas) = canvas_ref.cast::<HtmlCanvasElement>() {
-                    init_threejs_scene(&canvas, &obj_path);
+                    init_threejs_scene(&canvas, &model_name);
                 } else {
                     console::error_1(&"Canvas element not found".into());
                 }

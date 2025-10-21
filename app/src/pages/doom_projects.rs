@@ -21,7 +21,7 @@ pub struct Model {
     pub title: String,
     pub description: String,
     pub preview_image: String,
-    pub obj_path: String,
+    pub model_name: String,
     pub download_url: Option<String>,
     pub file_size: Option<String>,
     pub credits: Option<String>,
@@ -133,8 +133,8 @@ pub fn doom_projects() -> Html {
             title: "Unholy Cathedral".to_string(),
             description: "An evil cathedral inspired by the Kölner Dom, originally made for the Cathedral of Charybdis map.".to_string(),
             preview_image: "/static/doom_models/cathedral_preview.png".to_string(),
-            obj_path: "/static/cathedral/cathedral.obj".to_string(),
-            download_url: None, // Set to Some("/static/downloads/cathedral.zip".to_string()) when ready
+            model_name: "unholy_cathedral".to_string(),
+            download_url: None, // set to Some("/static/downloads/cathedral.zip".to_string()) when ready
             file_size: Some("12.4 MB".to_string()),
             credits: Some("Placeholder".to_string()),
         },
@@ -142,7 +142,7 @@ pub fn doom_projects() -> Html {
             title: "Scylla".to_string(),
             description: "A car inspired by the classic Ford Mustang design, originally made for the Cathedral of Charybdis map.".to_string(),
             preview_image: "/static/doom_models/jammy_preview.png".to_string(),
-            obj_path: "/static/doom_models/jammy.obj".to_string(),
+            model_name: "unholy_cathedral".to_string(),
             download_url: None,
             file_size: Some("8.7 MB".to_string()),
             credits: Some("Placeholder".to_string()),
@@ -151,7 +151,7 @@ pub fn doom_projects() -> Html {
             title: "ΚΑΝΑΔΕΖΑ".to_string(),
             description: "A doomcute vehicle inspired by the trucks used by the Hellenic military, originally made for the ΣΣΑΣ map.".to_string(),
             preview_image: "/static/doom_models/ssas_preview.png".to_string(),
-            obj_path: "/static/doom_models/ssas.obj".to_string(),
+            model_name: "unholy_cathedral".to_string(),
             download_url: None,
             file_size: Some("15.2 MB".to_string()),
             credits: Some("Placeholder".to_string()),
@@ -195,7 +195,7 @@ pub fn doom_projects() -> Html {
                             title={model.title.clone()}
                             description={model.description.clone()}
                             preview_image={model.preview_image.clone()}
-                            obj_path={model.obj_path.clone()}
+                            model_name={model.model_name.clone()}
                             download_url={model.download_url.clone()}
                             file_size={model.file_size.clone()}
                             credits={model.credits.clone()}

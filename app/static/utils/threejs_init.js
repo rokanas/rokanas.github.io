@@ -1,7 +1,9 @@
 // static/utils/threejs_init.js
        
-window.initThreeJsScene = function(canvas, objPath) {
+window.initThreeJsScene = function(canvas, modelName) {
     console.log('Starting Three.js initialization...');
+
+    const objPath = `static/models/${modelName}/${modelName}.obj`;
 
     // scene/camera/renderer setup
     const scene = new THREE.Scene();
@@ -131,7 +133,7 @@ window.initThreeJsScene = function(canvas, objPath) {
 
                     if (textureName && textureName !== 'undefined') {
                         // console.log('Attempting to load texture:', textureName);
-                        const texturePath = `static/cathedral/textures/${textureName}.png`;
+                        const texturePath = `static/models/${modelName}/textures/${textureName}.png`;
 
                         // increment pending count for this texture
                         pendingTextures++;

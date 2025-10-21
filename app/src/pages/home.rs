@@ -25,10 +25,10 @@ pub fn home() -> Html {
 
             // model canvas is button to doom projects
             <div
-                title = "Cathedral of Charybdis"
+                title = "Unholy Cathedral"
                 class = "cursor-grab hover:cursor-grab active:cursor-grabbing">
                 <ModelViewer 
-                    obj_path="/static/cathedral/cathedral.obj"
+                    model_name="unholy_cathedral"
                     width={650}
                     height={650}
                 />
@@ -36,7 +36,7 @@ pub fn home() -> Html {
 
             // model made text anchored to top/bottom left depending on navbar type
             <img 
-                src="/static/cathedral/MODEL_MADE.png" 
+                src="/static/models/unholy_cathedral/MODEL_MADE.png" 
                 alt="Model made using Ultimate Doom Builder + Blender"
                 class={format!(
                     "absolute {} left-2 w-[25vw] h-auto  text-red-600", // max-w-32 max-h-32 TODO: use max if necessary for larger screens
