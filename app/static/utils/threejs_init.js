@@ -11,9 +11,9 @@ window.initThreeJsScene = function(canvas, modelName, frontCam = true) {
    
     // set camera position based on parameter
     if (frontCam) {
-        camera.position.set(0, 0, 10); // straight-on front view
+        camera.position.set(0, 0, 11); // straight-on front view
     } else {
-        camera.position.set(-5, 3, 8); // slightly above, to the left, and in front
+        camera.position.set(-5, 3, 7); // slightly above, to the left, and in front
     }
 
     const renderer = new THREE.WebGLRenderer({ 
