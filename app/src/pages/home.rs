@@ -17,6 +17,13 @@ fn use_navigation() -> Callback<Route> {
 pub fn home() -> Html {
     let navbar_context = use_context::<NavbarContext>().expect("NavbarContext not found");
 
+    let window_width = use_state(|| {
+        web_sys::window()
+            .and_then(|w| w.inner_width().ok())
+            .and_then(|w| w.as_f64())
+            .unwrap_or(800.0) as u32
+    });
+
     html! {
         <div class={format!(
             "h-screen flex items-center justify-center transition-all duration-500 ease-in-out {}",
@@ -29,7 +36,7 @@ pub fn home() -> Html {
                 class = "cursor-grab hover:cursor-grab active:cursor-grabbing">
                 <ModelViewer 
                     model_name="unholy_cathedral"
-                    width={650}
+                    width={*window_width}
                     height={650}
                     front_cam=true
                 />
