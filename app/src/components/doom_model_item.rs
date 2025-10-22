@@ -81,15 +81,6 @@ pub fn doom_model_item(props: &DoomModelItemProps) -> Html {
                         <p class="text-gray-300 mb-4 text-sm leading-relaxed flex-grow">
                             {&props.description}
                         </p>
-
-                        // optional metadata
-                        if props.file_size.is_some() {
-                            <div class="text-xs text-gray-400 font-mono mb-3 space-y-1">
-                                if let Some(file_size) = &props.file_size {
-                                    <div>{"Size: "}{file_size}</div>
-                                }
-                            </div>
-                        }
                         
                         // buttons row
                         <div class="flex justify-between items-start mb-3 gap-3">
@@ -198,14 +189,11 @@ pub fn doom_model_item(props: &DoomModelItemProps) -> Html {
                                 <div class="bg-[#2b2b2b] p-4 rounded-lg col-span-3">
                                     <h4 class="text-sm font-mono text-red-500 mb-2">{"CREDITS"}</h4>
                                     <div class="space-y-1 text-gray-300 text-sm">
-                                        // if let Some(credit) = &props.credits {
-                                        //     <div class="flex flex-col">
-                                        //         <span class="font-mono">{credit}</span>
-                                        //     </div>
-                                        // }
-                                        <div>{"• Auto-rotates"}</div>
-                                        <div>{"• Drag to rotate manually"}</div>
-                                        <div>{"• Scroll to zoom"}</div>
+                                        if let Some(credit) = &props.credits {
+                                            <div class="flex flex-col">
+                                                <span class="font-mono whitespace-pre-line">{credit}</span> // whitespace-pre-line makes /n be respected
+                                            </div>
+                                        }
                                     </div>
                                 </div>
                             </div>

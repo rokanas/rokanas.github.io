@@ -135,8 +135,13 @@ pub fn doom_projects() -> Html {
             preview_image: "/static/models/unholy_cathedral/unholy_cathedral_preview.png".to_string(),
             model_name: "unholy_cathedral".to_string(),
             download_url: None, // set to Some("/static/downloads/cathedral.zip".to_string()) when ready
-            file_size: Some("12.4 MB".to_string()),
-            credits: Some("Placeholder".to_string()),
+            file_size: Some("11.6 MB".to_string()),
+            credits: Some(
+                "Model made by Bifteki using Ultimate Doom Builder & Blender \n
+                All textures from GothicTX by Adelusion et al. and from Doom II by id Software \n
+                Inspired by the Kölner Dom in Cologne, Germany."
+                .to_string()
+            ),
         },
         Model {
             title: "Scylla".to_string(),
@@ -144,8 +149,17 @@ pub fn doom_projects() -> Html {
             preview_image: "/static/models/scylla/scylla_preview.png".to_string(),
             model_name: "scylla".to_string(),
             download_url: None,
-            file_size: Some("8.7 MB".to_string()),
-            credits: Some("Placeholder".to_string()),
+            file_size: Some("169 KB".to_string()),
+            credits: Some(
+                "Model made by Bifteki using Ultimate Doom Builder & Blender \n
+                Head lights, steering wheel, license plate and car name textures by Bifteki. \n
+                Grille & tire textures from CarPack by AuroraTheKitsune
+                (https://www.doomworld.com/forum/topic/138609-carpack-car-truck-textures-for-doom/) \n
+                Tail lights and interior textures from GothicTX by Adelusion et al. \n
+                All other textures from Doom II by id Software \n
+                Inspired by the classic Ford Mustang."
+                .to_string()
+            ),
         },
         Model {
             title: "ΚΑΝΑΔΕΖΑ".to_string(),
@@ -153,8 +167,15 @@ pub fn doom_projects() -> Html {
             preview_image: "/static/models/kanadeza/kanadeza_preview.png".to_string(),
             model_name: "kanadeza".to_string(),
             download_url: None,
-            file_size: Some("15.2 MB".to_string()),
-            credits: Some("Placeholder".to_string()),
+            file_size: Some("146 KB".to_string()),
+            credits: Some(
+                "Model made by Bifteki using Ultimate Doom Builder & Blender \n
+                Grille & tire textures from CarPack by AuroraTheKitsune
+                (https://www.doomworld.com/forum/topic/138609-carpack-car-truck-textures-for-doom/) \n
+                All other textures from Doom II by id Software \n
+                Inspired by the Καναδέζα trucks used by the Hellenic military."
+                .to_string()
+            ),
         },
     ];
 
@@ -170,7 +191,7 @@ pub fn doom_projects() -> Html {
                 />
 
                 // projects grid
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center pb-13">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center pb-14">
                     { for maps.iter().map(|map| html! {
                         <DoomMapItem
                             title={map.title.clone()}
