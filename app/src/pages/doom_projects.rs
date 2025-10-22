@@ -13,6 +13,7 @@ pub struct Map {
     pub image_src: String,
     pub image_alt: Option<String>,
     pub additional_images: Vec<String>,
+    pub border: String,
 }
 
 // struct to hold 3d model data
@@ -25,6 +26,7 @@ pub struct Model {
     pub download_url: Option<String>,
     pub file_size: Option<String>,
     pub credits: Option<String>,
+    pub border: String,
 }
 
 // TODO: make smaller thumbnails if page loads slowly (involves refactoring image_src to thumbnail_src)
@@ -59,6 +61,7 @@ pub fn doom_projects() -> Html {
                 "/static/doom_projects/cathedral_of_charybdis/cathedral_of_charybdis_10.png".to_string(),
                 "/static/doom_projects/cathedral_of_charybdis/cathedral_of_charybdis_11.png".to_string(),
             ],
+            border: "/static/doom_projects/cathedral_of_charybdis/ADEL_B15_3.png".to_string(),
         },
         Map {
             title: "Jammy".to_string(),
@@ -72,6 +75,7 @@ pub fn doom_projects() -> Html {
                 "/static/doom_projects/jammy/jammy_5.png".to_string(),
                 "/static/doom_projects/jammy/jammy_6.png".to_string(),
             ],
+            border: "/static/doom_projects/jammy/OB8_0N_4.png".to_string(),
 
         },
         Map {
@@ -85,6 +89,7 @@ pub fn doom_projects() -> Html {
                 "/static/doom_projects/whispers_of_change/whispers_of_change_4.png".to_string(),
                 "/static/doom_projects/whispers_of_change/whispers_of_change_5.png".to_string(),
             ],
+            border: "/static/doom_projects/whispers_of_change/ADEL_G02_2.png".to_string(),
         },
         Map {
             title: "SWEDEN".to_string(),
@@ -100,6 +105,7 @@ pub fn doom_projects() -> Html {
                 "/static/doom_projects/sweden/sweden_7.png".to_string(),
                 "/static/doom_projects/sweden/sweden_8.png".to_string(),
             ],
+            border: "/static/doom_projects/sweden/STONE6_2.png".to_string(),
             
         },
         Map {
@@ -124,6 +130,7 @@ pub fn doom_projects() -> Html {
                 "/static/doom_projects/ssas/ssas_15.png".to_string(),
                 "/static/doom_projects/ssas/ssas_16.png".to_string(),
             ],
+            border: "/static/doom_projects/ssas/SP_HOT1.png".to_string(),
         },
     ];
 
@@ -142,6 +149,7 @@ pub fn doom_projects() -> Html {
                 Inspired by the Kölner Dom in Cologne, Germany."
                 .to_string()
             ),
+            border: "/static/doom_projects/cathedral_of_charybdis/ADEL_B15_3.png".to_string(),
         },
         Model {
             title: "Scylla".to_string(),
@@ -160,6 +168,7 @@ pub fn doom_projects() -> Html {
                 Inspired by the classic Ford Mustang."
                 .to_string()
             ),
+            border: "/static/models/scylla/SHAWN4.png".to_string(),
         },
         Model {
             title: "ΚΑΝΑΔΕΖΑ".to_string(),
@@ -176,6 +185,7 @@ pub fn doom_projects() -> Html {
                 Inspired by the Καναδέζα trucks used by the Hellenic military."
                 .to_string()
             ),
+            border: "/static/models/kanadeza/BROWNGRN_2.png".to_string(),
         },
     ];
 
@@ -199,6 +209,7 @@ pub fn doom_projects() -> Html {
                             image_src={map.image_src.clone()}
                             image_alt={map.image_alt.clone()}
                             additional_images={map.additional_images.clone()}
+                            border={map.border.clone()}
                         />
                     })}
                 </div>
@@ -220,6 +231,7 @@ pub fn doom_projects() -> Html {
                             download_url={model.download_url.clone()}
                             file_size={model.file_size.clone()}
                             credits={model.credits.clone()}
+                            border={model.border.clone()}
                         />
                     })}
                 </div>

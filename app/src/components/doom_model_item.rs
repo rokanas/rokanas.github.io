@@ -14,6 +14,7 @@ pub struct DoomModelItemProps {
     pub file_size: Option<String>,
     #[prop_or_default]
     pub credits: Option<String>,
+    pub border: String,
 }
 
 #[function_component(DoomModelItem)]
@@ -50,11 +51,11 @@ pub fn doom_model_item(props: &DoomModelItemProps) -> Html {
             <div class="max-w-sm hover:scale-105 transition-all duration-300">
                 <div 
                     class="relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
-                    style="background-image: url('/static/common/STBAR_MID.png'); 
+                    style={format!("background-image: url({}); 
                             background-repeat: no-repeat; 
                             background-size: 100% 100%; 
                             image-rendering: pixelated;
-                            min-height: 400px;"
+                            min-height: 400px;", props.border)}
                 >
                     // inner black overlay box
                     <div 
