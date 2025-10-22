@@ -24,6 +24,13 @@ pub fn home() -> Html {
             .unwrap_or(800.0) as u32
     });
 
+    let window_height = use_state(|| {
+    web_sys::window()
+        .and_then(|w| w.inner_height().ok())
+        .and_then(|w| w.as_f64())
+        .unwrap_or(600.0) as u32
+    });
+
     html! {
         <div class={format!(
             "h-screen flex items-center justify-center transition-all duration-500 ease-in-out {}",
@@ -37,7 +44,7 @@ pub fn home() -> Html {
                 <ModelViewer 
                     model_name="unholy_cathedral"
                     width={*window_width}
-                    height={650}
+                    height={*window_height}
                     front_cam=true
                 />
             </div>
