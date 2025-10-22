@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <title>Konstantinos Rokanas</title>
-        <link rel="stylesheet" href="/output-3f317ead3d898047.css" integrity="sha384-Csi7z9fydO901MTkFS0GgjSuaZLVxCVh6k5tBFnK23Qghqm6b96Hiig8YRrK1aQQ"/>
+        <link rel="stylesheet" href="/output-4c9a722f9c2a8e0a.css" integrity="sha384-9f3i69EQ+DRvciUBW3qPYDTIxp5ySwMx3UQhdgryTXgBXHN3P8XDzAr+RNWp2rcz"/>
         
 
         <!-- favicon variations generated using https://realfavicongenerator.net/ -->
@@ -15,19 +15,22 @@
         
         <!-- load three.js -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+        <!-- load OrbitControls for interactive camera -->
+        <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
         
         <!-- use reliable CDN for OBJLoader -->
         <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js"></script>
         
         <!-- scene initialization -->
-        <script src="/threejs_init-970ff7ae13a9437d.js" integrity="sha384-JVgUirVhguQDWqsHI5E19cDufGgnf49F8q/TubweeLZDnZW9g/jUc8LZbviysiwp"></script>
-    <link rel="modulepreload" href="/app-142e3980af17de72.js" crossorigin="anonymous" integrity="sha384-lsMpA3Dg6lpmlP6ZHYisQNM50O6wIk8VXWfqP6ChJ6S8vHrvW6dgHbXP/n9tDecc"><link rel="preload" href="/app-142e3980af17de72_bg.wasm" crossorigin="anonymous" integrity="sha384-PZZGGb4dCEGk2Pcb8yCNU+p4pwCsQGgKa8JcvDnygDSOuA/siwOKA759OOQUTrOf" as="fetch" type="application/wasm"></head>
+        <script src="/threejs_init-14971b0a8f66c1d5.js" integrity="sha384-espprKCk6+l+6seN59/AW1JpiMeSQWVewqCBgQRZ/C3agMD8+yUzZrDPzuY984+C"></script>
+    <link rel="modulepreload" href="/app-3d4cbdf1084b20e8.js" crossorigin="anonymous" integrity="sha384-akJpo+Hs77c2HLr4XsaRYtr9xv2IWG9aq6iLWzPr/mgPSuCkW7Did6MZ+vIp5OYZ"><link rel="preload" href="/app-3d4cbdf1084b20e8_bg.wasm" crossorigin="anonymous" integrity="sha384-x/NaUIBh9tFcr3YqwqQFdCUVawQzE5UANuz7oEXiIjxkrYtqt91D55aSuMAnz3Bc" as="fetch" type="application/wasm"></head>
     <body>
         <div id="app"></div>
     
 <script type="module">
-import init, * as bindings from '/app-142e3980af17de72.js';
-const wasm = await init({ module_or_path: '/app-142e3980af17de72_bg.wasm' });
+import init, * as bindings from '/app-3d4cbdf1084b20e8.js';
+const wasm = await init({ module_or_path: '/app-3d4cbdf1084b20e8_bg.wasm' });
 
 
 window.wasmBindings = bindings;

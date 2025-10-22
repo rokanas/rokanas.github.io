@@ -1,12 +1,20 @@
 // static/utils/threejs_init.js
        
-window.initThreeJsScene = function(canvas, objPath) {
+window.initThreeJsScene = function(canvas, modelName, frontCam = true) {
     console.log('Starting Three.js initialization...');
+
+    const objPath = `static/models/${modelName}/${modelName}.obj`;
 
     // scene/camera/renderer setup
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, canvas.width / canvas.height, 0.1, 1000);
-    camera.position.set(0, 0, 10);
+   
+    // set camera position based on parameter
+    if (frontCam) {
+        camera.position.set(0, 0, 10); // straight-on front view
+    } else {
+        camera.position.set(-5, 3, 8); // slightly above, to the left, and in front
+    }
 
     const renderer = new THREE.WebGLRenderer({ 
         canvas: canvas, 
@@ -15,6 +23,23 @@ window.initThreeJsScene = function(canvas, objPath) {
     });
     renderer.setSize(canvas.width, canvas.height);
     renderer.setClearColor(0x000000, 0); // transparent
+
+    // Create OrbitControls for interaction
+    let controls = null;
+    if (typeof THREE.OrbitControls !== 'undefined') {
+        controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.screenSpacePanning = false;
+        controls.minDistance = 5;
+        controls.maxDistance = 20;
+        controls.maxPolarAngle = Math.PI;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 0.5;
+        console.log('OrbitControls initialized');
+    } else {
+        console.warn('OrbitControls not available - manual control disabled');
+    }
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
     scene.add(ambientLight);
@@ -114,7 +139,7 @@ window.initThreeJsScene = function(canvas, objPath) {
 
                     if (textureName && textureName !== 'undefined') {
                         // console.log('Attempting to load texture:', textureName);
-                        const texturePath = `static/cathedral/textures/${textureName}.png`;
+                        const texturePath = `static/models/${modelName}/textures/${textureName}.png`;
 
                         // increment pending count for this texture
                         pendingTextures++;
@@ -168,6 +193,13 @@ window.initThreeJsScene = function(canvas, objPath) {
 
             model = object;
             scene.add(object);
+            
+            // If controls exist, focus them on the model
+            // if (controls) {
+            //     controls.target.set(0, 1.5, 0);
+            //     controls.update();
+            // }
+            
             modelAdded = true;
             console.log('Model added successfully');
 
@@ -225,9 +257,15 @@ window.initThreeJsScene = function(canvas, objPath) {
 
     function animate() {
         requestAnimationFrame(animate);
-        if (model) {
+        
+        // Update controls if they exist
+        if (controls) {
+            controls.update();
+        } else if (model) {
+            // Fallback to simple rotation if no controls
             model.rotation.y += 0.0005;
         }
+        
         renderer.render(scene, camera);
     }
 
