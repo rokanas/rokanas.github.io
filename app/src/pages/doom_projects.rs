@@ -132,7 +132,7 @@ pub fn doom_projects() -> Html {
         Model {
             title: "Unholy Cathedral".to_string(),
             description: "An evil cathedral inspired by the Kölner Dom, originally made for the Cathedral of Charybdis map.".to_string(),
-            preview_image: "/static/doom_models/cathedral_preview.png".to_string(),
+            preview_image: "/static/models/unholy_cathedral/unholy_cathedral_preview.png".to_string(),
             model_name: "unholy_cathedral".to_string(),
             download_url: None, // set to Some("/static/downloads/cathedral.zip".to_string()) when ready
             file_size: Some("12.4 MB".to_string()),
@@ -141,7 +141,7 @@ pub fn doom_projects() -> Html {
         Model {
             title: "Scylla".to_string(),
             description: "A car inspired by the classic Ford Mustang design, originally made for the Cathedral of Charybdis map.".to_string(),
-            preview_image: "/static/doom_models/jammy_preview.png".to_string(),
+            preview_image: "/static/models/scylla/scylla_preview.png".to_string(),
             model_name: "scylla".to_string(),
             download_url: None,
             file_size: Some("8.7 MB".to_string()),
@@ -150,7 +150,7 @@ pub fn doom_projects() -> Html {
         Model {
             title: "ΚΑΝΑΔΕΖΑ".to_string(),
             description: "A doomcute vehicle inspired by the trucks used by the Hellenic military, originally made for the ΣΣΑΣ map.".to_string(),
-            preview_image: "/static/doom_models/ssas_preview.png".to_string(),
+            preview_image: "/static/models/kanadeza/kanadeza_preview.png".to_string(),
             model_name: "kanadeza".to_string(),
             download_url: None,
             file_size: Some("15.2 MB".to_string()),
