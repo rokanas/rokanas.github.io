@@ -1,6 +1,6 @@
 // static/utils/threejs_init.js
        
-window.initThreeJsScene = function(canvas, modelName) {
+window.initThreeJsScene = function(canvas, modelName, frontCam = true) {
     console.log('Starting Three.js initialization...');
 
     const objPath = `static/models/${modelName}/${modelName}.obj`;
@@ -8,7 +8,13 @@ window.initThreeJsScene = function(canvas, modelName) {
     // scene/camera/renderer setup
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, canvas.width / canvas.height, 0.1, 1000);
-    camera.position.set(0, 0, 10);
+   
+    // set camera position based on parameter
+    if (frontCam) {
+        camera.position.set(0, 0, 10); // straight-on front view
+    } else {
+        camera.position.set(-5, 3, 8); // slightly above, to the left, and in front
+    }
 
     const renderer = new THREE.WebGLRenderer({ 
         canvas: canvas, 

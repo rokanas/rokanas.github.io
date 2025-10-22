@@ -159,6 +159,7 @@ pub fn doom_model_item(props: &DoomModelItemProps) -> Html {
                                         model_name={props.model_name.clone()}
                                         width=800
                                         height=400
+                                        front_cam=false
                                     />
                                 </div>
 

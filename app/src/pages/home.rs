@@ -31,6 +31,7 @@ pub fn home() -> Html {
                     model_name="unholy_cathedral"
                     width={650}
                     height={650}
+                    front_cam=true
                 />
             </div>
 

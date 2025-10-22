@@ -8,7 +8,7 @@ use wasm_bindgen::JsCast;
 #[wasm_bindgen]
 extern "C" {
     #[wasm_bindgen(js_name = "initThreeJsScene")]
-    fn init_threejs_scene(canvas: &HtmlCanvasElement, obj_path: &str);
+    fn threejs_init(canvas: &HtmlCanvasElement, obj_path: &str, front_cam: bool);
 }
 
 #[derive(Properties, PartialEq)]
@@ -19,6 +19,8 @@ pub struct ModelViewerProps {
     pub width: u32,
     #[prop_or(300)]
     pub height: u32,
+    #[prop_or(true)]
+    pub front_cam: bool,
 }
 
 #[function_component(ModelViewer)]
@@ -34,6 +36,7 @@ pub fn model_viewer(props: &ModelViewerProps) -> Html {
     {
         let canvas_ref = canvas_ref.clone();
         let model_name = model_name.clone();
+        let front_cam = props.front_cam;
         let loading = loading.clone();
         
         use_effect_with((), move |_| {
@@ -58,7 +61,7 @@ pub fn model_viewer(props: &ModelViewerProps) -> Html {
             // small delay to ensure canvas is mounted
             let timeout = gloo_timers::callback::Timeout::new(100, move || {
                 if let Some(canvas) = canvas_ref.cast::<HtmlCanvasElement>() {
-                    init_threejs_scene(&canvas, &model_name);
+                    threejs_init(&canvas, &model_name, front_cam);
                 } else {
                     console::error_1(&"Canvas element not found".into());
                 }
