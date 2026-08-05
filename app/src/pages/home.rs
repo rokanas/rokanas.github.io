@@ -15,9 +15,21 @@ fn use_navigation() -> Callback<Route> {
 
 #[function_component(Home)]
 pub fn home() -> Html {
-    let navigate = use_navigation();
-
     let navbar_context = use_context::<NavbarContext>().expect("NavbarContext not found");
+
+    let window_width = use_state(|| {
+        web_sys::window()
+            .and_then(|w| w.inner_width().ok())
+            .and_then(|w| w.as_f64())
+            .unwrap_or(800.0) as u32
+    });
+
+    let window_height = use_state(|| {
+    web_sys::window()
+        .and_then(|w| w.inner_height().ok())
+        .and_then(|w| w.as_f64())
+        .unwrap_or(600.0) as u32
+    });
 
     html! {
         <div class={format!(
@@ -26,20 +38,20 @@ pub fn home() -> Html {
         )}>
 
             // model canvas is button to doom projects
-            <button
-                title = "Cathedral of Charybdis"
-                onclick={Callback::from(move |_| navigate.emit(Route::DoomProjects))}
-                class = "cursor-pointer">
+            <div
+                title = "Unholy Cathedral"
+                class = "cursor-grab hover:cursor-grab active:cursor-grabbing">
                 <ModelViewer 
-                    obj_path="/static/cathedral/cathedral.obj"
-                    width={650}
-                    height={650}
+                    model_name="unholy_cathedral"
+                    width={*window_width}
+                    height={*window_height}
+                    front_cam=true
                 />
-            </button>
+            </div>
 
             // model made text anchored to top/bottom left depending on navbar type
             <img 
-                src="/static/cathedral/MODEL_MADE.png" 
+                src="/static/models/unholy_cathedral/MODEL_MADE.png" 
                 alt="Model made using Ultimate Doom Builder + Blender"
                 class={format!(
                     "absolute {} left-2 w-[25vw] h-auto  text-red-600", // max-w-32 max-h-32 TODO: use max if necessary for larger screens

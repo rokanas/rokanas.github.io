@@ -1,4 +1,4 @@
-# Blender MTL File: 'gzdoomsetup.blend'
+# Blender MTL File: 'GZDoom OBJ Setup.blend'
 # Material Count: 38
 
 newmtl ADEL_B14
@@ -201,7 +201,7 @@ Ni 1.000000
 d 1.000000
 illum 2
 
-newmtl CEIL5_1  
+newmtl CEIL5_1
 Ns 96.078431
 Ka 1.000000 1.000000 1.000000
 Kd 0.640000 0.640000 0.640000

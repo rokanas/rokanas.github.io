@@ -1,4 +1,4 @@
-// components/doom_project_item.rs
+// components/doom_map_item.rs
 use yew::prelude::*;
 
 #[derive(Properties, PartialEq)]
@@ -10,9 +10,10 @@ pub struct ProjectItemProps {
     pub image_alt: Option<String>,
     #[prop_or_default]
     pub additional_images: Vec<String>, 
+    pub border: String,
 }
 
-#[function_component(DoomProjectItem)]
+#[function_component(DoomMapItem)]
 pub fn project_item(props: &ProjectItemProps) -> Html {
     let alt_text = props.image_alt.as_ref()
         .unwrap_or(&props.title)
@@ -83,11 +84,11 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
             <div class="max-w-sm hover:scale-105 transition-all duration-300">
                 <div 
                     class="relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
-                    style="background-image: url('/static/common/STBAR_MID.png'); 
+                    style={format!("background-image: url({}); 
                             background-repeat: no-repeat; 
                             background-size: 100% 100%; 
                             image-rendering: pixelated;
-                            min-height: 400px;"
+                            min-height: 400px;", props.border)}
                 >
                     // inner black overlay box
                     <div 
