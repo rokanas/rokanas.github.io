@@ -1,6 +1,5 @@
-// components/footer.rs
+// components/hud.rs
 use yew::prelude::*;                    // import everything from yew prelude (html macros, hooks, components, etc)
-use yew_router::prelude::*;             // import everything from yew router prelude (routing macros, hooks, etc)
 use web_sys::{window};                  // import window function from web_sys (browser APIs for web assemnbly)
 use gloo_events::EventListener;         // import for handling DOM effects (e.g. mouse movement)
 use wasm_bindgen::JsCast;               // import trait for convering between Javascript types in web assembly
@@ -8,6 +7,7 @@ use wasm_bindgen::JsCast;               // import trait for convering between Ja
 use crate::router::Route;               // import route enum for page navigation
 use crate::components::hud_section::HudSection;
 use crate::components::hud_button::HudButton;
+use crate::hooks::{use_navigation, use_slide_visibility};
 
 // props to control footer visibility and animation
 #[derive(Properties, PartialEq)]
@@ -91,52 +91,18 @@ fn get_avatar_image(col: i32, row: i32, is_hover: bool) -> String { // take grid
     }
 }
 
-#[hook]         // macro for yew hook (reusable stateful logic)
-fn use_navigation() -> Callback<Route> {        // returns callback that takes a Route enum
-    let navigator = use_navigator().unwrap();   // get navigator object from yew router, panics if not available
-    
-    Callback::from(move |route: Route| {        // create callback that takes a route
-        navigator.push(&route);                 // use navigator to push new route
-    })
-}
-
 #[function_component(Hud)]   // declare function as footer component
 pub fn hud(props: &HudProps) -> Html {
     let (mouse_col, mouse_row) = use_mouse_grid();     // destructure tuple returned by hook to two variables (column, row)
-    let is_visible = use_state(|| false);
-    let should_render = use_state(|| props.show);
+    let (is_visible, should_render) = use_slide_visibility(props.show);
     let navigate = use_navigation();
 
-    // animate hud entrance/exit when show prop changes
-    {
-        let is_visible = is_visible.clone();
-        let should_render = should_render.clone();
-        use_effect_with(props.show, move |show| {
-            if *show {
-                // show: first render component, then slide it in
-                should_render.set(true);
-                let is_visible_clone = is_visible.clone();
-                gloo_timers::callback::Timeout::new(50, move || {
-                    is_visible_clone.set(true);
-                }).forget();
-            } else {
-                // hide first slide out, then stop rendering
-                is_visible.set(false);
-                let should_render_clone = should_render.clone();
-                gloo_timers::callback::Timeout::new(500, move || { // Wait for animation to complete
-                    should_render_clone.set(false);
-                }).forget();
-            }
-            || {}
-        });
-    }
-
     // don't render if should_render is false
-    if !*should_render {
+    if !should_render {
         return html! {};
     }
 
-    let footer_classes = if *is_visible {
+    let footer_classes = if is_visible {
         "fixed bottom-0 left-0 right-0 w-full z-40 transform translate-y-0 transition-transform duration-500 ease-out hidden sm:block"
     } else {
         "fixed bottom-0 left-0 right-0 w-full z-40 transform translate-y-full transition-transform duration-500 ease-out hidden sm:block"
@@ -150,7 +116,6 @@ pub fn hud(props: &HudProps) -> Html {
                 <HudSection 
                     background_image="/static/hud/section/STBAR1.png"
                     background_width=48
-                    background_height=32
                     text_color="text-red-600"
                     route={Route::Home}>
                     <HudButton
@@ -165,7 +130,6 @@ pub fn hud(props: &HudProps) -> Html {
                 <HudSection
                     background_image="/static/hud/section/STBAR2B.png"
                     background_width=36
-                    background_height=32
                     text_color="text-red-600"
                     route={Route::Projects}>
                     <HudButton
@@ -180,7 +144,6 @@ pub fn hud(props: &HudProps) -> Html {
                 <HudSection
                     background_image="/static/hud/section/STBAR3B.png"
                     background_width=58
-                    background_height=32
                     text_color="text-yellow-600"
                     route={Route::About}>
                     <HudButton
@@ -195,7 +158,6 @@ pub fn hud(props: &HudProps) -> Html {
                 <HudSection
                     background_image="/static/hud/section/STBAR4.png"
                     background_width=37
-                    background_height=32
                     text_color="text-white">
                     <button 
                         onclick={navigate.reform(|_| Route::Home)}
@@ -217,7 +179,6 @@ pub fn hud(props: &HudProps) -> Html {
                 <HudSection
                     background_image="/static/hud/section/STBAR5.png"
                     background_width=57
-                    background_height=32
                     text_color="text-red-600"
                     route={Route::DoomProjects}>
                     <HudButton
@@ -231,8 +192,7 @@ pub fn hud(props: &HudProps) -> Html {
                 // keys section
                 <HudSection
                     background_image="/static/hud/section/STBAR6.png"
-                    background_width=13 
-                    background_height=32
+                    background_width=13
                     text_color="text-red-600">
                     <div class="flex flex-col">
                     </div>
@@ -242,7 +202,6 @@ pub fn hud(props: &HudProps) -> Html {
                 <HudSection
                     background_image="/static/hud/section/STBAR7.png"
                     background_width=71
-                    background_height=32
                     text_color="text-blue-600"
                     route={Route::Contact}>
                     <HudButton

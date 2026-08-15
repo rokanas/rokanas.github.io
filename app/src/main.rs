@@ -2,6 +2,9 @@ mod app;
 mod router;
 mod pages;
 mod components;
+mod hooks;
+mod utils;
+mod data;
 
 use app::App;
 use tracing_subscriber::{filter::Targets, prelude::*};

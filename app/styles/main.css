@@ -5,3 +5,12 @@ body {
   height: 100%;
   margin: 0;
 }
+
+/* shared background treatment for pixel-art HUD panels: repeated
+   background-image/background-size/image-rendering combo used across
+   project cards, doom item cards, and section panels */
+@utility bg-pixel-panel {
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  image-rendering: pixelated;
+}

@@ -8,8 +8,6 @@ pub enum Route {
     Projects,
     #[at("/about")]
     About,
-    //#[at("/avatar")]
-    //Avatar,
     #[at("/doom-projects")]
     DoomProjects,
     #[at("/contact")]

@@ -1,25 +1,16 @@
 use yew::prelude::*;
 use yew_router::prelude::*;
 use crate::router::Route;
-
-// TODO: merge hud_button and header_button components
+use crate::hooks::use_navigation;
+use crate::utils::nav_button_helpers::{is_route_active, nav_image_paths};
 
 #[derive(Properties, PartialEq)]
 pub struct HeaderButtonProps {
     pub src: String,        // base filepath
-    pub alt_text: String, 
-    pub route: Route,       
+    pub alt_text: String,
+    pub route: Route,
     #[prop_or(false)]
     pub disabled: bool,     // for disabled buttons
-}
-
-#[hook]
-fn use_navigation() -> Callback<Route> {
-    let navigator = use_navigator().unwrap();
-    
-    Callback::from(move |route: Route| {
-        navigator.push(&route);
-    })
 }
 
 #[function_component(HeaderButton)]
@@ -27,14 +18,8 @@ pub fn header_button(props: &HeaderButtonProps) -> Html {
     let navigate = use_navigation();
     let current_route = use_route::<Route>();
 
-    let is_active = if let Some(current) = &current_route {
-        *current == props.route
-    } else {
-        false
-    };
-
-    let normal_img = format!("{}_W.png", props.src);
-    let active_img = format!("{}_R.png", props.src);
+    let is_active = is_route_active(&current_route, &props.route);
+    let (normal_img, active_img) = nav_image_paths(&props.src);
 
     html! {
         if props.disabled {

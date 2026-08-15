@@ -1,34 +1,11 @@
 // components/education.rs
 use yew::prelude::*;
 
-use crate::pages::about::{ExperienceItem};
+use crate::data::education::education_data;
 
 #[function_component(Education)]
 pub fn education() -> Html {
-    // education data
-    let education: Vec<ExperienceItem> = vec![
-        ExperienceItem {
-            title: "Software Engineering & Management (BSc)".to_string(),
-            institution: "University of Gothenburg, SE".to_string(),
-            date: "2022 - 2025".to_string(),
-            description: None,
-            icon: "/static/about/education/U_GOTH.png".to_string(),
-        },
-        ExperienceItem {
-            title: "European Law (LLM)".to_string(),
-            institution: "Leiden University, NL".to_string(),
-            date: "2015 - 2016".to_string(),
-            description: None,
-            icon: "/static/about/education/U_LEID.png".to_string(),
-        },
-        ExperienceItem {
-            title: "Law (LLB)".to_string(),
-            institution: "University of Reading, UK".to_string(),
-            date: "2012 - 2015".to_string(),
-            description: None,
-            icon: "/static/about/education/U_READ.png".to_string(),
-        },
-    ];
+    let education = education_data();
 
     html! {
         // timeline
@@ -63,13 +40,9 @@ pub fn education() -> Html {
                             <div class={format!("ml-24 md:ml-0 {} md:w-5/12", 
                                 if is_even { "md:mr-8 md:text-right" } else { "md:ml-8" }
                             )}>
-                                <div 
-                                    class="relative text-white flex items-center justify-left text-left p-6 hover:scale-105 transition-transform duration-300"
-                                    style="background-image: url('/static/hud/section/STBAR7.png'); 
-                                            background-repeat: no-repeat; 
-                                            background-size: 100% 100%; 
-                                            image-rendering: pixelated; 
-                                            min-height: 120px;"
+                                <div
+                                    class="relative text-white flex items-center justify-left text-left p-6 hover:scale-105 transition-transform duration-300 bg-pixel-panel"
+                                    style="background-image: url('/static/hud/section/STBAR7.png'); min-height: 120px;"
                                 >
 
                                     // inner box
