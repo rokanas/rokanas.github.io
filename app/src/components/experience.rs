@@ -1,58 +1,12 @@
 // components/experience.rs
 use yew::prelude::*;
 
-use crate::pages::about::{ExperienceItem};
+use crate::data::experience::experience_data;
 
 #[function_component(Experience)]
 pub fn experience() -> Html {
     let selected_job = use_state(|| 0usize);    // track which job is selected
-
-    // experience data
-    let experience: Vec<ExperienceItem> = vec![
-        ExperienceItem {
-            title: "Teaching Assistant".to_string(),
-            institution: "University of Gothenburg".to_string(),
-            date: "2024 - 2025".to_string(),
-            description: Some(vec![
-                "TA for Software Architecture, Requirements Engineering and Systems Development.".to_string(),
-                "Led TA meetings and workshops with students, provided in-person and remote guidance.".to_string(),
-                "Provided support and feedback to professors concerning assignments and course materials.".to_string(),
-                "Graded student assignments and exams.".to_string()]),
-            icon: "/static/about/education/U_GOTH.png".to_string(),
-        },
-        ExperienceItem {
-            title: "Compliance Officer".to_string(),
-            institution: "Huawei Technologies S.A.".to_string(),
-            date: "2019 - 2022".to_string(),
-            description: Some(vec![
-                "Legal compliance assessment and risk analysis for all areas of company operations in Athens and Cyprus offices (specialization in Data Protection (GDPR) and Cybersecurity)".to_string(),
-                "Legal support to regional offices in Albania, Northern Macedonia and Bulgaria.".to_string(),
-                "Led training sessions for all regional offices on sensitive areas (personal data protection, cybersecurity, anti-bribery).".to_string(),]),
-            icon: "/static/about/experience/HUAWEI.png".to_string(),
-        },
-        ExperienceItem {
-            title: "Intern at Academy of European Public Law".to_string(),
-            institution: "European Public Law Organization (EPLO)".to_string(),
-            date: "2019".to_string(),
-            description: Some(vec![
-                "Assisted in the design, organization and implementation of European and Public Law university programs and summer exchange programs".to_string(),
-                "Assisted in the administration of the Department of Education.".to_string(),
-                "Drafted reports on EPLO activities and conducted research for various other departments.".to_string(),
-                ]),
-            icon: "/static/about/experience/EPLO.png".to_string(),
-        },
-        ExperienceItem {
-            title: "Intern at Greek National Desk".to_string(),
-            institution: "Eurojust".to_string(),
-            date: "2019 - 2020".to_string(),
-            description: Some(vec![
-                "Assisted in administrative functions of the Greek national desk.".to_string(),
-                "Composed external and internal communications towards national authorities and national desks.".to_string(),
-                "Legal case file and database management.".to_string(),
-                    ]),
-            icon: "/static/about/experience/EUROJUST.png".to_string(),
-        },
-    ];
+    let experience = experience_data();
 
     html! {
         // education component
@@ -96,14 +50,9 @@ pub fn experience() -> Html {
 
                 // right content (job details)
                 <div class="lg:w-2/3">
-                    <div 
-                        class="relative p-8"                                                 
-                        style="background-image: url('/static/common/STBAR_BIG.png'); 
-                                background-repeat: no-repeat; 
-                                background-size: 100% 100%; 
-                                image-rendering: pixelated;
-                                min-height: 120px;
-                                transparency: 0.9;"
+                    <div
+                        class="relative p-8 bg-pixel-panel"
+                        style="background-image: url('/static/common/STBAR_BIG.png'); min-height: 120px; transparency: 0.9;"
                     >
                         // inner box
                         <div 

@@ -1,4 +1,4 @@
-// pages/portfolio.rs
+// pages/about.rs
 use yew::prelude::*;
 use web_sys::window;
 
@@ -7,16 +7,7 @@ use crate::components::heading::{Heading};
 use crate::components::education::{Education};
 use crate::components::experience::{Experience};
 use crate::components::technologies::{Technologies};
-
-// struct to hold education and experience data
-#[derive(Clone, PartialEq)]
-pub struct ExperienceItem {
-    pub title: String,
-    pub institution: String,
-    pub date: String,
-    pub description: Option<Vec<String>>,
-    pub icon: String,
-}
+use crate::data::about::{BioParagraph, bio_paragraphs};
 
 #[function_component(About)]
 pub fn about() -> Html {
@@ -66,21 +57,21 @@ pub fn about() -> Html {
                             class="w-auto h-auto mx-auto"
                         />
                     </div>
-                            <p class="text-gray-300 text-lg lg:text-lg leading-relaxed">
-                                {"🎓 I'm a recent software engineering graduate eager to begin a career in tech."}
-                            </p>
-                            <p class="text-gray-300 text-lg lg:text-lg leading-relaxed mt-5">
-                                {"🛠 I want to build intuitive software solutions that make your jobs and lives easier, saving you time and effort. Currently learning Rust, Solidity smart contracts and agentic AI implementations."}
-                            </p>
-                            <p class="text-gray-300 text-lg lg:text-lg leading-relaxed mt-5">
-                                {"⚖️ Formerly a legal professional with a focus on personal data and cybersecurity policy compliance and experience both in international organizations and in the private sector."}
-                            </p>
-                            <p class="text-gray-300 text-lg lg:text-lg leading-relaxed mt-5">
-                                {"⛧ I'm also a lifelong "} <strong>{"Doom"}</strong> {" enthusiast, mapmaker and content creator."}
-                            </p>
-                            <p class="text-gray-300 text-lg lg:text-lg leading-relaxed mt-5">
-                                {"🤼‍♂️ When away from the computer, I enjoy practicing mixed-martial arts, submission wrestling, rock-climbing and playing electric guitar."}
-                            </p>
+                            { for bio_paragraphs().iter().enumerate().map(|(index, paragraph)| {
+                                let class = if index == 0 {
+                                    "text-gray-300 text-lg lg:text-lg leading-relaxed"
+                                } else {
+                                    "text-gray-300 text-lg lg:text-lg leading-relaxed mt-5"
+                                };
+                                match paragraph {
+                                    BioParagraph::Plain(text) => html! {
+                                        <p class={class}>{text}</p>
+                                    },
+                                    BioParagraph::WithEmphasis { before, emphasis, after } => html! {
+                                        <p class={class}>{before} <strong>{emphasis}</strong> {after}</p>
+                                    },
+                                }
+                            })}
                         </div>
                     </div>
                 </div>

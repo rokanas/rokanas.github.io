@@ -1,6 +1,7 @@
 // components/doom_model_item.rs
 use yew::prelude::*;
 use crate::components::model_viewer::ModelViewer;
+use crate::components::card_shell::CardShell;
 
 #[derive(Properties, PartialEq)]
 pub struct DoomModelItemProps {
@@ -46,78 +47,51 @@ pub fn doom_model_item(props: &DoomModelItemProps) -> Html {
         })
     };
 
+    let header = html! {
+        <h3 class="text-xl font-bold text-red-600 font-mono mb-3">
+            {&props.title}
+        </h3>
+    };
+
     html! {
         <>
-            <div class="max-w-sm hover:scale-105 transition-all duration-300">
-                <div 
-                    class="relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
-                    style={format!("background-image: url({}); 
-                            background-repeat: no-repeat; 
-                            background-size: 100% 100%; 
-                            image-rendering: pixelated;
-                            min-height: 400px;", props.border)}
-                >
-                    // inner black overlay box
-                    <div 
-                        class="absolute inset-0 m-3 z-5 bg-[#1a1a1a] bg-opacity-60 border-4 border-[#0b0b0a]"
-                    ></div>
-                    
-                    // content
-                    <div class="relative z-10 p-6 h-full flex flex-col">
-                        // preview image
-                        <div class="aspect-video bg-[#2b2b2b] overflow-hidden rounded mb-4">
-                            <img 
-                                src={props.preview_image.clone()}
-                                alt={props.title.clone()}
-                                class="w-full h-full object-contain image-rendering-pixelated"
-                            />
-                        </div>
-                        
-                        // title
-                        <h3 class="text-xl font-bold text-red-600 font-mono mb-3">
-                            {&props.title}
-                        </h3>
-                        
-                        // description
-                        <p class="text-gray-300 mb-4 text-sm leading-relaxed flex-grow">
-                            {&props.description}
-                        </p>
-                        
-                        // buttons row
-                        <div class="flex justify-between items-start mb-3 gap-3">
-                            // more info
-                            <button 
-                                onclick={open_modal}
-                                class="group w-full bg-[#2b2b2b] hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-2 px-4 rounded transition-all duration-200 cursor-pointer font-mono text-sm">
-                                <div class="flex items-center justify-center gap-2">    
-                                    <span>{"VIEW MODEL"}</span>
-                                    <span class="text-xs group-hover:translate-x-1 transition-transform duration-200">{"→"}</span>
-                                </div>
-                            </button>
-                            // download
-                            if props.download_url.is_some() {
-                                <button 
-                                    onclick={download_click.clone()}
-                                    class="group w-full bg-[#2b2b2b] hover:bg-green-600 border-2 border-green-600 hover:border-green-600 text-green-600 hover:text-white font-bold py-2 px-4 rounded transition-all duration-200 cursor-pointer font-mono text-sm">
-                                    <div class="flex items-center justify-center gap-2">    
-                                        <span>{"DOWNLOAD"}</span>
-                                        <span class="text-xs group-hover:translate-x-1 transition-transform duration-200">{"↓"}</span>
-                                    </div>
-                                </button>
-                            } else {
-                                <button 
-                                    class="group w-full bg-[#2b2b2b] hover:bg-gray-600 border-2 border-gray-500 hover:border-gray-400 text-gray-400 hover:text-gray-300 font-bold py-2 px-4 rounded transition-all duration-200 cursor-not-allowed font-mono text-sm">
-                                    <div class="flex items-center justify-center gap-2">    
-                                        <span class="group-hover:hidden">{"DOWNLOAD"}</span>
-                                        <span class="hidden group-hover:inline">{"COMING SOON"}</span>
-                                        <span class="text-xs">{"↓"}</span>
-                                    </div>
-                                </button>
-                            }
-                        </div>
+            <CardShell
+                border={props.border.clone()}
+                image_src={props.preview_image.clone()}
+                image_alt={props.title.clone()}
+                description={props.description.clone()}
+                header={header}
+            >
+                // more info
+                <button
+                    onclick={open_modal}
+                    class="group w-full bg-[#2b2b2b] hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-2 px-4 rounded transition-all duration-200 cursor-pointer font-mono text-sm">
+                    <div class="flex items-center justify-center gap-2">
+                        <span>{"VIEW MODEL"}</span>
+                        <span class="text-xs group-hover:translate-x-1 transition-transform duration-200">{"→"}</span>
                     </div>
-                </div>
-            </div>
+                </button>
+                // download
+                if props.download_url.is_some() {
+                    <button
+                        onclick={download_click.clone()}
+                        class="group w-full bg-[#2b2b2b] hover:bg-green-600 border-2 border-green-600 hover:border-green-600 text-green-600 hover:text-white font-bold py-2 px-4 rounded transition-all duration-200 cursor-pointer font-mono text-sm">
+                        <div class="flex items-center justify-center gap-2">
+                            <span>{"DOWNLOAD"}</span>
+                            <span class="text-xs group-hover:translate-x-1 transition-transform duration-200">{"↓"}</span>
+                        </div>
+                    </button>
+                } else {
+                    <button
+                        class="group w-full bg-[#2b2b2b] hover:bg-gray-600 border-2 border-gray-500 hover:border-gray-400 text-gray-400 hover:text-gray-300 font-bold py-2 px-4 rounded transition-all duration-200 cursor-not-allowed font-mono text-sm">
+                        <div class="flex items-center justify-center gap-2">
+                            <span class="group-hover:hidden">{"DOWNLOAD"}</span>
+                            <span class="hidden group-hover:inline">{"COMING SOON"}</span>
+                            <span class="text-xs">{"↓"}</span>
+                        </div>
+                    </button>
+                }
+            </CardShell>
 
             // modal with 3D viewer
             if *modal_open {
@@ -160,14 +134,6 @@ pub fn doom_model_item(props: &DoomModelItemProps) -> Html {
                                     {"Drag to move, scroll to zoom"}
                                 </div>
                             </div>
-
-                            // // detailed description if available
-                            // if let Some(credit) = &props.credits {
-                            //     <div>
-                            //         <h3 class="text-lg font-bold text-red-600 font-mono mb-2">{"CREDITS"}</h3>
-                            //         <p class="text-gray-300 leading-relaxed whitespace-pre-line">{credit}</p>
-                            //     </div>
-                            // }
 
                             // model info
                             <div class="grid grid-cols-4 gap-4">

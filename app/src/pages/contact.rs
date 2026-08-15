@@ -25,6 +25,35 @@ struct FormResponse {
     result: String,
 }
 
+const RECAPTCHA_SITE_KEY: &str = "6LfHdcsrAAAAAA4ndXu6pT_KvO1sdOxdPIRX3q12";
+const FORM_INPUT_CLASSES: &str = "w-full px-4 py-3 bg-[#1a1a1a] border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-red-600 focus:ring-1 focus:ring-red-600 focus:outline-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed";
+
+// updates a single field of the form and pushes the new value into state
+fn field_setter(
+    form_data: UseStateHandle<FormData>,
+    apply: impl Fn(&mut FormData, String) + 'static,
+) -> Callback<Event> {
+    Callback::from(move |e: Event| {
+        let input: HtmlInputElement = e.target_unchecked_into();
+        let mut data = (*form_data).clone();
+        apply(&mut data, input.value());
+        form_data.set(data);
+    })
+}
+
+// resets the reCAPTCHA widget via its global JS API, if present
+fn reset_recaptcha() {
+    if let Some(window) = web_sys::window() {
+        if let Ok(grecaptcha) = js_sys::Reflect::get(&window, &"grecaptcha".into()) {
+            if let Ok(reset_fn) = js_sys::Reflect::get(&grecaptcha, &"reset".into()) {
+                if let Ok(reset_fn) = reset_fn.dyn_into::<js_sys::Function>() {
+                    let _ = reset_fn.call0(&js_sys::Object::new());
+                }
+            }
+        }
+    }
+}
+
 #[function_component(Contact)]
 pub fn contact() -> Html {
     use_effect_with((), |_| {
@@ -39,8 +68,8 @@ pub fn contact() -> Html {
                     if let Ok(render) = js_sys::Reflect::get(&grecaptcha, &"render".into()) {
                         if let Ok(render) = render.dyn_into::<js_sys::Function>() {
                             let params = js_sys::Object::new();
-                            js_sys::Reflect::set(&params, &"sitekey".into(), 
-                                &"6LfHdcsrAAAAAA4ndXu6pT_KvO1sdOxdPIRX3q12".into()).unwrap();
+                            js_sys::Reflect::set(&params, &"sitekey".into(),
+                                &RECAPTCHA_SITE_KEY.into()).unwrap();
                             js_sys::Reflect::set(&params, &"theme".into(), 
                                 &"dark".into()).unwrap();
                             
@@ -94,45 +123,10 @@ pub fn contact() -> Html {
     let is_submitting = use_state(|| false);
     let submission_status = use_state(|| None::<String>);
 
-    let on_name_change = {
-        let form_data = form_data.clone();
-        Callback::from(move |e: Event| {
-            let input: HtmlInputElement = e.target_unchecked_into();
-            let mut data = (*form_data).clone();
-            data.name = input.value();
-            form_data.set(data);
-        })
-    };
-
-    let on_email_change = {
-        let form_data = form_data.clone();
-        Callback::from(move |e: Event| {
-            let input: HtmlInputElement = e.target_unchecked_into();
-            let mut data = (*form_data).clone();
-            data.email = input.value();
-            form_data.set(data);
-        })
-    };
-
-    let on_subject_change = {
-        let form_data = form_data.clone();
-        Callback::from(move |e: Event| {
-            let input: HtmlInputElement = e.target_unchecked_into();
-            let mut data = (*form_data).clone();
-            data.subject = input.value();
-            form_data.set(data);
-        })
-    };
-
-    let on_message_change = {
-        let form_data = form_data.clone();
-        Callback::from(move |e: Event| {
-            let input: HtmlInputElement = e.target_unchecked_into();
-            let mut data = (*form_data).clone();
-            data.message = input.value();
-            form_data.set(data);
-        })
-    };
+    let on_name_change = field_setter(form_data.clone(), |d, v| d.name = v);
+    let on_email_change = field_setter(form_data.clone(), |d, v| d.email = v);
+    let on_subject_change = field_setter(form_data.clone(), |d, v| d.subject = v);
+    let on_message_change = field_setter(form_data.clone(), |d, v| d.message = v);
 
     let on_submit = {
         let form_data = form_data.clone();
@@ -191,30 +185,13 @@ pub fn contact() -> Html {
                             });
                             
                             // reset reCAPTCHA by calling the global reset function if available
-                            // reset on error too
-                            if let Some(window) = web_sys::window() {
-                                if let Ok(grecaptcha) = js_sys::Reflect::get(&window, &"grecaptcha".into()) {
-                                    if let Ok(reset_fn) = js_sys::Reflect::get(&grecaptcha, &"reset".into()) {
-                                        if let Ok(reset_fn) = reset_fn.dyn_into::<js_sys::Function>() {
-                                            let _ = reset_fn.call0(&js_sys::Object::new());
-                                        }
-                                    }
-                                }
-                            }
+                            reset_recaptcha();
                         }
                         Err(err) => {
                             submission_status_clone.set(Some(format!("Error sending message: {}", err)));
-                            
+
                             // reset reCAPTCHA on error too
-                            if let Some(window) = web_sys::window() {
-                                if let Ok(grecaptcha) = js_sys::Reflect::get(&window, &"grecaptcha".into()) {
-                                    if let Ok(reset_fn) = js_sys::Reflect::get(&grecaptcha, &"reset".into()) {
-                                        if let Ok(reset_fn) = reset_fn.dyn_into::<js_sys::Function>() {
-                                            let _ = reset_fn.call0(&js_sys::Object::new());
-                                        }
-                                    }
-                                }
-                            }
+                            reset_recaptcha();
                         }
                     }
                 });
@@ -255,10 +232,7 @@ pub fn contact() -> Html {
                                             onchange={on_name_change}
                                             required=true
                                             disabled={*is_submitting}
-                                            class="w-full px-4 py-3 bg-[#1a1a1a] border border-gray-600 rounded-lg 
-                                                   text-white placeholder-gray-400 focus:border-red-600 focus:ring-1 
-                                                   focus:ring-red-600 focus:outline-none transition-colors
-                                                   disabled:opacity-50 disabled:cursor-not-allowed"
+                                            class={FORM_INPUT_CLASSES}
                                             placeholder="Your name"
                                         />
                                     </div>
@@ -274,10 +248,7 @@ pub fn contact() -> Html {
                                             onchange={on_email_change}
                                             required=true
                                             disabled={*is_submitting}
-                                            class="w-full px-4 py-3 bg-[#1a1a1a] border border-gray-600 rounded-lg 
-                                                   text-white placeholder-gray-400 focus:border-red-600 focus:ring-1 
-                                                   focus:ring-red-600 focus:outline-none transition-colors
-                                                   disabled:opacity-50 disabled:cursor-not-allowed"
+                                            class={FORM_INPUT_CLASSES}
                                             placeholder="your.email@example.com"
                                         />
                                     </div>
@@ -296,10 +267,7 @@ pub fn contact() -> Html {
                                         onchange={on_subject_change}
                                         required=false
                                         disabled={*is_submitting}
-                                        class="w-full px-4 py-3 bg-[#1a1a1a] border border-gray-600 rounded-lg 
-                                               text-white placeholder-gray-400 focus:border-red-600 focus:ring-1 
-                                               focus:ring-red-600 focus:outline-none transition-colors
-                                               disabled:opacity-50 disabled:cursor-not-allowed"
+                                        class={FORM_INPUT_CLASSES}
                                         placeholder="What's this about?"
                                     />
                                 </div>
@@ -317,10 +285,7 @@ pub fn contact() -> Html {
                                         onchange={on_message_change}
                                         required=true
                                         disabled={*is_submitting}
-                                        class="w-full px-4 py-3 bg-[#1a1a1a] border border-gray-600 rounded-lg 
-                                               text-white placeholder-gray-400 focus:border-red-600 focus:ring-1 
-                                               focus:ring-red-600 focus:outline-none transition-colors resize-vertical
-                                               disabled:opacity-50 disabled:cursor-not-allowed"
+                                        class={format!("{} resize-vertical", FORM_INPUT_CLASSES)}
                                         placeholder="What's on your mind?"
                                     />
                                 </div>
@@ -331,7 +296,7 @@ pub fn contact() -> Html {
                                         <div 
                                             id="recaptcha-container"
                                             class="g-recaptcha transform scale-90 sm:scale-100"
-                                            data-sitekey="6LfHdcsrAAAAAA4ndXu6pT_KvO1sdOxdPIRX3q12"
+                                            data-sitekey={RECAPTCHA_SITE_KEY}
                                             data-theme="dark"
                                         ></div>
                                     

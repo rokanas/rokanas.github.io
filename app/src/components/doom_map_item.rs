@@ -1,5 +1,7 @@
 // components/doom_map_item.rs
 use yew::prelude::*;
+use crate::components::card_shell::CardShell;
+use crate::hooks::use_image_carousel;
 
 #[derive(Properties, PartialEq)]
 pub struct ProjectItemProps {
@@ -20,7 +22,6 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
         .clone();
 
     let lightbox_open = use_state(|| false);
-    let current_image_index = use_state(|| 0usize);
 
     // create combined list of all images (main image + additional images)
     let all_images = {
@@ -29,12 +30,15 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
         images
     };
 
+    let (current_image_index, current_image_src, prev_image, next_image, reset_carousel) =
+        use_image_carousel(all_images.clone());
+
     let gallery_click = {
         let lightbox_open = lightbox_open.clone();
-        let current_image_index = current_image_index.clone();
+        let reset_carousel = reset_carousel.clone();
         Callback::from(move |_| {
             lightbox_open.set(true);
-            current_image_index.set(0); // reset to first image when opening lightbox
+            reset_carousel.emit(()); // reset to first image when opening lightbox
         })
     };
 
@@ -45,102 +49,41 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
         })
     };
 
-    let prev_image = {
-        let current_image_index = current_image_index.clone();
-        let total_images = all_images.len();
-        Callback::from(move |e: MouseEvent| {
-            e.stop_propagation(); // prevent lightbox from closing
-            let current = *current_image_index;
-            let new_index = if current == 0 {
-                total_images - 1
-            } else {
-                current - 1
-            };
-            current_image_index.set(new_index);
-        })
+    let header = html! {
+        <h3 class="text-xl font-bold text-red-600 font-mono mb-3">
+            {&props.title}
+        </h3>
     };
-
-    let next_image = {
-        let current_image_index = current_image_index.clone();
-        let total_images = all_images.len();
-        Callback::from(move |e: MouseEvent| {
-            e.stop_propagation(); // prevent lightbox from closing
-            let current = *current_image_index;
-            let new_index = (current + 1) % total_images;
-            current_image_index.set(new_index);
-        })
-    };
-    
-    let _download_click = {
-        // TODO: IMPLEMENT
-    };
-
-    let current_image_src = all_images.get(*current_image_index)
-        .unwrap_or(&props.image_src)
-        .clone();
 
     html! {
         <>  // fragment to group project item and lightbox
-            <div class="max-w-sm hover:scale-105 transition-all duration-300">
-                <div 
-                    class="relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
-                    style={format!("background-image: url({}); 
-                            background-repeat: no-repeat; 
-                            background-size: 100% 100%; 
-                            image-rendering: pixelated;
-                            min-height: 400px;", props.border)}
-                >
-                    // inner black overlay box
-                    <div 
-                        class="absolute inset-0 m-3 z-5 bg-[#1a1a1a] bg-opacity-60 border-4 border-[#0b0b0a]"
-                    ></div>
-                    
-                    // content
-                    <div class="relative z-10 p-6 h-full flex flex-col">
-                        // project image
-                        <div class="aspect-video bg-[#2b2b2b] overflow-hidden rounded mb-4">
-                            <img 
-                                src={props.image_src.clone()}
-                                alt={alt_text}
-                                class="w-full h-full object-contain image-rendering-pixelated"
-                            />
-                        </div>
-                        
-                        // title
-                        <h3 class="text-xl font-bold text-red-600 font-mono mb-3">
-                            {&props.title}
-                        </h3>
-                        
-                        // description
-                        <p class="text-gray-300 mb-4 text-sm leading-relaxed flex-grow">
-                            {&props.description}
-                        </p>
-                        
-                        // buttons row
-                        <div class="flex justify-between items-start mb-3 gap-3">
-                            // view gallery
-                            <button 
-                                onclick={gallery_click}
-                                class="group w-full bg-[#2b2b2b] hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-2 px-4 rounded transition-all duration-200 cursor-pointer font-mono text-sm">
-                                <div class="flex items-center justify-center gap-2">    
-                                    <span>{"VIEW GALLERY"}</span>
-                                    <span class="text-xs group-hover:translate-x-1 transition-transform duration-200">{"→"}</span>
-                                </div>
-                            </button>
-                            // download (coming soon)
-                            <button 
-                                // onclick={download_click.clone()}
-                                class="group w-full bg-[#2b2b2b] hover:bg-gray-600 border-2 border-gray-500 hover:border-gray-400 text-gray-400 hover:text-gray-300 font-bold py-2 px-4 rounded transition-all duration-200 cursor-not-allowed font-mono text-sm">
-                                <div class="flex items-center justify-center gap-2">    
-                                    <span class="group-hover:hidden">{"DOWNLOAD"}</span>
-                                    <span class="hidden group-hover:inline">{"COMING SOON"}</span>
-                                    <span class="text-xs group-hover:translate-x-1 transition-transform duration-200">{"→"}</span>
-                                </div>
-                            </button>
-                        </div>
+            <CardShell
+                border={props.border.clone()}
+                image_src={props.image_src.clone()}
+                image_alt={alt_text}
+                description={props.description.clone()}
+                header={header}
+            >
+                // view gallery
+                <button
+                    onclick={gallery_click}
+                    class="group w-full bg-[#2b2b2b] hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-2 px-4 rounded transition-all duration-200 cursor-pointer font-mono text-sm">
+                    <div class="flex items-center justify-center gap-2">
+                        <span>{"VIEW GALLERY"}</span>
+                        <span class="text-xs group-hover:translate-x-1 transition-transform duration-200">{"→"}</span>
                     </div>
-                </div>
-            </div>
+                </button>
+                // download (coming soon)
+                <button
+                    // onclick={download_click.clone()}
+                    class="group w-full bg-[#2b2b2b] hover:bg-gray-600 border-2 border-gray-500 hover:border-gray-400 text-gray-400 hover:text-gray-300 font-bold py-2 px-4 rounded transition-all duration-200 cursor-not-allowed font-mono text-sm">
+                    <div class="flex items-center justify-center gap-2">
+                        <span class="group-hover:hidden">{"DOWNLOAD"}</span>
+                        <span class="hidden group-hover:inline">{"COMING SOON"}</span>
+                        <span class="text-xs group-hover:translate-x-1 transition-transform duration-200">{"→"}</span>
+                    </div>
+                </button>
+            </CardShell>
 
             // lightbox
             if *lightbox_open {
@@ -166,7 +109,7 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
                         // main image display
                         <img
                             src={current_image_src}
-                            alt={format!("{} - Image {}", props.title, *current_image_index + 1)}
+                            alt={format!("{} - Image {}", props.title, current_image_index + 1)}
                             class="max-w-full max-h-full object-contain"
                             style="image-rendering: pixelated;"
                             onclick={Callback::from(|e: MouseEvent| e.stop_propagation())}
@@ -202,7 +145,7 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
                         <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-lg">
                             <div class="text-center font-mono">
                                 <div class="text-lg font-bold text-red-600">{&props.title}</div>
-                                <div class="text-sm">{format!("{} / {}", *current_image_index + 1, all_images.len())}</div>
+                                <div class="text-sm">{format!("{} / {}", current_image_index + 1, all_images.len())}</div>
                             </div>
                         </div>
                     </div>

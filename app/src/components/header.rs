@@ -3,6 +3,7 @@ use yew_router::prelude::*;
 use web_sys::MouseEvent;
 use crate::router::Route;
 use crate::components::header_button::HeaderButton;
+use crate::hooks::{use_navigation, use_slide_visibility};
 
 #[derive(Properties, PartialEq)]
 pub struct HeaderProps {
@@ -10,17 +11,10 @@ pub struct HeaderProps {
     pub show: bool,
 }
 
-#[hook]
-fn use_navigation() -> Callback<Route> {
-    let navigator = use_navigator().unwrap();
-    Callback::from(move |route: Route| navigator.push(&route))
-}
-
 #[function_component(Header)]
 pub fn header(props: &HeaderProps) -> Html {
     let navigate = use_navigation();
-    let is_visible = use_state(|| false);
-    let should_render = use_state(|| props.show);   
+    let (is_visible, should_render) = use_slide_visibility(props.show);
 
     // get current route
     let current_route = use_route::<Route>().unwrap_or(Route::Home);
@@ -45,36 +39,13 @@ pub fn header(props: &HeaderProps) -> Html {
         })
     };
 
-    {
-        let is_visible = is_visible.clone();
-        let should_render = should_render.clone();
-        use_effect_with(props.show, move |show| {
-            if *show {
-                // show: first render component, then slide in
-                should_render.set(true);
-                let is_visible_clone = is_visible.clone();
-                gloo_timers::callback::Timeout::new(50, move || {
-                    is_visible_clone.set(true);
-                }).forget();
-            } else {
-                // hide: first slide out, then stop rendering
-                is_visible.set(false);
-                let should_render_clone = should_render.clone();
-                gloo_timers::callback::Timeout::new(500, move || { // Wait for animation to complete
-                    should_render_clone.set(false);
-                }).forget();
-            }
-            || {}
-        });
-    }
-
     // don't render if should_render is false
-    if !*should_render {
+    if !should_render {
         return html! {};
     }
 
     // header slides in / out
-    let header_class = if *is_visible {
+    let header_class = if is_visible {
         "fixed top-0 left-0 right-0 w-full z-40 transform -translate-y-0 transition-transform duration-500 ease-out overflow-visible block sm:block"
     } else {
         "fixed top-0 left-0 right-0 w-full z-40 transform -translate-y-[120%] transition-transform duration-500 ease-out overflow-visible block sm:block"

@@ -1,17 +1,6 @@
 use yew::prelude::*;
-use yew_router::prelude::*;
-use crate::router::Route;
 use crate::components::model_viewer::ModelViewer;
 use crate::app::NavbarContext;
-
-#[hook]
-fn use_navigation() -> Callback<Route> {
-    let navigator = use_navigator().unwrap();
-    
-    Callback::from(move |route: Route| {
-        navigator.push(&route);
-    })
-}
 
 #[function_component(Home)]
 pub fn home() -> Html {

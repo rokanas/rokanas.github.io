@@ -1,6 +1,8 @@
 // components/project_item.rs
 use yew::prelude::*;
 use web_sys::window;
+use crate::components::card_shell::CardShell;
+use crate::hooks::use_image_carousel;
 
 #[derive(Clone, PartialEq)]
 pub struct Tag {
@@ -37,7 +39,6 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
         .clone();
 
     let modal_open = use_state(|| false);
-    let current_image_index = use_state(|| 0usize);
 
     // create combined list of images (based on availability)
     let all_images = if props.additional_images.is_empty() {
@@ -48,12 +49,15 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
         props.additional_images.clone()
     };
 
+    let (current_image_index, current_image_src, prev_image, next_image, reset_carousel) =
+        use_image_carousel(all_images.clone());
+
     let more_info_click = {
         let modal_open = modal_open.clone();
-        let current_image_index = current_image_index.clone();
+        let reset_carousel = reset_carousel.clone();
         Callback::from(move |_| {
             modal_open.set(true);
-            current_image_index.set(0); // reset to first image when opening modal
+            reset_carousel.emit(()); // reset to first image when opening modal
         })
     };
 
@@ -61,32 +65,6 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
         let modal_open = modal_open.clone();
         Callback::from(move |_| {
             modal_open.set(false);
-        })
-    };
-
-    let prev_image = {
-        let current_image_index = current_image_index.clone();
-        let total_images = all_images.len();
-        Callback::from(move |e: MouseEvent| {
-            e.stop_propagation(); // prevent modal from closing
-            let current = *current_image_index;
-            let new_index = if current == 0 {
-                total_images - 1
-            } else {
-                current - 1
-            };
-            current_image_index.set(new_index);
-        })
-    };
-
-    let next_image = {
-        let current_image_index = current_image_index.clone();
-        let total_images = all_images.len();
-        Callback::from(move |e: MouseEvent| {
-            e.stop_propagation(); // prevent modal from closing
-            let current = *current_image_index;
-            let new_index = (current + 1) % total_images;
-            current_image_index.set(new_index);
         })
     };
 
@@ -110,90 +88,59 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
         })
     };
 
-    let current_image_src = all_images.get(*current_image_index)
-        .unwrap_or(&props.image_src)
-        .clone();
+    let header = html! {
+        <div class="flex justify-between items-start mb-3 gap-3">
+            // title (left)
+            <h3 class="text-xl font-bold text-red-600 font-mono flex-shrink-0">
+                {&props.title}
+            </h3>
+
+            // tags (right)
+            <div class="flex flex-wrap gap-1 justify-end">
+                { for props.tags.iter().map(|tag| {
+                    let tag_classes = format!("px-2 py-1 rounded text-xs font-mono font-bold {} {}",
+                        tag.color,
+                        tag.text_color.as_ref().unwrap_or(&"text-white".to_string())
+                    );
+
+                    html! {
+                        <span class={tag_classes}>
+                            {&tag.name}
+                        </span>
+                    }
+                })}
+            </div>
+        </div>
+    };
 
     html! {
         <>  // fragment to group project item and modal
-            <div class="max-w-sm hover:scale-105 transition-all duration-300">
-                <div 
-                    class="relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
-                    style="background-image: url('/static/common/STBAR_MID.png'); 
-                            background-repeat: no-repeat; 
-                            background-size: 100% 100%; 
-                            image-rendering: pixelated;
-                            min-height: 400px;"
-                >
-                    // inner black overlay box
-                    <div 
-                        class="absolute inset-0 m-3 z-5 bg-[#1a1a1a] bg-opacity-60 border-4 border-[#0b0b0a]"
-                    ></div>
-                    
-                    // content
-                    <div class="relative z-10 p-6 h-full flex flex-col">
-                        // project image
-                        <div class="aspect-video bg-[#2b2b2b] overflow-hidden rounded mb-4">
-                            <img 
-                                src={props.image_src.clone()}
-                                alt={alt_text}
-                                class="w-full h-full object-contain image-rendering-pixelated" // hover:scale-110 transition-transform duration-500
-                            />
-                        </div>
-                        
-                        // title + tags row
-                        <div class="flex justify-between items-start mb-3 gap-3">
-                            // title (left)
-                            <h3 class="text-xl font-bold text-red-600 font-mono flex-shrink-0">
-                                {&props.title}
-                            </h3>
-                            
-                            // tags (right)
-                            <div class="flex flex-wrap gap-1 justify-end">
-                                { for props.tags.iter().map(|tag| {
-                                    let tag_classes = format!("px-2 py-1 rounded text-xs font-mono font-bold {} {}", 
-                                        tag.color,
-                                        tag.text_color.as_ref().unwrap_or(&"text-white".to_string())
-                                    );
-                                    
-                                    html! {
-                                        <span class={tag_classes}>
-                                            {&tag.name}
-                                        </span>
-                                    }
-                                })}
-                            </div>
-                        </div>
-                        
-                        // description
-                        <p class="text-gray-300 mb-4 text-sm leading-relaxed flex-grow">
-                            {&props.description}
-                        </p>
-                        
-                        // buttons row
-                        <div class="flex justify-between items-start mb-3 gap-3">
-                            // more info
-                            <button 
-                                onclick={more_info_click}
-                                class="group w-full bg-[#2b2b2b] hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-2 px-4 rounded transition-all duration-200 cursor-pointer font-mono text-sm">
-                                <div class="flex items-center justify-center gap-2">    
-                                    <span>{"MORE INFO"}</span>
-                                    <span class="text-xs group-hover:translate-x-1 transition-transform duration-200">{"→"}</span>
-                                </div>
-                            </button>
-                            // github
-                            <button 
-                                onclick={github_click.clone()}
-                                class="group w-full bg-[#2b2b2b] hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-2 px-4 rounded transition-all duration-200 cursor-pointer font-mono text-sm">
-                                <div class="flex items-center justify-center gap-2">    
-                                    <span>{"GITHUB"}</span>
-                                    <span class="text-xs group-hover:translate-x-1 transition-transform duration-200">{"→"}</span>
-                                </div>
-                            </button>
-                        </div>
+            <CardShell
+                border="/static/common/STBAR_MID.png"
+                image_src={props.image_src.clone()}
+                image_alt={alt_text}
+                description={props.description.clone()}
+                header={header}
+            >
+                // more info
+                <button
+                    onclick={more_info_click}
+                    class="group w-full bg-[#2b2b2b] hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-2 px-4 rounded transition-all duration-200 cursor-pointer font-mono text-sm">
+                    <div class="flex items-center justify-center gap-2">
+                        <span>{"MORE INFO"}</span>
+                        <span class="text-xs group-hover:translate-x-1 transition-transform duration-200">{"→"}</span>
                     </div>
-                </div>
-            </div>
+                </button>
+                // github
+                <button
+                    onclick={github_click.clone()}
+                    class="group w-full bg-[#2b2b2b] hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-2 px-4 rounded transition-all duration-200 cursor-pointer font-mono text-sm">
+                    <div class="flex items-center justify-center gap-2">
+                        <span>{"GITHUB"}</span>
+                        <span class="text-xs group-hover:translate-x-1 transition-transform duration-200">{"→"}</span>
+                    </div>
+                </button>
+            </CardShell>
 
             // modal
             if *modal_open {
@@ -258,7 +205,7 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
                                         
                                         // image counter
                                         <div class="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-mono">
-                                            {format!("{}/{}", *current_image_index + 1, all_images.len())}
+                                            {format!("{}/{}", current_image_index + 1, all_images.len())}
                                         </div>
                                     </>
                                 }

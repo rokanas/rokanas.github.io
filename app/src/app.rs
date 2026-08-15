@@ -38,8 +38,7 @@ fn switch(routes: Route) -> Html {
                 <About /> 
             </FadeWrapper>
         },
-        //Route::Avatar => html! { <Avatar /> },
-        Route::DoomProjects => html! { 
+        Route::DoomProjects => html! {
             <FadeWrapper>
                 <DoomProjects /> 
             </FadeWrapper>
