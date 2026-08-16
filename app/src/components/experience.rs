@@ -2,6 +2,7 @@
 use yew::prelude::*;
 
 use crate::data::experience::experience_data;
+use crate::utils::markdown_links::render_inline_links;
 
 #[function_component(Experience)]
 pub fn experience() -> Html {
@@ -32,11 +33,13 @@ pub fn experience() -> Html {
                             onclick={onclick}>
                                 <div class="flex-shrink-0 mr-4">
                                     <div class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center">
-                                        <img 
-                                            src={exp.icon.clone()} 
-                                            alt="Institution logo" 
-                                            class="w-10 h-10 object-contain rounded-full bg-white"
-                                        />
+                                        <div class={format!("w-10 h-10 rounded-full overflow-hidden flex items-center justify-center {}", exp.icon_bg)}>
+                                            <img
+                                                src={exp.icon.clone()}
+                                                alt="Institution logo"
+                                                class="w-full h-full object-contain"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="flex-1">
@@ -63,11 +66,13 @@ pub fn experience() -> Html {
                             <div class="flex items-center mb-6">
                                 <div class="flex-shrink-0 mr-4">
                                     <div class="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center">
-                                        <img 
-                                            src={experience[*selected_job].icon.clone()}
-                                            alt="Company logo" 
-                                            class="w-13 h-13 object-contain rounded-full bg-white"
-                                        />
+                                        <div class={format!("w-13 h-13 rounded-full overflow-hidden flex items-center justify-center {}", experience[*selected_job].icon_bg)}>
+                                            <img
+                                                src={experience[*selected_job].icon.clone()}
+                                                alt="Company logo"
+                                                class="w-full h-full object-contain"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                                 <div>
@@ -77,13 +82,13 @@ pub fn experience() -> Html {
                                 </div>
                             </div>
 
-                            <div class="space-y-4">                                        
+                            <div class="space-y-4">
                                 if let Some(description) = &experience[*selected_job].description {
                                     { for description.iter().map(|point| {
                                         html! {
                                             <li class="flex items-start">
                                                 <div class="flex-shrink-0 w-2 h-2 bg-red-600 rounded-full mt-2 mr-3"></div>
-                                                <p class="text-gray-300 leading-relaxed mb-2">{point}</p>
+                                                <p class="text-gray-300 leading-relaxed mb-2">{render_inline_links(point)}</p>
                                             </li>
                                         }
                                     })}

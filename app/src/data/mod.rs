@@ -15,4 +15,5 @@ pub struct ExperienceItem {
     pub date: String,
     pub description: Option<Vec<String>>,
     pub icon: String,
+    pub icon_bg: &'static str, // backdrop class for the icon badge, matching each logo's own background
 }
