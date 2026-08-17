@@ -446,6 +446,9 @@
   .hidden {
     display: none;
   }
+  .inline {
+    display: inline;
+  }
   .aspect-square {
     aspect-ratio: 1 / 1;
   }
@@ -864,6 +867,9 @@
   }
   .bg-\[\#2b2b2b\]\/60 {
     background-color: color-mix(in oklab, #2b2b2b 60%, transparent);
+  }
+  .bg-black {
+    background-color: var(--color-black);
   }
   .bg-black\/50 {
     background-color: color-mix(in srgb, #000 50%, transparent);
@@ -1539,6 +1545,13 @@
       }
     }
   }
+  .hover\:text-red-400 {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-red-400);
+      }
+    }
+  }
   .hover\:text-red-600 {
     &:hover {
       @media (hover: hover) {
@@ -1550,6 +1563,13 @@
     &:hover {
       @media (hover: hover) {
         color: var(--color-white);
+      }
+    }
+  }
+  .hover\:underline {
+    &:hover {
+      @media (hover: hover) {
+        text-decoration-line: underline;
       }
     }
   }

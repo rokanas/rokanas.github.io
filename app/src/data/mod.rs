@@ -5,6 +5,7 @@ pub mod projects;
 pub mod doom_projects;
 pub mod education;
 pub mod experience;
+pub mod technologies;
 pub mod about;
 
 // shared by data::education and data::experience
@@ -15,4 +16,5 @@ pub struct ExperienceItem {
     pub date: String,
     pub description: Option<Vec<String>>,
     pub icon: String,
+    pub icon_bg: &'static str, // backdrop class for the icon badge, matching each logo's own background
 }

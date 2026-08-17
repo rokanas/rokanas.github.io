@@ -1,3 +1,5 @@
 app/dist/
 app/target/
 app/styles/output.css
+app/static/backups
+CLAUDE.md

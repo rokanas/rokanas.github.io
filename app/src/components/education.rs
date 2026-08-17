@@ -21,10 +21,10 @@ pub fn education() -> Html {
                             if is_even { "md:flex-row" } else { "md:flex-row-reverse" }
                         )}>
                             // timeline node
-                            <div class="absolute left-8 md:left-1/2 w-16 h-16 bg-white border-4 border-red-600 rounded-full flex items-center justify-center transform -translate-x-1/2 md:-translate-x-1/2 z-20">
-                                <img 
-                                    src={exp.icon.clone()} 
-                                    alt="Avatar" 
+                            <div class={format!("absolute left-8 md:left-1/2 w-16 h-16 border-4 border-red-600 rounded-full flex items-center justify-center transform -translate-x-1/2 md:-translate-x-1/2 z-20 {}", exp.icon_bg)}>
+                                <img
+                                    src={exp.icon.clone()}
+                                    alt="Avatar"
                                     class="w-12 h-12 object-contain rounded-full"
                                 />
                             </div>
