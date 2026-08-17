@@ -11,6 +11,7 @@ pub fn education_data() -> Vec<ExperienceItem> {
             description: None,
             icon: "/static/about/education/U_GOTH.svg".to_string(),
             icon_bg: "bg-black",
+            social_button: None,
         },
         ExperienceItem {
             title: "European Law (LLM)".to_string(),
@@ -19,6 +20,7 @@ pub fn education_data() -> Vec<ExperienceItem> {
             description: None,
             icon: "/static/about/education/U_LEID.svg".to_string(),
             icon_bg: "bg-white",
+            social_button: None,
         },
         ExperienceItem {
             title: "Law (LLB)".to_string(),
@@ -27,6 +29,7 @@ pub fn education_data() -> Vec<ExperienceItem> {
             description: None,
             icon: "/static/about/education/U_READ.svg".to_string(),
             icon_bg: "bg-white",
+            social_button: None,
         },
     ]
 }

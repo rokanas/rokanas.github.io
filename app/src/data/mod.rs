@@ -7,6 +7,7 @@ pub mod education;
 pub mod experience;
 pub mod technologies;
 pub mod about;
+pub mod social_buttons;
 
 // shared by data::education and data::experience
 #[derive(Clone, PartialEq)]
@@ -17,4 +18,5 @@ pub struct ExperienceItem {
     pub description: Option<Vec<String>>,
     pub icon: String,
     pub icon_bg: &'static str, // backdrop class for the icon badge, matching each logo's own background
+    pub social_button: Option<&'static str>, // title of a SocialButton (see data::social_buttons) overlaid on the detail panel; None hides it
 }

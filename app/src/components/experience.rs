@@ -1,6 +1,7 @@
 // components/experience.rs
 use yew::prelude::*;
 
+use crate::components::social_buttons::SocialButtons;
 use crate::data::experience::experience_data;
 use crate::utils::markdown_links::render_inline_links;
 
@@ -58,10 +59,20 @@ pub fn experience() -> Html {
                         style="background-image: url('/static/common/STBAR_BIG.png'); min-height: 120px; transparency: 0.9;"
                     >
                         // inner box
-                        <div 
+                        <div
                             class="absolute inset-0 m-4 z-5 bg-[#1a1a1a] bg-opacity-60 border-4 border-[#0b0b0a]"
                         ></div>
                         
+                        // social button
+                        if let Some(title) = experience[*selected_job].social_button {
+                            <SocialButtons
+                                button_size={12}
+                                svg_size={8}
+                                only={Some(title)}
+                                wrapper_class={"absolute top-9 right-9 z-20".to_string()}
+                            />
+                        }
+
                         <div class="relative z-10">
                             <div class="flex items-center mb-6">
                                 <div class="flex-shrink-0 mr-4">
