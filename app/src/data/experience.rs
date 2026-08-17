@@ -7,7 +7,7 @@ pub fn experience_data() -> Vec<ExperienceItem> {
         ExperienceItem {
             title: "Software Engineer".to_string(),
             institution: "Hypotenuse Labs".to_string(),
-            date: "2025-Now".to_string(),
+            date: "2025 - Now".to_string(),
             description: Some(vec![
                 "Full-stack and smart-contract development on Web3 projects.".to_string(),
                 "Maintenance and integration support for the [Stellar Disbursement Platform](https://developers.stellar.org/docs/platforms/stellar-disbursement-platform).".to_string(),
@@ -15,6 +15,7 @@ pub fn experience_data() -> Vec<ExperienceItem> {
             ]),
             icon: "/static/about/experience/HYPE.svg".to_string(),
             icon_bg: "bg-black",
+            social_button: Some("Github Hype"),
         },
         ExperienceItem {
             title: "Teaching Assistant".to_string(),
@@ -27,6 +28,7 @@ pub fn experience_data() -> Vec<ExperienceItem> {
             ]),
             icon: "/static/about/education/U_GOTH.svg".to_string(),
             icon_bg: "bg-black",
+            social_button: None,
         },
         ExperienceItem {
             title: "Compliance Officer".to_string(),
@@ -39,6 +41,7 @@ pub fn experience_data() -> Vec<ExperienceItem> {
             ]),
             icon: "/static/about/experience/HUAWEI.svg".to_string(),
             icon_bg: "bg-white",
+            social_button: None,
         },
     ]
 }

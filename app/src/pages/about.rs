@@ -8,6 +8,7 @@ use crate::components::education::{Education};
 use crate::components::experience::{Experience};
 use crate::components::technologies::{Technologies};
 use crate::data::about::{BioParagraph, bio_paragraphs};
+use crate::data::social_buttons::SocialButtonTag;
 
 #[function_component(About)]
 pub fn about() -> Html {
@@ -44,7 +45,7 @@ pub fn about() -> Html {
                             <SocialButtons 
                                 button_size={12}
                                 svg_size={8}
-                                professional=true
+                                tags={vec![SocialButtonTag::General, SocialButtonTag::Professional]}
                             />
                         </div>
                             
@@ -113,9 +114,9 @@ pub fn about() -> Html {
 
                 // social media button links footer
                 <SocialButtons 
-                    button_size={12 }
+                    button_size={12}
                     svg_size={8}
-                    professional=true
+                    tags={vec![SocialButtonTag::General, SocialButtonTag::Professional]}
                 />
 
             </div>

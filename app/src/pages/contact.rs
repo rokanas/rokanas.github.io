@@ -9,6 +9,7 @@ use wasm_bindgen::closure::Closure;
 
 use crate::components::social_buttons::SocialButtons;
 use crate::components::heading::Heading;
+use crate::data::social_buttons::SocialButtonTag;
 
 #[derive(Serialize, Deserialize, Clone)]
 struct FormData {
@@ -335,8 +336,8 @@ pub fn contact() -> Html {
                         <SocialButtons
                             button_size={12}
                             svg_size={8}
-                            professional=false
-                        > </SocialButtons>
+                            tags={vec![SocialButtonTag::General, SocialButtonTag::Personal]}
+                        />
                     </div>
                 </div>
             </div>
