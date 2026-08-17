@@ -9,18 +9,18 @@ pub enum BioParagraph {
 pub fn bio_paragraphs() -> Vec<BioParagraph> {
     vec![
         BioParagraph::Plain(
-            "💻 I'm software engineer working in Web3 and DeFi development.".to_string()
+            "💻 I'm software engineer working in Web3 / DeFi development and passionate about decentralized solutions.".to_string()
         ),
         BioParagraph::Plain(
-            "⚖️ Formerly a legal professional with a focus on personal data and cybersecurity policy compliance".to_string()
+            "⚖️ Formerly a legal professional with a focus on personal data and cybersecurity compliance.".to_string()
         ),
         BioParagraph::WithEmphasis {
             before: "⛧ I'm also a lifelong ".to_string(),
-            emphasis: "Doom".to_string(),
+            emphasis: "DOOM".to_string(),
             after: " enthusiast, mapmaker and content creator.".to_string(),
         },
         BioParagraph::Plain(
-            "🤼‍♂️ When AFK, I enjoy practicing submission wrestling, mixed-martial arts, rock-climbing and playing electric guitar.".to_string()
+            "🤼‍♂️ When AFK, I enjoy practicing submission wrestling, mixed-martial arts, rock-climbing and electric guitar.".to_string()
         ),
     ]
 }

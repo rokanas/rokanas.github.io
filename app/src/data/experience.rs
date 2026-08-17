@@ -11,7 +11,7 @@ pub fn experience_data() -> Vec<ExperienceItem> {
             description: Some(vec![
                 "Full-stack and smart-contract development on Web3 projects.".to_string(),
                 "Maintenance and integration support for the [Stellar Disbursement Platform](https://developers.stellar.org/docs/platforms/stellar-disbursement-platform).".to_string(),
-                "Partner and operator support.".to_string(),
+                "Technical deep-dives, guidance and direct coordination with clients and stakeholders.".to_string(),
             ]),
             icon: "/static/about/experience/HYPE.svg".to_string(),
             icon_bg: "bg-black",
@@ -35,7 +35,7 @@ pub fn experience_data() -> Vec<ExperienceItem> {
             description: Some(vec![
                 "Legal compliance assessment and risk analysis for all areas of company operations in Athens and Cyprus offices (specialization in Data Protection (GDPR) and Cybersecurity)".to_string(),
                 "Legal support to regional offices in Albania, Northern Macedonia and Bulgaria.".to_string(),
-                "Led training sessions for all regional offices on sensitive areas (personal data protection, cybersecurity, anti-bribery).".to_string(),
+                "Led training sessions for all regional offices on sensitive areas (personal data protection, cybersecurity, AMLY & anti-bribery).".to_string(),
             ]),
             icon: "/static/about/experience/HUAWEI.svg".to_string(),
             icon_bg: "bg-white",

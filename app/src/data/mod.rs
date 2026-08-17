@@ -5,6 +5,7 @@ pub mod projects;
 pub mod doom_projects;
 pub mod education;
 pub mod experience;
+pub mod technologies;
 pub mod about;
 
 // shared by data::education and data::experience
