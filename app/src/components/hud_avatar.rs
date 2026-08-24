@@ -20,6 +20,13 @@ const PERSPECTIVE_PX: f64 = 500.0;
 const MAX_ROTATE_X_DEG: f64 = 14.0;
 const MAX_ROTATE_Y_DEG: f64 = 14.0;
 const MAX_ROTATE_Z_DEG: f64 = 14.0;
+// vertical rotation is asymmetric: strong at the top, almost flat at the bottom.
+const VERTICAL_ROTATE_MIN_DEG: f64 = -1.0;
+
+// mouse at the top (y_norm=0) -> max_deg; mouse at the bottom (y_norm=1) -> just below neutral.
+fn vertical_rotate_deg(y_norm: f64, max_deg: f64) -> f64 {
+    max_deg + (VERTICAL_ROTATE_MIN_DEG - max_deg) * y_norm
+}
 
 // alternates the sprite row (0 = top, 1 = bottom) on a timer instead of vertical mouse position.
 #[hook]
@@ -88,7 +95,7 @@ fn use_avatar_tracking() -> (i32, NodeRef, NodeRef) {
                         // dead-center column: vertical drives a 3D tilt (rotateX) instead of
                         // the flat roll, since there's no mirrored left/right art to fix up.
                         let (roll_transform, tilt_transform) = if col == CENTER_COL {
-                            let rotate_x = (0.5 - y_norm) * 2.0 * MAX_ROTATE_X_DEG;
+                            let rotate_x = vertical_rotate_deg(y_norm, MAX_ROTATE_X_DEG);
                             (
                                 "none".to_string(),
                                 format!("perspective({PERSPECTIVE_PX}px) rotateX({rotate_x:.2}deg) rotateY({rotate_y:.2}deg)"),
@@ -97,7 +104,7 @@ fn use_avatar_tracking() -> (i32, NodeRef, NodeRef) {
                             // sprite art is mirrored left/right, so flip the roll sign on the
                             // right half to keep "mouse up" reading as tilting up.
                             let roll_side_sign = if x_norm < 0.5 { 1.0 } else { -1.0 };
-                            let rotate_z = (0.5 - y_norm) * 2.0 * MAX_ROTATE_Z_DEG * roll_side_sign;
+                            let rotate_z = vertical_rotate_deg(y_norm, MAX_ROTATE_Z_DEG) * roll_side_sign;
                             (
                                 format!("rotate({rotate_z:.2}deg)"),
                                 format!("perspective({PERSPECTIVE_PX}px) rotateY({rotate_y:.2}deg)"),
