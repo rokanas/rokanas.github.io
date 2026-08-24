@@ -28,27 +28,27 @@ fn vertical_rotate_deg(y_norm: f64, max_deg: f64) -> f64 {
     max_deg + (VERTICAL_ROTATE_MIN_DEG - max_deg) * y_norm
 }
 
-// alternates the sprite between its upper/lower pose on a timer instead of vertical mouse position.
+// alternates the sprite between its two poses (AVATAR_*_1 / AVATAR_*_2) on a timer
 #[hook]
-fn use_sprite_toggle() -> bool {
-    let is_upper = use_state(|| true);
+fn use_sprite_toggle() -> u8 {
+    let frame = use_state(|| 1u8);
 
     {
-        let is_upper = is_upper.clone();
+        let frame = frame.clone();
         use_effect_with((), move |_| {
-            // tracks state itself, since reading *is_upper here would be stale
+            // tracks state itself, since reading *frame here would be stale
             // (this closure is only ever created once).
-            let current = std::rc::Rc::new(std::cell::Cell::new(true));
+            let current = std::rc::Rc::new(std::cell::Cell::new(1u8));
             let interval = Interval::new(SPRITE_TOGGLE_INTERVAL_MS, move || {
-                let next = !current.get();
+                let next = if current.get() == 1 { 2 } else { 1 };
                 current.set(next);
-                is_upper.set(next);
+                frame.set(next);
             });
             move || drop(interval)
         });
     }
 
-    *is_upper
+    *frame
 }
 
 // grid_col drives the sprite swap via Yew state; roll/tilt refs get the
@@ -143,35 +143,26 @@ fn use_avatar_tracking() -> (i32, NodeRef, NodeRef) {
     (*col_state, roll_ref, tilt_ref)
 }
 
-fn get_avatar_image(col: i32, is_upper: bool, is_hover: bool) -> String {
+fn get_avatar_image(col: i32, frame: u8, is_hover: bool) -> String {
     if is_hover {
         return "/static/hud/avatar/AVATAR_4.png".to_string();
     }
 
-    if is_upper {
-        match col {
-            0 => "/static/hud/avatar/AVATAR_TOP_LEFT.png".to_string(),
-            1 => "/static/hud/avatar/AVATAR_TOP_CENTER_LEFT.png".to_string(),
-            2 => "/static/hud/avatar/AVATAR_TOP_CENTER.png".to_string(),
-            3 => "/static/hud/avatar/AVATAR_TOP_CENTER_RIGHT.png".to_string(),
-            4 => "/static/hud/avatar/AVATAR_TOP_RIGHT.png".to_string(),
-            _ => "/static/hud/avatar/AVATAR_1.png".to_string(),
-        }
-    } else {
-        match col {
-            0 => "/static/hud/avatar/AVATAR_BOTTOM_LEFT.png".to_string(),
-            1 => "/static/hud/avatar/AVATAR_BOTTOM_CENTER_LEFT.png".to_string(),
-            2 => "/static/hud/avatar/AVATAR_BOTTOM_CENTER.png".to_string(),
-            3 => "/static/hud/avatar/AVATAR_BOTTOM_CENTER_RIGHT.png".to_string(),
-            4 => "/static/hud/avatar/AVATAR_BOTTOM_RIGHT.png".to_string(),
-            _ => "/static/hud/avatar/AVATAR_1.png".to_string(),
-        }
-    }
+    let column_name = match col {
+        0 => "LEFT",
+        1 => "LEFT_CENTER",
+        2 => "CENTER",
+        3 => "RIGHT_CENTER",
+        4 => "RIGHT",
+        _ => return "/static/hud/avatar/AVATAR_1.png".to_string(),
+    };
+
+    format!("/static/hud/avatar/AVATAR_{column_name}_{frame}.png")
 }
 
 #[function_component(HudAvatar)]
 pub fn hud_avatar() -> Html {
-    let is_upper = use_sprite_toggle();
+    let frame = use_sprite_toggle();
     let (col, roll_ref, tilt_ref) = use_avatar_tracking();
     let navigate = use_navigation();
 
@@ -185,12 +176,12 @@ pub fn hud_avatar() -> Html {
                 // separate element so the 3D tilt flattens before the roll applies
                 <div ref={tilt_ref} class="transition-transform duration-150 ease-out will-change-transform">
                     <img
-                        src={get_avatar_image(col, is_upper, false)}
+                        src={get_avatar_image(col, frame, false)}
                         alt="Avatar"
                         class="w-full block transition-opacity duration-200 ease-in-out group-hover:opacity-0"
                     />
                     <img
-                        src={get_avatar_image(col, is_upper, true)}
+                        src={get_avatar_image(col, frame, true)}
                         alt="Avatar"
                         class="w-full h-full block absolute inset-0 opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100"
                     />
