@@ -2,7 +2,7 @@
 use yew::prelude::*;
 use web_sys::{window, HtmlElement};
 use gloo_events::EventListener;
-use gloo_timers::callback::Interval;
+use gloo_timers::callback::{Interval, Timeout};
 use wasm_bindgen::JsCast;
 
 use crate::router::Route;
@@ -11,6 +11,8 @@ use crate::hooks::use_navigation;
 const GRID_COLS: i32 = 5;
 const CENTER_COL: i32 = GRID_COLS / 2;
 const SPRITE_TOGGLE_INTERVAL_MS: u32 = 500;
+const HOVER_FRAME_COUNT: u8 = 4;
+const HOVER_FRAME_INTERVAL_MS: u32 = 80;
 
 // horizontal mouse movement tilts the sprite in 3D (rotateY); vertical spins
 // it flat in 2D (rotate), on a separate nested element so the 3D tilt
@@ -49,6 +51,35 @@ fn use_sprite_toggle() -> u8 {
     }
 
     *frame
+}
+
+// on hover, rapidly steps through _HOVER sprites and holds on frame 4;
+// each new hover restarts the cycle from frame 1.
+#[hook]
+fn use_hover_animation() -> (u8, Callback<MouseEvent>, Callback<MouseEvent>) {
+    let frame = use_state(|| 1u8);
+    let pending = use_mut_ref(Vec::<Timeout>::new);
+
+    let onmouseenter = {
+        let frame = frame.clone();
+        let pending = pending.clone();
+        Callback::from(move |_: MouseEvent| {
+            pending.borrow_mut().clear(); // cancel leftovers from a rapid re-hover
+            frame.set(1);
+            for step in 2..=HOVER_FRAME_COUNT {
+                let frame = frame.clone();
+                let delay = HOVER_FRAME_INTERVAL_MS * (step as u32 - 1);
+                pending.borrow_mut().push(Timeout::new(delay, move || frame.set(step)));
+            }
+        })
+    };
+
+    let onmouseleave = {
+        let pending = pending.clone();
+        Callback::from(move |_: MouseEvent| pending.borrow_mut().clear())
+    };
+
+    (*frame, onmouseenter, onmouseleave)
 }
 
 // grid_col drives the sprite swap via Yew state; roll/tilt refs get the
@@ -143,32 +174,35 @@ fn use_avatar_tracking() -> (i32, NodeRef, NodeRef) {
     (*col_state, roll_ref, tilt_ref)
 }
 
-fn get_avatar_image(col: i32, frame: u8, is_hover: bool) -> String {
-    if is_hover {
-        return "/static/hud/avatar/AVATAR_4.png".to_string();
-    }
-
+fn get_avatar_image(col: i32, frame: u8) -> String {
     let column_name = match col {
         0 => "LEFT",
         1 => "LEFT_CENTER",
         2 => "CENTER",
         3 => "RIGHT_CENTER",
         4 => "RIGHT",
-        _ => return "/static/hud/avatar/AVATAR_1.png".to_string(),
+        _ => return "/static/hud/avatar/AVATAR_HOVER_1.png".to_string(),
     };
 
     format!("/static/hud/avatar/AVATAR_{column_name}_{frame}.png")
+}
+
+fn get_hover_image(hover_frame: u8) -> String {
+    format!("/static/hud/avatar/AVATAR_HOVER_{hover_frame}.png")
 }
 
 #[function_component(HudAvatar)]
 pub fn hud_avatar() -> Html {
     let frame = use_sprite_toggle();
     let (col, roll_ref, tilt_ref) = use_avatar_tracking();
+    let (hover_frame, onmouseenter, onmouseleave) = use_hover_animation();
     let navigate = use_navigation();
 
     html! {
         <button
             onclick={navigate.reform(|_| Route::Home)}
+            onmouseenter={onmouseenter}
+            onmouseleave={onmouseleave}
             class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
             // sized/positioned against HudSection, not the button (which collapses to
             // 0x0) — the transform has to live here rather than on the button itself.
@@ -176,12 +210,12 @@ pub fn hud_avatar() -> Html {
                 // separate element so the 3D tilt flattens before the roll applies
                 <div ref={tilt_ref} class="transition-transform duration-150 ease-out will-change-transform">
                     <img
-                        src={get_avatar_image(col, frame, false)}
+                        src={get_avatar_image(col, frame)}
                         alt="Avatar"
                         class="w-full block transition-opacity duration-200 ease-in-out group-hover:opacity-0"
                     />
                     <img
-                        src={get_avatar_image(col, frame, true)}
+                        src={get_hover_image(hover_frame)}
                         alt="Avatar"
                         class="w-full h-full block absolute inset-0 opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100"
                     />
