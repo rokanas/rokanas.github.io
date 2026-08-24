@@ -2,13 +2,15 @@
 use yew::prelude::*;
 use web_sys::{window, HtmlElement};
 use gloo_events::EventListener;
+use gloo_timers::callback::Interval;
 use wasm_bindgen::JsCast;
 
 use crate::router::Route;
 use crate::hooks::use_navigation;
 
 const GRID_COLS: i32 = 5;
-const GRID_ROWS: i32 = 2;
+const CENTER_COL: i32 = GRID_COLS / 2;
+const ROW_TOGGLE_INTERVAL_MS: u32 = 500;
 
 // horizontal mouse movement tilts the sprite in 3D (rotateY); vertical spins
 // it flat in 2D (rotate), on a separate nested element so the 3D tilt
@@ -18,18 +20,40 @@ const PERSPECTIVE_PX: f64 = 500.0;
 const MAX_ROTATE_X_DEG: f64 = 14.0;
 const MAX_ROTATE_Y_DEG: f64 = 14.0;
 const MAX_ROTATE_Z_DEG: f64 = 14.0;
-const CENTER_COL: i32 = GRID_COLS / 2;
 
-// grid_col/grid_row drive the sprite swap via Yew state; roll/tilt refs get
-// the continuous transform written directly, bypassing re-render.
+// alternates the sprite row (0 = top, 1 = bottom) on a timer instead of vertical mouse position.
 #[hook]
-fn use_avatar_tracking() -> (i32, i32, NodeRef, NodeRef) {
-    let grid_pos = use_state(|| (2, 1)); // default: center-left
+fn use_row_toggle() -> i32 {
+    let row = use_state(|| 0);
+
+    {
+        let row = row.clone();
+        use_effect_with((), move |_| {
+            // tracks state itself, since reading *row here would be stale
+            // (this closure is only ever created once).
+            let current = std::rc::Rc::new(std::cell::Cell::new(0));
+            let interval = Interval::new(ROW_TOGGLE_INTERVAL_MS, move || {
+                let next = 1 - current.get();
+                current.set(next);
+                row.set(next);
+            });
+            move || drop(interval)
+        });
+    }
+
+    *row
+}
+
+// grid_col drives the sprite swap via Yew state; roll/tilt refs get the
+// continuous transform written directly, bypassing re-render.
+#[hook]
+fn use_avatar_tracking() -> (i32, NodeRef, NodeRef) {
+    let col_state = use_state(|| CENTER_COL);
     let roll_ref = use_node_ref();
     let tilt_ref = use_node_ref();
 
     {
-        let grid_pos = grid_pos.clone();
+        let col_state = col_state.clone();
         let roll_ref = roll_ref.clone();
         let tilt_ref = tilt_ref.clone();
         use_effect_with((), move |_| {
@@ -51,16 +75,13 @@ fn use_avatar_tracking() -> (i32, i32, NodeRef, NodeRef) {
                         let viewport_width = viewport_width.as_f64().unwrap_or(1920.0);
                         let viewport_height = viewport_height.as_f64().unwrap_or(1080.0);
 
-                        let col = (((x / viewport_width) * GRID_COLS as f64).floor() as i32).clamp(0, GRID_COLS - 1);
-                        let row = (((y / viewport_height) * GRID_ROWS as f64).floor() as i32).clamp(0, GRID_ROWS - 1);
-
-                        // set unconditionally: this closure is only created once, so a
-                        // "changed" check against *grid_pos here would read a stale value.
-                        grid_pos.set((col, row));
-
-                        // continuous roll/tilt, independent of the grid
                         let x_norm = (x / viewport_width).clamp(0.0, 1.0);
                         let y_norm = (y / viewport_height).clamp(0.0, 1.0);
+
+                        let col = ((x_norm * GRID_COLS as f64).floor() as i32).clamp(0, GRID_COLS - 1);
+                        // set unconditionally: this closure is only created once, so a
+                        // "changed" check against *col_state here would read a stale value.
+                        col_state.set(col);
 
                         let rotate_y = (x_norm - 0.5) * 2.0 * MAX_ROTATE_Y_DEG;
 
@@ -112,8 +133,7 @@ fn use_avatar_tracking() -> (i32, i32, NodeRef, NodeRef) {
         });
     }
 
-    let (col, row) = *grid_pos;
-    (col, row, roll_ref, tilt_ref)
+    (*col_state, roll_ref, tilt_ref)
 }
 
 fn get_avatar_image(col: i32, row: i32, is_hover: bool) -> String {
@@ -140,7 +160,8 @@ fn get_avatar_image(col: i32, row: i32, is_hover: bool) -> String {
 
 #[function_component(HudAvatar)]
 pub fn hud_avatar() -> Html {
-    let (col, row, roll_ref, tilt_ref) = use_avatar_tracking();
+    let row = use_row_toggle();
+    let (col, roll_ref, tilt_ref) = use_avatar_tracking();
     let navigate = use_navigation();
 
     html! {
