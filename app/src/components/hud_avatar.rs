@@ -10,7 +10,7 @@ use crate::hooks::use_navigation;
 
 const GRID_COLS: i32 = 5;
 const CENTER_COL: i32 = GRID_COLS / 2;
-const ROW_TOGGLE_INTERVAL_MS: u32 = 500;
+const SPRITE_TOGGLE_INTERVAL_MS: u32 = 500;
 
 // horizontal mouse movement tilts the sprite in 3D (rotateY); vertical spins
 // it flat in 2D (rotate), on a separate nested element so the 3D tilt
@@ -28,27 +28,27 @@ fn vertical_rotate_deg(y_norm: f64, max_deg: f64) -> f64 {
     max_deg + (VERTICAL_ROTATE_MIN_DEG - max_deg) * y_norm
 }
 
-// alternates the sprite row (0 = top, 1 = bottom) on a timer instead of vertical mouse position.
+// alternates the sprite between its upper/lower pose on a timer instead of vertical mouse position.
 #[hook]
-fn use_row_toggle() -> i32 {
-    let row = use_state(|| 0);
+fn use_sprite_toggle() -> bool {
+    let is_upper = use_state(|| true);
 
     {
-        let row = row.clone();
+        let is_upper = is_upper.clone();
         use_effect_with((), move |_| {
-            // tracks state itself, since reading *row here would be stale
+            // tracks state itself, since reading *is_upper here would be stale
             // (this closure is only ever created once).
-            let current = std::rc::Rc::new(std::cell::Cell::new(0));
-            let interval = Interval::new(ROW_TOGGLE_INTERVAL_MS, move || {
-                let next = 1 - current.get();
+            let current = std::rc::Rc::new(std::cell::Cell::new(true));
+            let interval = Interval::new(SPRITE_TOGGLE_INTERVAL_MS, move || {
+                let next = !current.get();
                 current.set(next);
-                row.set(next);
+                is_upper.set(next);
             });
             move || drop(interval)
         });
     }
 
-    *row
+    *is_upper
 }
 
 // grid_col drives the sprite swap via Yew state; roll/tilt refs get the
@@ -143,31 +143,35 @@ fn use_avatar_tracking() -> (i32, NodeRef, NodeRef) {
     (*col_state, roll_ref, tilt_ref)
 }
 
-fn get_avatar_image(col: i32, row: i32, is_hover: bool) -> String {
+fn get_avatar_image(col: i32, is_upper: bool, is_hover: bool) -> String {
     if is_hover {
         return "/static/hud/avatar/AVATAR_4.png".to_string();
     }
 
-    match (col, row) {
-        (0, 0) => "/static/hud/avatar/AVATAR_TOP_LEFT.png".to_string(),
-        (1, 0) => "/static/hud/avatar/AVATAR_TOP_CENTER_LEFT.png".to_string(),
-        (2, 0) => "/static/hud/avatar/AVATAR_TOP_CENTER.png".to_string(),
-        (3, 0) => "/static/hud/avatar/AVATAR_TOP_CENTER_RIGHT.png".to_string(),
-        (4, 0) => "/static/hud/avatar/AVATAR_TOP_RIGHT.png".to_string(),
-
-        (0, 1) => "/static/hud/avatar/AVATAR_BOTTOM_LEFT.png".to_string(),
-        (1, 1) => "/static/hud/avatar/AVATAR_BOTTOM_CENTER_LEFT.png".to_string(),
-        (2, 1) => "/static/hud/avatar/AVATAR_BOTTOM_CENTER.png".to_string(),
-        (3, 1) => "/static/hud/avatar/AVATAR_BOTTOM_CENTER_RIGHT.png".to_string(),
-        (4, 1) => "/static/hud/avatar/AVATAR_BOTTOM_RIGHT.png".to_string(),
-
-        _ => "/static/hud/avatar/AVATAR_1.png".to_string(),
+    if is_upper {
+        match col {
+            0 => "/static/hud/avatar/AVATAR_TOP_LEFT.png".to_string(),
+            1 => "/static/hud/avatar/AVATAR_TOP_CENTER_LEFT.png".to_string(),
+            2 => "/static/hud/avatar/AVATAR_TOP_CENTER.png".to_string(),
+            3 => "/static/hud/avatar/AVATAR_TOP_CENTER_RIGHT.png".to_string(),
+            4 => "/static/hud/avatar/AVATAR_TOP_RIGHT.png".to_string(),
+            _ => "/static/hud/avatar/AVATAR_1.png".to_string(),
+        }
+    } else {
+        match col {
+            0 => "/static/hud/avatar/AVATAR_BOTTOM_LEFT.png".to_string(),
+            1 => "/static/hud/avatar/AVATAR_BOTTOM_CENTER_LEFT.png".to_string(),
+            2 => "/static/hud/avatar/AVATAR_BOTTOM_CENTER.png".to_string(),
+            3 => "/static/hud/avatar/AVATAR_BOTTOM_CENTER_RIGHT.png".to_string(),
+            4 => "/static/hud/avatar/AVATAR_BOTTOM_RIGHT.png".to_string(),
+            _ => "/static/hud/avatar/AVATAR_1.png".to_string(),
+        }
     }
 }
 
 #[function_component(HudAvatar)]
 pub fn hud_avatar() -> Html {
-    let row = use_row_toggle();
+    let is_upper = use_sprite_toggle();
     let (col, roll_ref, tilt_ref) = use_avatar_tracking();
     let navigate = use_navigation();
 
@@ -181,12 +185,12 @@ pub fn hud_avatar() -> Html {
                 // separate element so the 3D tilt flattens before the roll applies
                 <div ref={tilt_ref} class="transition-transform duration-150 ease-out will-change-transform">
                     <img
-                        src={get_avatar_image(col, row, false)}
+                        src={get_avatar_image(col, is_upper, false)}
                         alt="Avatar"
                         class="w-full block transition-opacity duration-200 ease-in-out group-hover:opacity-0"
                     />
                     <img
-                        src={get_avatar_image(col, row, true)}
+                        src={get_avatar_image(col, is_upper, true)}
                         alt="Avatar"
                         class="w-full h-full block absolute inset-0 opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100"
                     />
