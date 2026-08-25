@@ -13,6 +13,8 @@ const CENTER_COL: i32 = GRID_COLS / 2;
 const SPRITE_TOGGLE_INTERVAL_MS: u32 = 500;
 const HOVER_FRAME_COUNT: u8 = 4;
 const HOVER_FRAME_INTERVAL_MS: u32 = 80;
+const CLICK_FRAME_COUNT: u8 = 7;
+const CLICK_FRAME_INTERVAL_MS: u32 = 120;
 
 // horizontal mouse movement tilts the sprite in 3D (rotateY); vertical spins
 // it flat in 2D (rotate), on a separate nested element so the 3D tilt
@@ -80,6 +82,81 @@ fn use_hover_animation() -> (u8, Callback<MouseEvent>, Callback<MouseEvent>) {
     };
 
     (*frame, onmouseenter, onmouseleave)
+}
+
+// on click, rapidly steps through AVATAR_CLICK_1..CLICK_6 — always to completion,
+// even if the mouse leaves mid-animation. Once the last frame is reached, it
+// lingers there while still hovered, and only reverts to None (back to the
+// normal hover/grid sprite) once the mouse actually leaves — immediately if
+// that happens after the animation already finished, or right as the last
+// frame lands if the mouse had already left earlier.
+#[hook]
+fn use_click_animation() -> (Option<u8>, bool, Callback<MouseEvent>, Callback<MouseEvent>, Callback<MouseEvent>) {
+    let click_frame = use_state(|| None::<u8>);
+    let pending = use_mut_ref(Vec::<Timeout>::new);
+    let is_animating = use_mut_ref(|| false);
+    // two trackers for hover, deliberately: the RefCell is read from inside
+    // Timeout callbacks (which are only ever created once, so a UseStateHandle
+    // read there would be a stale snapshot — see the col_state comment above);
+    // the UseStateHandle exists purely so the component can react to hover
+    // changes when deciding whether to keep the overlay visible.
+    let is_hovering_cell = use_mut_ref(|| false);
+    let is_hovering_state = use_state(|| false);
+
+    let onclick = {
+        let click_frame = click_frame.clone();
+        let pending = pending.clone();
+        let is_hovering_cell = is_hovering_cell.clone();
+        let is_animating = is_animating.clone();
+        Callback::from(move |_: MouseEvent| {
+            pending.borrow_mut().clear(); // cancel leftovers from a rapid re-click
+            *is_animating.borrow_mut() = true;
+            click_frame.set(Some(1));
+            for step in 2..CLICK_FRAME_COUNT {
+                let click_frame = click_frame.clone();
+                let delay = CLICK_FRAME_INTERVAL_MS * (step as u32 - 1);
+                pending.borrow_mut().push(Timeout::new(delay, move || click_frame.set(Some(step))));
+            }
+            // last frame decides whether to linger (still hovering) or revert (already left)
+            let click_frame = click_frame.clone();
+            let is_hovering_cell = is_hovering_cell.clone();
+            let is_animating = is_animating.clone();
+            let last_delay = CLICK_FRAME_INTERVAL_MS * (CLICK_FRAME_COUNT as u32 - 1);
+            pending.borrow_mut().push(Timeout::new(last_delay, move || {
+                *is_animating.borrow_mut() = false;
+                if *is_hovering_cell.borrow() {
+                    click_frame.set(Some(CLICK_FRAME_COUNT));
+                } else {
+                    click_frame.set(None);
+                }
+            }));
+        })
+    };
+
+    let onmouseenter = {
+        let is_hovering_cell = is_hovering_cell.clone();
+        let is_hovering_state = is_hovering_state.clone();
+        Callback::from(move |_: MouseEvent| {
+            *is_hovering_cell.borrow_mut() = true;
+            is_hovering_state.set(true);
+        })
+    };
+
+    let onmouseleave = {
+        let click_frame = click_frame.clone();
+        let is_hovering_state = is_hovering_state.clone();
+        Callback::from(move |_: MouseEvent| {
+            *is_hovering_cell.borrow_mut() = false;
+            is_hovering_state.set(false);
+            // only reset right away if the animation isn't still in flight —
+            // otherwise its own last-frame step will pick up on is_hovering itself
+            if !*is_animating.borrow() {
+                click_frame.set(None);
+            }
+        })
+    };
+
+    (*click_frame, *is_hovering_state, onclick, onmouseenter, onmouseleave)
 }
 
 // grid_col drives the sprite swap via Yew state; roll/tilt refs get the
@@ -191,19 +268,60 @@ fn get_hover_image(hover_frame: u8) -> String {
     format!("/static/hud/avatar/AVATAR_HOVER_{hover_frame}.png")
 }
 
+fn get_click_image(click_frame: u8) -> String {
+    format!("/static/hud/avatar/AVATAR_CLICK_{click_frame}.png")
+}
+
 #[function_component(HudAvatar)]
 pub fn hud_avatar() -> Html {
     let frame = use_sprite_toggle();
     let (col, roll_ref, tilt_ref) = use_avatar_tracking();
-    let (hover_frame, onmouseenter, onmouseleave) = use_hover_animation();
+    let (hover_frame, hover_onmouseenter, hover_onmouseleave) = use_hover_animation();
+    let (click_frame, click_is_hovering, animate_click, click_onmouseenter, click_onmouseleave) = use_click_animation();
     let navigate = use_navigation();
+
+    // a click can only happen while already hovering, so the click animation has to
+    // override the hover-overlay layer, not the base layer it already sits on top of.
+    let overlay_image = match click_frame {
+        Some(step) => get_click_image(step),
+        None => get_hover_image(hover_frame),
+    };
+
+    // the overlay must stay visible for the rest of a click animation even after
+    // the mouse leaves, so its opacity can't be pure-CSS :hover driven like the
+    // rest of the crossfade — it needs to also account for click_frame directly.
+    let overlay_active = click_is_hovering || click_frame.is_some();
+    let base_class = if overlay_active {
+        "w-full block transition-opacity duration-200 ease-in-out opacity-0"
+    } else {
+        "w-full block transition-opacity duration-200 ease-in-out opacity-100"
+    };
+    let overlay_class = if overlay_active {
+        "w-full h-full block absolute inset-0 transition-opacity duration-200 ease-in-out opacity-100"
+    } else {
+        "w-full h-full block absolute inset-0 transition-opacity duration-200 ease-in-out opacity-0"
+    };
+
+    let onclick = Callback::from(move |e: MouseEvent| {
+        animate_click.emit(e);
+        navigate.emit(Route::Home);
+    });
+
+    let onmouseenter = Callback::from(move |e: MouseEvent| {
+        hover_onmouseenter.emit(e.clone());
+        click_onmouseenter.emit(e);
+    });
+    let onmouseleave = Callback::from(move |e: MouseEvent| {
+        hover_onmouseleave.emit(e.clone());
+        click_onmouseleave.emit(e);
+    });
 
     html! {
         <button
-            onclick={navigate.reform(|_| Route::Home)}
+            onclick={onclick}
             onmouseenter={onmouseenter}
             onmouseleave={onmouseleave}
-            class="group w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
+            class="w-full h-full flex items-center justify-center cursor-pointer bg-transparent border-none">
             // sized/positioned against HudSection, not the button (which collapses to
             // 0x0) — the transform has to live here rather than on the button itself.
             <div ref={roll_ref} class="w-4/5 absolute transition-transform duration-150 ease-out will-change-transform">
@@ -212,12 +330,12 @@ pub fn hud_avatar() -> Html {
                     <img
                         src={get_avatar_image(col, frame)}
                         alt="Avatar"
-                        class="w-full block transition-opacity duration-200 ease-in-out group-hover:opacity-0"
+                        class={base_class}
                     />
                     <img
-                        src={get_hover_image(hover_frame)}
+                        src={overlay_image}
                         alt="Avatar"
-                        class="w-full h-full block absolute inset-0 opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100"
+                        class={overlay_class}
                     />
                 </div>
             </div>
