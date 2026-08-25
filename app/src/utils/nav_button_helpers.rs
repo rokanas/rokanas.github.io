@@ -12,5 +12,5 @@ pub fn is_route_active(current: &Option<Route>, target: &Route) -> bool {
 
 // builds the normal/active image paths from a button's base filepath
 pub fn nav_image_paths(src: &str) -> (String, String) {
-    (format!("{}_W.png", src), format!("{}_R.png", src))
+    (format!("{}_W.webp", src), format!("{}_R.webp", src))
 }

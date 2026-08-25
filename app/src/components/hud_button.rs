@@ -24,7 +24,7 @@ pub fn hud_button(props: &HudButtonProps) -> Html {
 
     // construct image paths
     let (normal_img, active_img) = nav_image_paths(&props.src);
-    let disabled_img = format!("{}_G.png", props.src);
+    let disabled_img = format!("{}_G.webp", props.src);
 
     html! {
         if props.disabled {

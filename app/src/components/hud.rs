@@ -67,27 +67,27 @@ fn use_mouse_grid() -> (i32, i32) {         // return tuple of signed integers (
 fn get_avatar_image(col: i32, row: i32, is_hover: bool) -> String { // take grid position and hover state, return image path
     if is_hover {
         // single hover image regardless of grid position
-        return "/static/hud/avatar/AVATAR_4.png".to_string();
+        return "/static/hud/avatar/AVATAR_4.webp".to_string();
     }
     
     // map grid positions to corresponding avatar image
     match (col, row) {
         // top row (row 0)
-        (0, 0) => "/static/hud/avatar/AVATAR_TOP_LEFT.png".to_string(),
-        (1, 0) => "/static/hud/avatar/AVATAR_TOP_CENTER_LEFT.png".to_string(),
-        (2, 0) => "/static/hud/avatar/AVATAR_TOP_CENTER.png".to_string(),
-        (3, 0) => "/static/hud/avatar/AVATAR_TOP_CENTER_RIGHT.png".to_string(),
-        (4, 0) => "/static/hud/avatar/AVATAR_TOP_RIGHT.png".to_string(),
+        (0, 0) => "/static/hud/avatar/AVATAR_TOP_LEFT.webp".to_string(),
+        (1, 0) => "/static/hud/avatar/AVATAR_TOP_CENTER_LEFT.webp".to_string(),
+        (2, 0) => "/static/hud/avatar/AVATAR_TOP_CENTER.webp".to_string(),
+        (3, 0) => "/static/hud/avatar/AVATAR_TOP_CENTER_RIGHT.webp".to_string(),
+        (4, 0) => "/static/hud/avatar/AVATAR_TOP_RIGHT.webp".to_string(),
         
         // bottom row (row 1)
-        (0, 1) => "/static/hud/avatar/AVATAR_BOTTOM_LEFT.png".to_string(),
-        (1, 1) => "/static/hud/avatar/AVATAR_BOTTOM_CENTER_LEFT.png".to_string(),
-        (2, 1) => "/static/hud/avatar/AVATAR_BOTTOM_CENTER.png".to_string(),
-        (3, 1) => "/static/hud/avatar/AVATAR_BOTTOM_CENTER_RIGHT.png".to_string(),
-        (4, 1) => "/static/hud/avatar/AVATAR_BOTTOM_RIGHT.png".to_string(),
+        (0, 1) => "/static/hud/avatar/AVATAR_BOTTOM_LEFT.webp".to_string(),
+        (1, 1) => "/static/hud/avatar/AVATAR_BOTTOM_CENTER_LEFT.webp".to_string(),
+        (2, 1) => "/static/hud/avatar/AVATAR_BOTTOM_CENTER.webp".to_string(),
+        (3, 1) => "/static/hud/avatar/AVATAR_BOTTOM_CENTER_RIGHT.webp".to_string(),
+        (4, 1) => "/static/hud/avatar/AVATAR_BOTTOM_RIGHT.webp".to_string(),
         
         // fallback
-        _ => "/static/hud/avatar/AVATAR_1.png".to_string(),    // _ is catch-all pattern for any other value
+        _ => "/static/hud/avatar/AVATAR_1.webp".to_string(),    // _ is catch-all pattern for any other value
     }
 }
 
@@ -114,7 +114,7 @@ pub fn hud(props: &HudProps) -> Html {
                 
                 // home
                 <HudSection 
-                    background_image="/static/hud/section/STBAR1.png"
+                    background_image="/static/hud/section/STBAR1.webp"
                     background_width=48
                     text_color="text-red-600"
                     route={Route::Home}>
@@ -128,7 +128,7 @@ pub fn hud(props: &HudProps) -> Html {
 
                 // about
                 <HudSection
-                    background_image="/static/hud/section/STBAR2B.png"
+                    background_image="/static/hud/section/STBAR2B.webp"
                     background_width=36
                     text_color="text-red-600"
                     route={Route::Projects}>
@@ -142,7 +142,7 @@ pub fn hud(props: &HudProps) -> Html {
 
                 // projects
                 <HudSection
-                    background_image="/static/hud/section/STBAR3B.png"
+                    background_image="/static/hud/section/STBAR3B.webp"
                     background_width=58
                     text_color="text-yellow-600"
                     route={Route::About}>
@@ -156,7 +156,7 @@ pub fn hud(props: &HudProps) -> Html {
 
                 // avatar
                 <HudSection
-                    background_image="/static/hud/section/STBAR4.png"
+                    background_image="/static/hud/section/STBAR4.webp"
                     background_width=37
                     text_color="text-white">
                     <button 
@@ -177,7 +177,7 @@ pub fn hud(props: &HudProps) -> Html {
 
                 // doom projects
                 <HudSection
-                    background_image="/static/hud/section/STBAR5.png"
+                    background_image="/static/hud/section/STBAR5.webp"
                     background_width=57
                     text_color="text-red-600"
                     route={Route::DoomProjects}>
@@ -191,7 +191,7 @@ pub fn hud(props: &HudProps) -> Html {
 
                 // keys section
                 <HudSection
-                    background_image="/static/hud/section/STBAR6.png"
+                    background_image="/static/hud/section/STBAR6.webp"
                     background_width=13
                     text_color="text-red-600">
                     <div class="flex flex-col">
@@ -200,7 +200,7 @@ pub fn hud(props: &HudProps) -> Html {
 
                 // contact
                 <HudSection
-                    background_image="/static/hud/section/STBAR7.png"
+                    background_image="/static/hud/section/STBAR7.webp"
                     background_width=71
                     text_color="text-blue-600"
                     route={Route::Contact}>

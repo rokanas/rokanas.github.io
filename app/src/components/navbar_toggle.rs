@@ -32,7 +32,7 @@ pub fn navbar_toggle(props: &NavbarToggleProps) -> Html {
         >
             // button icon / text
             <img 
-                src="static/common/NAV_TOGGLE.png"
+                src="static/common/NAV_TOGGLE.webp"
                 alt="Toggle" 
                 class="w-14 h-14 object-contain rounded-full"
             />

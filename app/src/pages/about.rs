@@ -35,7 +35,7 @@ pub fn about() -> Html {
                         <div class="flex-shrink-0 w-full lg:w-auto flex flex-col items-center">
                             <div class="w-64 h-64 lg:w-80 lg:h-80 rounded-full bg-[#1a1a1a] flex items-center justify-center text-6xl lg:text-8xl shadow-2xl border-8 border-[#0b0b0a] hover:scale-105 transition-transform duration-300">
                                 <img 
-                                    src="/static/about/AVATAR.png" 
+                                    src="/static/about/AVATAR.webp" 
                                     alt="Avatar" 
                                     class="w-full h-full object-cover rounded-full"
                                 />
@@ -53,7 +53,7 @@ pub fn about() -> Html {
                 <div class="flex-1 text-center lg:text-left">
                     <div class="text-center mb-10 mt-10">
                         <img 
-                            src="/static/about/KONSTANTINOS_ROKANAS_1.png" 
+                            src="/static/about/KONSTANTINOS_ROKANAS_1.webp" 
                             alt="Konstantinos Rokanas"
                             class="w-auto h-auto mx-auto"
                         />
@@ -81,7 +81,7 @@ pub fn about() -> Html {
                 <div class="mb-16">
                     // heading
                     <Heading 
-                        src="/static/about/EXPERIENCE_1.png" 
+                        src="/static/about/EXPERIENCE_1.webp" 
                         alt="Experience"
                         sub_heading=""             
                     />
@@ -93,7 +93,7 @@ pub fn about() -> Html {
                 <div class="mb-16">
                     // heading
                     <Heading 
-                        src="/static/about/EDUCATION_1.png" 
+                        src="/static/about/EDUCATION_1.webp" 
                         alt="Education"
                         sub_heading=""             
                     />
@@ -105,7 +105,7 @@ pub fn about() -> Html {
                 <div class="mb-16">
                     // heading
                     <Heading 
-                        src="/static/about/TECHNOLOGIES_1.png" 
+                        src="/static/about/TECHNOLOGIES_1.webp" 
                         alt="Technologies"
                         sub_heading=""             
                     />

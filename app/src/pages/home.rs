@@ -40,7 +40,7 @@ pub fn home() -> Html {
 
             // model made text anchored to top/bottom left depending on navbar type
             <img 
-                src="/static/models/unholy_cathedral/MODEL_MADE.png" 
+                src="/static/models/unholy_cathedral/MODEL_MADE.webp" 
                 alt="Model made using Ultimate Doom Builder + Blender"
                 class={format!(
                     "absolute {} left-2 w-[25vw] h-auto  text-red-600", // max-w-32 max-h-32 TODO: use max if necessary for larger screens

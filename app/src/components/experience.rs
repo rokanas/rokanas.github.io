@@ -56,7 +56,7 @@ pub fn experience() -> Html {
                 <div class="lg:w-2/3">
                     <div
                         class="relative p-8 bg-pixel-panel"
-                        style="background-image: url('/static/common/STBAR_BIG.png'); min-height: 120px; transparency: 0.9;"
+                        style="background-image: url('/static/common/STBAR_BIG.webp'); min-height: 120px; transparency: 0.9;"
                     >
                         // inner box
                         <div

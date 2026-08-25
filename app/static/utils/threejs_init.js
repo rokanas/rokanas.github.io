@@ -167,7 +167,7 @@ window.initThreeJsScene = function(canvas, modelName, frontCam = true) {
 
                     if (textureName && textureName !== 'undefined') {
                         // console.log('Attempting to load texture:', textureName);
-                        const texturePath = `static/models/${modelName}/textures/${textureName}.png`;
+                        const texturePath = `static/models/${modelName}/textures/${textureName}.webp`;
 
                         // increment pending count for this texture
                         pendingTextures++;

@@ -42,7 +42,7 @@ pub fn education() -> Html {
                             )}>
                                 <div
                                     class="relative text-white flex items-center justify-left text-left p-6 hover:scale-105 transition-transform duration-300 bg-pixel-panel"
-                                    style="background-image: url('/static/hud/section/STBAR7.png'); min-height: 120px;"
+                                    style="background-image: url('/static/hud/section/STBAR7.webp'); min-height: 120px;"
                                 >
 
                                     // inner box

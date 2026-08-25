@@ -28,7 +28,7 @@ pub fn doom_projects() -> Html {
                 
                 // page heading
                 <Heading 
-                    src="/static/doom_projects/DOOM_MAPS_1.png" 
+                    src="/static/doom_projects/DOOM_MAPS_1.webp" 
                     alt="Doom Maps"
                     sub_heading="All maps made for limit-removing source ports and tested in GZDoom."
                 />
@@ -48,7 +48,7 @@ pub fn doom_projects() -> Html {
                 </div>
 
                 <Heading 
-                    src="/static/doom_projects/DOOM_MODELS_1.png" 
+                    src="/static/doom_projects/DOOM_MODELS_1.webp" 
                     alt="Doom Models"
                     sub_heading="All models made using Ultimate Doom Builder and Blender."
                 />
