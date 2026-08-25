@@ -14,7 +14,7 @@ const SPRITE_TOGGLE_INTERVAL_MS: u32 = 500;
 const HOVER_FRAME_COUNT: u8 = 4;
 const HOVER_FRAME_INTERVAL_MS: u32 = 80;
 const CLICK_FRAME_COUNT: u8 = 7;
-const CLICK_FRAME_INTERVAL_MS: u32 = 120;
+const CLICK_FRAME_INTERVAL_MS: u32 = 110;
 
 // horizontal tilts in 3D (rotateY) on one element; vertical rolls flat in 2D
 // (rotate) on a nested one, so the 3D tilt flattens before the roll applies.
@@ -31,20 +31,31 @@ fn vertical_rotate_deg(y_norm: f64, max_deg: f64) -> f64 {
     max_deg + (VERTICAL_ROTATE_MIN_DEG - max_deg) * y_norm
 }
 
-// alternates the sprite between its two poses (AVATAR_*_1 / AVATAR_*_2) on a timer
+const SPRITE_FRAME_MIN: u8 = 1;
+const SPRITE_FRAME_MAX: u8 = 3;
+
+// ping-pongs the idle sprite 1,2,3,2,1,2,3,2,... on a timer (AVATAR_*_1..3).
 #[hook]
 fn use_sprite_toggle() -> u8 {
-    let frame = use_state(|| 1u8);
+    let frame = use_state(|| SPRITE_FRAME_MIN);
 
     {
         let frame = frame.clone();
         use_effect_with((), move |_| {
             // tracks state itself, since reading *frame here would be stale
             // (this closure is only ever created once).
-            let current = std::rc::Rc::new(std::cell::Cell::new(1u8));
+            let current = std::rc::Rc::new(std::cell::Cell::new((SPRITE_FRAME_MIN, 1i8)));
             let interval = Interval::new(SPRITE_TOGGLE_INTERVAL_MS, move || {
-                let next = if current.get() == 1 { 2 } else { 1 };
-                current.set(next);
+                let (value, direction) = current.get();
+                let direction = if value == SPRITE_FRAME_MAX {
+                    -1
+                } else if value == SPRITE_FRAME_MIN {
+                    1
+                } else {
+                    direction
+                };
+                let next = (value as i8 + direction) as u8;
+                current.set((next, direction));
                 frame.set(next);
             });
             move || drop(interval)
