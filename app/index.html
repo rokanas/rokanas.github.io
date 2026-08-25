@@ -13,17 +13,9 @@
         <link data-trunk rel="icon" type="image/png" href="static/favicon/apple-touch-icon.png" sizes="180x180" />
         <link data-trunk rel="copy-file" href="static/favicon/site.webmanifest" />
         
-        <!-- load three.js -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-        <!-- load OrbitControls for interactive camera -->
-        <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-        
-        <!-- use reliable CDN for OBJLoader -->
-        <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js"></script>
-        
-        <!-- scene initialization -->
-        <script data-trunk src="static/utils/threejs_init.js"></script>
+        <!-- three.js + OrbitControls + OBJLoader are no longer loaded here: ModelViewer
+             fetches them on demand via loadThreeJsDeps() so they don't block Header/Hud -->
+        <script data-trunk src="static/utils/threejs_init.js" defer></script>
     </head>
     <body>
         <div id="app"></div>

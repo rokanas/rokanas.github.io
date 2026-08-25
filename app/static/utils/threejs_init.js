@@ -1,5 +1,33 @@
 // static/utils/threejs_init.js
-       
+
+const THREE_CDN = {
+    core: 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js',
+    orbitControls: 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js',
+    objLoader: 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js',
+};
+
+function loadScript(src) {
+    return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = () => reject(new Error(`Failed to load script: ${src}`));
+        document.head.appendChild(script);
+    });
+}
+
+// lazily fetches three.js + addons; cached so repeat mounts reuse the same
+// in-flight/resolved promise instead of re-injecting scripts
+let threeDepsPromise = null;
+window.loadThreeJsDeps = function() {
+    if (!threeDepsPromise) {
+        threeDepsPromise = loadScript(THREE_CDN.core).then(() =>
+            Promise.all([loadScript(THREE_CDN.orbitControls), loadScript(THREE_CDN.objLoader)])
+        );
+    }
+    return threeDepsPromise;
+};
+
 window.initThreeJsScene = function(canvas, modelName, frontCam = true) {
     console.log('Starting Three.js initialization...');
 
