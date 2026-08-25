@@ -1,5 +1,10 @@
 // static/utils/threejs_init.js
-       
+
+// this script loads once but initThreeJsScene runs fresh each mount, so this
+// module-level cache persists: repeat mounts reuse the already-loaded model
+// instead of re-fetching + re-parsing the OBJ.
+const modelCache = {};
+
 window.initThreeJsScene = function(canvas, modelName, frontCam = true) {
     console.log('Starting Three.js initialization...');
 
@@ -58,10 +63,17 @@ window.initThreeJsScene = function(canvas, modelName, frontCam = true) {
     let pendingTextures = 0;
     let modelAdded = false;
     let loadingSignaled = false;
+    // only the real OBJ-load path is worth caching, not the generic fallback cube
+    let isCacheable = false;
 
     function checkComplete() {
         if (!loadingSignaled && modelAdded && pendingTextures === 0) {
             loadingSignaled = true;
+            // cache only once genuinely ready (all textures resolved/fell back),
+            // so a rapid re-mount hitting the cache never sees a texture-less model
+            if (isCacheable && !modelCache[modelName]) {
+                modelCache[modelName] = model;
+            }
             if (typeof window.modelLoadComplete === 'function') {
                 try {
                     window.modelLoadComplete();
@@ -82,6 +94,17 @@ window.initThreeJsScene = function(canvas, modelName, frontCam = true) {
         modelAdded = true;
         // no textures pending in fallback -> mark complete
         checkComplete();
+    }
+
+    // reuse an already-loaded model instead of re-fetching + re-parsing the OBJ
+    if (modelCache[modelName]) {
+        console.log('Using cached model for', modelName);
+        model = modelCache[modelName];
+        scene.add(model);
+        modelAdded = true;
+        checkComplete();
+        animate();
+        return;
     }
 
     // if OBJLoader missing, fallback and signal complete
@@ -192,6 +215,7 @@ window.initThreeJsScene = function(canvas, modelName, frontCam = true) {
             }
 
             model = object;
+            isCacheable = true;
             scene.add(object);
             
             // If controls exist, focus them on the model

@@ -16,10 +16,9 @@ const HOVER_FRAME_INTERVAL_MS: u32 = 80;
 const CLICK_FRAME_COUNT: u8 = 7;
 const CLICK_FRAME_INTERVAL_MS: u32 = 120;
 
-// horizontal mouse movement tilts the sprite in 3D (rotateY); vertical spins
-// it flat in 2D (rotate), on a separate nested element so the 3D tilt
-// flattens before the roll applies — keeps the roll direction consistent.
-// exception: in the dead-center column, vertical also uses 3D (rotateX).
+// horizontal tilts in 3D (rotateY) on one element; vertical rolls flat in 2D
+// (rotate) on a nested one, so the 3D tilt flattens before the roll applies.
+// exception: near dead-center, vertical also uses 3D (rotateX).
 const PERSPECTIVE_PX: f64 = 500.0;
 const MAX_ROTATE_X_DEG: f64 = 14.0;
 const MAX_ROTATE_Y_DEG: f64 = 14.0;
@@ -84,22 +83,17 @@ fn use_hover_animation() -> (u8, Callback<MouseEvent>, Callback<MouseEvent>) {
     (*frame, onmouseenter, onmouseleave)
 }
 
-// on click, rapidly steps through AVATAR_CLICK_1..CLICK_6 — always to completion,
-// even if the mouse leaves mid-animation. Once the last frame is reached, it
-// lingers there while still hovered, and only reverts to None (back to the
-// normal hover/grid sprite) once the mouse actually leaves — immediately if
-// that happens after the animation already finished, or right as the last
-// frame lands if the mouse had already left earlier.
+// on click, steps through AVATAR_CLICK_1..CLICK_6 to completion regardless of
+// mouse movement, lingers on the last frame while still hovered, and reverts
+// to None only once both the animation is done and the mouse has left.
 #[hook]
 fn use_click_animation() -> (Option<u8>, bool, Callback<MouseEvent>, Callback<MouseEvent>, Callback<MouseEvent>) {
     let click_frame = use_state(|| None::<u8>);
     let pending = use_mut_ref(Vec::<Timeout>::new);
     let is_animating = use_mut_ref(|| false);
-    // two trackers for hover, deliberately: the RefCell is read from inside
-    // Timeout callbacks (which are only ever created once, so a UseStateHandle
-    // read there would be a stale snapshot — see the col_state comment above);
-    // the UseStateHandle exists purely so the component can react to hover
-    // changes when deciding whether to keep the overlay visible.
+    // two trackers, deliberately: the RefCell is read fresh inside Timeout
+    // callbacks (a UseStateHandle there would be stale); the UseStateHandle
+    // lets the component re-render to keep the overlay visible.
     let is_hovering_cell = use_mut_ref(|| false);
     let is_hovering_state = use_state(|| false);
 
