@@ -34,29 +34,32 @@ fn vertical_rotate_deg(y_norm: f64, max_deg: f64) -> f64 {
 const SPRITE_FRAME_MIN: u8 = 1;
 const SPRITE_FRAME_MAX: u8 = 3;
 
-// ping-pongs the idle sprite 1,2,3,2,1,2,3,2,... on a timer (AVATAR_*_1..3).
+// ping-pongs the idle sprite 1,2,3,2,1,2,3,2,... on a timer (AVATAR_*_1..3),
+// pausing (and resuming from the same spot) while is_hovering is true.
 #[hook]
-fn use_sprite_toggle() -> u8 {
+fn use_sprite_toggle(is_hovering: bool) -> u8 {
     let frame = use_state(|| SPRITE_FRAME_MIN);
+    // outside the effect so it survives the pause/resume teardown below.
+    let current = use_mut_ref(|| (SPRITE_FRAME_MIN, 1i8));
 
     {
         let frame = frame.clone();
-        use_effect_with((), move |_| {
-            // tracks state itself, since reading *frame here would be stale
-            // (this closure is only ever created once).
-            let current = std::rc::Rc::new(std::cell::Cell::new((SPRITE_FRAME_MIN, 1i8)));
-            let interval = Interval::new(SPRITE_TOGGLE_INTERVAL_MS, move || {
-                let (value, direction) = current.get();
-                let direction = if value == SPRITE_FRAME_MAX {
-                    -1
-                } else if value == SPRITE_FRAME_MIN {
-                    1
-                } else {
-                    direction
-                };
-                let next = (value as i8 + direction) as u8;
-                current.set((next, direction));
-                frame.set(next);
+        let current = current.clone();
+        use_effect_with(is_hovering, move |&is_hovering| {
+            let interval = (!is_hovering).then(|| {
+                Interval::new(SPRITE_TOGGLE_INTERVAL_MS, move || {
+                    let (value, direction) = *current.borrow();
+                    let direction = if value == SPRITE_FRAME_MAX {
+                        -1
+                    } else if value == SPRITE_FRAME_MIN {
+                        1
+                    } else {
+                        direction
+                    };
+                    let next = (value as i8 + direction) as u8;
+                    *current.borrow_mut() = (next, direction);
+                    frame.set(next);
+                })
             });
             move || drop(interval)
         });
@@ -279,10 +282,10 @@ fn get_click_image(click_frame: u8) -> String {
 
 #[function_component(HudAvatar)]
 pub fn hud_avatar() -> Html {
-    let frame = use_sprite_toggle();
+    let (click_frame, click_is_hovering, animate_click, click_onmouseenter, click_onmouseleave) = use_click_animation();
+    let frame = use_sprite_toggle(click_is_hovering);
     let (col, roll_ref, tilt_ref) = use_avatar_tracking();
     let (hover_frame, hover_onmouseenter, hover_onmouseleave) = use_hover_animation();
-    let (click_frame, click_is_hovering, animate_click, click_onmouseenter, click_onmouseleave) = use_click_animation();
     let navigate = use_navigation();
 
     // a click can only happen while already hovering, so the click animation has to
