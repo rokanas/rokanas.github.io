@@ -5,6 +5,8 @@
         <title>Konstantinos Rokanas</title>
         <link data-trunk rel="css" href="/styles/output.css" />
         <link data-trunk rel="copy-dir" href="static" />
+        <!-- explicit rust link so `data-wasm-opt` takes effect (implicit auto-detection ignores it) -->
+        <link data-trunk rel="rust" data-wasm-opt="z" data-wasm-opt-params="--all-features" />
 
         <!-- favicon variations generated using https://realfavicongenerator.net/ -->
         <link data-trunk rel="icon" type="image/png" href="static/favicon/favicon-96x96.png" sizes="96x96" />
