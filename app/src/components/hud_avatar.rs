@@ -20,9 +20,9 @@ const CLICK_FRAME_INTERVAL_MS: u32 = 110;
 // (rotate) on a nested one, so the 3D tilt flattens before the roll applies.
 // exception: near dead-center, vertical also uses 3D (rotateX).
 const PERSPECTIVE_PX: f64 = 500.0;
-const MAX_ROTATE_X_DEG: f64 = 14.0;
+const MAX_ROTATE_X_DEG: f64 = 22.0;
 const MAX_ROTATE_Y_DEG: f64 = 14.0;
-const MAX_ROTATE_Z_DEG: f64 = 14.0;
+const MAX_ROTATE_Z_DEG: f64 = 22.0;
 // vertical rotation is asymmetric: strong at the top, almost flat at the bottom.
 const VERTICAL_ROTATE_MIN_DEG: f64 = -1.0;
 
