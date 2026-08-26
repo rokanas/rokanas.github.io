@@ -1,6 +1,6 @@
 // components/hud_avatar.rs
 use yew::prelude::*;
-use web_sys::{window, HtmlElement};
+use web_sys::{window, HtmlElement, HtmlImageElement};
 use gloo_events::EventListener;
 use gloo_timers::callback::{Interval, Timeout};
 use wasm_bindgen::JsCast;
@@ -20,9 +20,9 @@ const CLICK_FRAME_INTERVAL_MS: u32 = 110;
 // (rotate) on a nested one, so the 3D tilt flattens before the roll applies.
 // exception: near dead-center, vertical also uses 3D (rotateX).
 const PERSPECTIVE_PX: f64 = 500.0;
-const MAX_ROTATE_X_DEG: f64 = 14.0;
+const MAX_ROTATE_X_DEG: f64 = 22.0;
 const MAX_ROTATE_Y_DEG: f64 = 14.0;
-const MAX_ROTATE_Z_DEG: f64 = 14.0;
+const MAX_ROTATE_Z_DEG: f64 = 22.0;
 // vertical rotation is asymmetric: strong at the top, almost flat at the bottom.
 const VERTICAL_ROTATE_MIN_DEG: f64 = -1.0;
 
@@ -280,8 +280,35 @@ fn get_click_image(click_frame: u8) -> String {
     format!("/static/hud/avatar/AVATAR_CLICK_{click_frame}.webp")
 }
 
+// warms the browser cache for every sprite variant on mount, so the first
+// hover/click/column-change doesn't stall on a network fetch.  
+fn preload(src: &str) {
+    if let Ok(img) = HtmlImageElement::new() {
+        img.set_src(src);
+    }
+}
+
+#[hook]
+fn use_preload_avatar_sprites() {
+    use_effect_with((), |_| {
+        for col in 0..GRID_COLS {
+            for frame in SPRITE_FRAME_MIN..=SPRITE_FRAME_MAX {
+                preload(&get_avatar_image(col, frame));
+            }
+        }
+        for frame in 1..=HOVER_FRAME_COUNT {
+            preload(&get_hover_image(frame));
+        }
+        for frame in 1..=CLICK_FRAME_COUNT {
+            preload(&get_click_image(frame));
+        }
+        || ()
+    });
+}
+
 #[function_component(HudAvatar)]
 pub fn hud_avatar() -> Html {
+    use_preload_avatar_sprites();
     let (click_frame, click_is_hovering, animate_click, click_onmouseenter, click_onmouseleave) = use_click_animation();
     let frame = use_sprite_toggle(click_is_hovering);
     let (col, roll_ref, tilt_ref) = use_avatar_tracking();
