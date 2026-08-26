@@ -2,35 +2,15 @@
     <html>
     <head>
         <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Konstantinos Rokanas</title>
         <link rel="stylesheet" href="/output-f6a93d190cf9e76b.css" integrity="sha384-maJqstNiVc4SKX3EWmRsr7tPrCrz1O4L536hUc5S/4UooGzEugMkEudURUbASi0f"/>
         
-
-        <!-- favicon variations generated using https://realfavicongenerator.net/ -->
-        <link rel="icon" href="/favicon-96x96-8ef1aaa2a22f8cef.png" integrity="sha384-KCQ8cOwAS2Z92Pbu3KC2H9wiSEvqU4hdSqOPTA9hle9aRVynfmk5Nu9eOXVV+fjt"/>
-        <link rel="icon" href="/favicon-bd37e9bd9aa39513.svg" integrity="sha384-EOXvbpoheVlUGPLRe9K/6q+VM3n19zVSHeb3kyabBoMSwDUZBVjUyeWpz4tpeea1"/>
-        <link rel="icon" href="/favicon-9c7f4a2378684bf8.ico" integrity="sha384-0ftJ/TaFMXAzQjConEeqsAcPY+XullHDFTufo6rsIEGyIbS0Y4eijJiPxLY+st97"/>
-        <link rel="icon" href="/apple-touch-icon-7ae0eca2b7ebcff0.png" integrity="sha384-v3hXzGMTFykRq637zRP5YuVyWlh/hpT/Rc80ZcttBh3xIUJAhxVTXlX29slW7LOk"/>
+        <!-- explicit rust link so `data-wasm-opt` takes effect (implicit auto-detection ignores it) -->
         
-        
-        <!-- load three.js -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-        <!-- load OrbitControls for interactive camera -->
-        <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-        
-        <!-- use reliable CDN for OBJLoader -->
-        <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js"></script>
-        
-        <!-- scene initialization -->
-        <script src="/threejs_init-2039de69902b5e0e.js" integrity="sha384-DxTHVotj2hSeDwDB2RV/5MIdAcQKlJ6cLUcWki0Iqy+jSa7thR3+CVQr0+ff1dpa"></script>
-    <link rel="modulepreload" href="/app-b3495b56fcbc2e05.js" crossorigin="anonymous" integrity="sha384-Dj8vObVbhs6y8PqZsWuOlsDTXzNAFJqt/DgchuIzLjXh0t5ajH/zSlXsB7UmwYMU"><link rel="preload" href="/app-b3495b56fcbc2e05_bg.wasm" crossorigin="anonymous" integrity="sha384-32WuwcD/+kYjucfdvD5Ewy6K/oBFJ1qZ8W0ljyMsvVP0JjmuhdRodsCT6J8XVk8a" as="fetch" type="application/wasm"></head>
-    <body>
-        <div id="app"></div>
-    
 <script type="module">
-import init, * as bindings from '/app-b3495b56fcbc2e05.js';
-const wasm = await init({ module_or_path: '/app-b3495b56fcbc2e05_bg.wasm' });
+import init, * as bindings from '/app-28a145bdd0ce2a0c.js';
+const wasm = await init({ module_or_path: '/app-28a145bdd0ce2a0c_bg.wasm' });
 
 
 window.wasmBindings = bindings;
@@ -38,5 +18,21 @@ window.wasmBindings = bindings;
 
 dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
 
-</script></body>
+</script>
+
+        <!-- favicon variations generated using https://realfavicongenerator.net/ -->
+        <link rel="icon" href="/favicon-96x96-e146eb762e8ae033.webp" integrity="sha384-nsF2s2LuohMW5U2ooTlKvpRFBUdRCWNHDNwb45dlNSqtRY91jnSS/QIquYZXs6ex"/>
+        <link rel="icon" href="/favicon-bd37e9bd9aa39513.svg" integrity="sha384-EOXvbpoheVlUGPLRe9K/6q+VM3n19zVSHeb3kyabBoMSwDUZBVjUyeWpz4tpeea1"/>
+        <link rel="icon" href="/favicon-9c7f4a2378684bf8.ico" integrity="sha384-0ftJ/TaFMXAzQjConEeqsAcPY+XullHDFTufo6rsIEGyIbS0Y4eijJiPxLY+st97"/>
+        <link rel="apple-touch-icon" href="static/favicon/apple-touch-icon.webp" sizes="180x180" />
+        
+        <link rel="manifest" href="static/favicon/site.webmanifest" />
+        
+        <!-- three.js + OrbitControls + OBJLoader are no longer loaded here: ModelViewer
+             fetches them on demand via loadThreeJsDeps() so they don't block Header/Hud -->
+        <script src="/threejs_init-f7093010ab016906.js" defer integrity="sha384-2TRZmWnm3auWi5+bKAljnCvHug9NlCGBKSoHNbdXWbx4GHPWfLs+w8iramTmSNk1"></script>
+    <link rel="modulepreload" href="/app-28a145bdd0ce2a0c.js" crossorigin="anonymous" integrity="sha384-TiRCFoiTeVwCCMUDJ2FBiB7KtE7UA5qTrTOxB3ImI7Qkh7X6+Lw5pWHT11ChwGhj"><link rel="preload" href="/app-28a145bdd0ce2a0c_bg.wasm" crossorigin="anonymous" integrity="sha384-akYJ+Qm1iQ6yWcOjJqSpmhSnP0YlpVsQgwfwgHX8iW0a6pQrxUm+4rBWZHnkwGbw" as="fetch" type="application/wasm"></head>
+    <body>
+        <div id="app"></div>
+    </body>
     </html>
