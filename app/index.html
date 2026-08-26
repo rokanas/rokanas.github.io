@@ -2,28 +2,24 @@
     <html>
     <head>
         <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Konstantinos Rokanas</title>
         <link data-trunk rel="css" href="/styles/output.css" />
         <link data-trunk rel="copy-dir" href="static" />
+        <!-- explicit rust link so `data-wasm-opt` takes effect (implicit auto-detection ignores it) -->
+        <link data-trunk rel="rust" data-wasm-opt="z" data-wasm-opt-params="--all-features" />
 
         <!-- favicon variations generated using https://realfavicongenerator.net/ -->
-        <link data-trunk rel="icon" type="image/png" href="static/favicon/favicon-96x96.png" sizes="96x96" />
+        <link data-trunk rel="icon" type="image/webp" href="static/favicon/favicon-96x96.webp" sizes="96x96" />
         <link data-trunk rel="icon" type="image/svg+xml" href="static/favicon/favicon.svg" />
         <link data-trunk rel="icon" href="static/favicon/favicon.ico" />
-        <link data-trunk rel="icon" type="image/png" href="static/favicon/apple-touch-icon.png" sizes="180x180" />
+        <link rel="apple-touch-icon" href="static/favicon/apple-touch-icon.webp" sizes="180x180" />
         <link data-trunk rel="copy-file" href="static/favicon/site.webmanifest" />
+        <link rel="manifest" href="static/favicon/site.webmanifest" />
         
-        <!-- load three.js -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-        <!-- load OrbitControls for interactive camera -->
-        <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-        
-        <!-- use reliable CDN for OBJLoader -->
-        <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js"></script>
-        
-        <!-- scene initialization -->
-        <script data-trunk src="static/utils/threejs_init.js"></script>
+        <!-- three.js + OrbitControls + OBJLoader are no longer loaded here: ModelViewer
+             fetches them on demand via loadThreeJsDeps() so they don't block Header/Hud -->
+        <script data-trunk src="static/utils/threejs_init.js" defer></script>
     </head>
     <body>
         <div id="app"></div>

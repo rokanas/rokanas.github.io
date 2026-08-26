@@ -116,7 +116,7 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
     html! {
         <>  // fragment to group project item and modal
             <CardShell
-                border="/static/common/STBAR_MID.png"
+                border="/static/common/STBAR_MID.webp"
                 image_src={props.image_src.clone()}
                 image_alt={alt_text}
                 description={props.description.clone()}

@@ -26,7 +26,7 @@ pub fn all_projects() -> Vec<Project> {
                 Tag { name: "Typescript".to_string(), color: "bg-blue-800".to_string(), text_color: None },
             ],
             description: "A web app for classifying skin lesions using custom-trained AI, made for DIT826 Software Engineering for Data-Intensive AI Applications course.".to_string(),
-            image_src: "/static/projects/skinscan/skinscan_logo.png".to_string(),
+            image_src: "/static/projects/skinscan/skinscan_logo.webp".to_string(),
             image_alt: Some("Skinscan logo".to_string()),
             github_url: "https://github.com/rokanas/skinscan".to_string(),
             detailed_description: Some(
@@ -58,8 +58,8 @@ pub fn all_projects() -> Vec<Project> {
             ],
             wiki_url: Some("https://github.com/rokanas/skinscan/wiki".to_string()),
             additional_images: vec![
-                "/static/projects/skinscan/skinscan_homepage.png".to_string(),
-                "/static/projects/skinscan/skinscan_admin_dashboard.png".to_string(),
+                "/static/projects/skinscan/skinscan_homepage.webp".to_string(),
+                "/static/projects/skinscan/skinscan_admin_dashboard.webp".to_string(),
             ],
         },
         Project {
@@ -68,7 +68,7 @@ pub fn all_projects() -> Vec<Project> {
                 Tag { name: "Javascript".to_string(), color: "bg-yellow-500".to_string(), text_color: None },
             ],
             description: "A distributed system for booking dentist appointments, made for DIT356 Distributed Systems Development course.".to_string(),
-            image_src: "/static/projects/dentago/dentago_logo.png".to_string(),
+            image_src: "/static/projects/dentago/dentago_logo.webp".to_string(),
             image_alt: Some("Dentago component diagram".to_string()),
             github_url: "https://github.com/rokanas/dentago".to_string(),
             detailed_description: Some(
@@ -99,7 +99,7 @@ pub fn all_projects() -> Vec<Project> {
             ],
             wiki_url: Some("https://github.com/rokanas/dentago/wiki".to_string()),
             additional_images: vec![
-                "/static/projects/dentago/dentago_component_diagram.png".to_string(),
+                "/static/projects/dentago/dentago_component_diagram.webp".to_string(),
             ],
 
         },
@@ -110,7 +110,7 @@ pub fn all_projects() -> Vec<Project> {
                 Tag { name: "Javascript".to_string(), color: "bg-yellow-500".to_string(), text_color: None },
             ],
             description: "A monitoring system for terrariums using the Wio Terminal, made for DIT043 Object-Oriented Programming course.".to_string(),
-            image_src: "/static/projects/terminarium/terminarium_logo.png".to_string(),
+            image_src: "/static/projects/terminarium/terminarium_logo.webp".to_string(),
             image_alt: Some("Terminarium logo".to_string()),
             github_url: "https://github.com/rokanas/terminarium".to_string(),
             detailed_description: Some(
@@ -139,7 +139,7 @@ pub fn all_projects() -> Vec<Project> {
             ],
             wiki_url: Some("https://github.com/rokanas/terminarium/wiki".to_string()),
             additional_images: vec![
-                "/static/projects/terminarium/terminarium_system_design.jpg".to_string(),
+                "/static/projects/terminarium/terminarium_system_design.webp".to_string(),
             ],
         },
         Project {
@@ -148,7 +148,7 @@ pub fn all_projects() -> Vec<Project> {
                 Tag { name: "Python".to_string(), color: "bg-blue-500".to_string(), text_color: None },
             ],
             description: "A multi-purpose discord bot made for the Zulu Empire community server.".to_string(),
-            image_src: "/static/projects/zulubot/zulubot_logo.png".to_string(),
+            image_src: "/static/projects/zulubot/zulubot_logo.webp".to_string(),
             image_alt: Some("Zulu empire logo".to_string()),
             github_url: "https://github.com/rokanas/zulubot".to_string(),
             detailed_description: Some(
@@ -182,7 +182,7 @@ pub fn all_projects() -> Vec<Project> {
                 Tag { name: "C++".to_string(), color: "bg-pink-500".to_string(), text_color: None },
             ],
             description: "A fully-functioning onscreen keyboard for the Wio Terminal that registers and stores user input".to_string(),
-            image_src: "/static/projects/wio_terminal_keyboard/wio_terminal_keyboard_1.png".to_string(),
+            image_src: "/static/projects/wio_terminal_keyboard/wio_terminal_keyboard_1.webp".to_string(),
             image_alt: Some("Wio terminal keyboard".to_string()),
             github_url: "https://github.com/rokanas/wio-terminal-keyboard".to_string(),
             detailed_description: Some(

@@ -35,7 +35,7 @@ pub fn hud(props: &HudProps) -> Html {
                 
                 // home
                 <HudSection 
-                    background_image="/static/hud/section/STBAR1.png"
+                    background_image="/static/hud/section/STBAR1.webp"
                     background_width=48
                     text_color="text-red-600"
                     route={Route::Home}>
@@ -49,7 +49,7 @@ pub fn hud(props: &HudProps) -> Html {
 
                 // about
                 <HudSection
-                    background_image="/static/hud/section/STBAR2B.png"
+                    background_image="/static/hud/section/STBAR2B.webp"
                     background_width=36
                     text_color="text-red-600"
                     route={Route::Projects}>
@@ -63,7 +63,7 @@ pub fn hud(props: &HudProps) -> Html {
 
                 // projects
                 <HudSection
-                    background_image="/static/hud/section/STBAR3B.png"
+                    background_image="/static/hud/section/STBAR3B.webp"
                     background_width=58
                     text_color="text-yellow-600"
                     route={Route::About}>
@@ -77,7 +77,7 @@ pub fn hud(props: &HudProps) -> Html {
 
                 // avatar
                 <HudSection
-                    background_image="/static/hud/section/STBAR4.png"
+                    background_image="/static/hud/section/STBAR4.webp"
                     background_width=37
                     text_color="text-white">
                     <HudAvatar />
@@ -85,7 +85,7 @@ pub fn hud(props: &HudProps) -> Html {
 
                 // doom projects
                 <HudSection
-                    background_image="/static/hud/section/STBAR5.png"
+                    background_image="/static/hud/section/STBAR5.webp"
                     background_width=57
                     text_color="text-red-600"
                     route={Route::DoomProjects}>
@@ -99,7 +99,7 @@ pub fn hud(props: &HudProps) -> Html {
 
                 // keys section
                 <HudSection
-                    background_image="/static/hud/section/STBAR6.png"
+                    background_image="/static/hud/section/STBAR6.webp"
                     background_width=13
                     text_color="text-red-600">
                     <div class="flex flex-col">
@@ -108,7 +108,7 @@ pub fn hud(props: &HudProps) -> Html {
 
                 // contact
                 <HudSection
-                    background_image="/static/hud/section/STBAR7.png"
+                    background_image="/static/hud/section/STBAR7.webp"
                     background_width=71
                     text_color="text-blue-600"
                     route={Route::Contact}>

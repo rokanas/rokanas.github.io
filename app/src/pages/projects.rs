@@ -25,7 +25,7 @@ pub fn projects() -> Html {
                 
                 // page heading
                 <Heading 
-                    src="/static/projects/PROJECTS_1.png" 
+                    src="/static/projects/PROJECTS_1.webp" 
                     alt="Projects"
                     sub_heading="A collection of my software projects, both personal and academic."
                 />

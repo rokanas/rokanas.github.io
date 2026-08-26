@@ -3,12 +3,17 @@ use yew::prelude::*;
 use web_sys::{HtmlCanvasElement, console};
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
+use wasm_bindgen_futures::JsFuture;
 
 // JavaScript bindings for Three.js
 #[wasm_bindgen]
 extern "C" {
     #[wasm_bindgen(js_name = "initThreeJsScene")]
     fn threejs_init(canvas: &HtmlCanvasElement, obj_path: &str, front_cam: bool);
+
+    // fetches three.js + addons from CDN on first call, no-ops on later ones
+    #[wasm_bindgen(js_name = "loadThreeJsDeps")]
+    fn load_threejs_deps() -> js_sys::Promise;
 }
 
 #[derive(Properties, PartialEq)]
@@ -57,16 +62,18 @@ pub fn model_viewer(props: &ModelViewerProps) -> Html {
             let js_callback = callback.as_ref().unchecked_ref::<js_sys::Function>();
             js_sys::Reflect::set(&window, &"modelLoadComplete".into(), js_callback).unwrap();
 
-            
-            // small delay to ensure canvas is mounted
-            let timeout = gloo_timers::callback::Timeout::new(100, move || {
+            // fetch three.js deps (deferred out of index.html) before touching THREE.*
+            wasm_bindgen_futures::spawn_local(async move {
+                if let Err(e) = JsFuture::from(load_threejs_deps()).await {
+                    console::error_1(&e);
+                    return;
+                }
                 if let Some(canvas) = canvas_ref.cast::<HtmlCanvasElement>() {
                     threejs_init(&canvas, &model_name, front_cam);
                 } else {
                     console::error_1(&"Canvas element not found".into());
                 }
             });
-            timeout.forget();
 
             // keep closure alive for JS to call
             callback.forget();

@@ -18,7 +18,7 @@ pub fn heading(props: &HeadingProps) -> Html {
                 class="w-auto h-auto mx-auto"
             />
             <img 
-                src="/static/common/DIVIDER_1.png" 
+                src="/static/common/DIVIDER_1.webp" 
                 alt="Divider"
                 class="w-auto h-auto mx-auto mb-4 -mt-6"
             />
