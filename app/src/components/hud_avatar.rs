@@ -266,18 +266,18 @@ fn get_avatar_image(col: i32, frame: u8) -> String {
         2 => "CENTER",
         3 => "RIGHT_CENTER",
         4 => "RIGHT",
-        _ => return "/static/hud/avatar/AVATAR_HOVER_1.png".to_string(),
+        _ => return "/static/hud/avatar/AVATAR_HOVER_1.webp".to_string(),
     };
 
-    format!("/static/hud/avatar/AVATAR_{column_name}_{frame}.png")
+    format!("/static/hud/avatar/AVATAR_{column_name}_{frame}.webp")
 }
 
 fn get_hover_image(hover_frame: u8) -> String {
-    format!("/static/hud/avatar/AVATAR_HOVER_{hover_frame}.png")
+    format!("/static/hud/avatar/AVATAR_HOVER_{hover_frame}.webp")
 }
 
 fn get_click_image(click_frame: u8) -> String {
-    format!("/static/hud/avatar/AVATAR_CLICK_{click_frame}.png")
+    format!("/static/hud/avatar/AVATAR_CLICK_{click_frame}.webp")
 }
 
 #[function_component(HudAvatar)]
