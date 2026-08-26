@@ -1,4 +1,5 @@
 pub mod hud;
+pub mod hud_avatar;
 pub mod card_shell;
 pub mod header;
 pub mod header_button;
