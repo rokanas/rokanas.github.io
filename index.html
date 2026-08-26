@@ -9,8 +9,8 @@
         <!-- explicit rust link so `data-wasm-opt` takes effect (implicit auto-detection ignores it) -->
         
 <script type="module">
-import init, * as bindings from '/app-28a145bdd0ce2a0c.js';
-const wasm = await init({ module_or_path: '/app-28a145bdd0ce2a0c_bg.wasm' });
+import init, * as bindings from '/app-f27ed205ff794bbb.js';
+const wasm = await init({ module_or_path: '/app-f27ed205ff794bbb_bg.wasm' });
 
 
 window.wasmBindings = bindings;
@@ -31,7 +31,7 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
         <!-- three.js + OrbitControls + OBJLoader are no longer loaded here: ModelViewer
              fetches them on demand via loadThreeJsDeps() so they don't block Header/Hud -->
         <script src="/threejs_init-f7093010ab016906.js" defer integrity="sha384-2TRZmWnm3auWi5+bKAljnCvHug9NlCGBKSoHNbdXWbx4GHPWfLs+w8iramTmSNk1"></script>
-    <link rel="modulepreload" href="/app-28a145bdd0ce2a0c.js" crossorigin="anonymous" integrity="sha384-TiRCFoiTeVwCCMUDJ2FBiB7KtE7UA5qTrTOxB3ImI7Qkh7X6+Lw5pWHT11ChwGhj"><link rel="preload" href="/app-28a145bdd0ce2a0c_bg.wasm" crossorigin="anonymous" integrity="sha384-akYJ+Qm1iQ6yWcOjJqSpmhSnP0YlpVsQgwfwgHX8iW0a6pQrxUm+4rBWZHnkwGbw" as="fetch" type="application/wasm"></head>
+    <link rel="modulepreload" href="/app-f27ed205ff794bbb.js" crossorigin="anonymous" integrity="sha384-LtbDKyZQgfA4qIk5TcAxeskJ94bQYOLxlEwwjP/ay17XacenUldMagUoeFZAs05t"><link rel="preload" href="/app-f27ed205ff794bbb_bg.wasm" crossorigin="anonymous" integrity="sha384-qg4VM7a69cIFQdNu7QXo1l2rAsMpASctrBniui1vodMjnq9LONY1bG4Cdu4+8xbu" as="fetch" type="application/wasm"></head>
     <body>
         <div id="app"></div>
     </body>
