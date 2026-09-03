@@ -26,7 +26,7 @@ pub fn experience() -> Html {
                         html! {
                             <div class={format!("flex items-center p-4 cursor-pointer transition-all duration-300 {}", 
                                 if is_selected { 
-                                    "bg-red-600/30 border-3 border-red-600/40" 
+                                    "bg-doom-red/30 border-3 border-doom-red/40" 
                                 } else { 
                                     "bg-gray-500/25 border-3 border-gray-900 hover:border-gray-600" 
                                 }
@@ -44,8 +44,8 @@ pub fn experience() -> Html {
                                     </div>
                                 </div>
                                 <div class="flex-1">
-                                    <h3 class="text-white font-semibold text-lg mb-1">{&exp.title}</h3>
-                                    <p class="text-gray-400 text-sm">{&exp.institution}</p>
+                                    <h3 class="text-doom-white font-semibold text-lg mb-1">{&exp.title}</h3>
+                                    <p class="text-doom-gray-dark text-sm">{&exp.institution}</p>
                                 </div>
                             </div>
                         }
@@ -60,7 +60,7 @@ pub fn experience() -> Html {
                     >
                         // inner box
                         <div
-                            class="absolute inset-0 m-4 z-5 bg-[#1a1a1a] bg-opacity-60 border-4 border-[#0b0b0a]"
+                            class="absolute inset-0 m-4 z-5 bg-doom-panel-inner bg-opacity-60 border-4 border-doom-panel-outer"
                         ></div>
                         
                         // social button
@@ -87,9 +87,9 @@ pub fn experience() -> Html {
                                     </div>
                                 </div>
                                 <div>
-                                    <h2 class="text-2xl font-bold text-white mb-2">{&experience[*selected_job].title}</h2>
-                                    <p class="text-red-600 text-lg mb-1">{&experience[*selected_job].institution}</p>
-                                    <p class="text-gray-400 text-sm">{&experience[*selected_job].date}</p>
+                                    <h2 class="text-2xl font-bold text-doom-white mb-2">{&experience[*selected_job].title}</h2>
+                                    <p class="text-doom-red text-lg mb-1">{&experience[*selected_job].institution}</p>
+                                    <p class="text-doom-gray-dark text-sm">{&experience[*selected_job].date}</p>
                                 </div>
                             </div>
 
@@ -98,8 +98,8 @@ pub fn experience() -> Html {
                                     { for description.iter().map(|point| {
                                         html! {
                                             <li class="flex items-start">
-                                                <div class="flex-shrink-0 w-2 h-2 bg-red-600 rounded-full mt-2 mr-3"></div>
-                                                <p class="text-gray-300 leading-relaxed mb-2">{render_inline_links(point)}</p>
+                                                <div class="flex-shrink-0 w-2 h-2 bg-doom-red rounded-full mt-2 mr-3"></div>
+                                                <p class="text-doom-gray-light leading-relaxed mb-2">{render_inline_links(point)}</p>
                                             </li>
                                         }
                                     })}

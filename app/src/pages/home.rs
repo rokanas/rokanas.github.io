@@ -43,7 +43,7 @@ pub fn home() -> Html {
                 src="/static/models/unholy_cathedral/MODEL_MADE.webp" 
                 alt="Model made using Ultimate Doom Builder + Blender"
                 class={format!(
-                    "absolute {} left-2 w-[25vw] h-auto  text-red-600", // max-w-32 max-h-32 TODO: use max if necessary for larger screens
+                    "absolute {} left-2 w-[25vw] h-auto  text-doom-red", // max-w-32 max-h-32 TODO: use max if necessary for larger screens
                     if navbar_context.is_default_navbar { "bottom-2" } else { "top-2" }
             )}/>
         </div>

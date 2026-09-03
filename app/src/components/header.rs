@@ -54,9 +54,9 @@ pub fn header(props: &HeaderProps) -> Html {
     // mobile button class depending on current route
     let get_mobile_button_class = |route: Route| {
         if route == current_route {
-            "text-center text-red-600 font-medium transition-colors duration-200 px-3 py-2 rounded-md bg-[#2b2b2b]/60 cursor-pointer" // active state
+            "text-center text-doom-red font-medium transition-colors duration-200 px-3 py-2 rounded-md bg-doom-panel-button/60 cursor-pointer" // active state
         } else {
-            "text-center text-gray-300 hover:text-red-600 font-medium transition-colors duration-200 px-3 py-2 rounded-md hover:bg-[#2b2b2b]/40 cursor-pointer" // inactive state
+            "text-center text-doom-gray-light hover:text-doom-red font-medium transition-colors duration-200 px-3 py-2 rounded-md hover:bg-doom-panel-button/40 cursor-pointer" // inactive state
         }
     };
 
@@ -108,7 +108,7 @@ pub fn header(props: &HeaderProps) -> Html {
                             // mobile menu button
                             <div class="md:hidden absolute right-4 z-[9999]">
                                 <button
-                                    class="text-gray-300 hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-inset p-2 rounded-md cursor-pointer"
+                                    class="text-doom-gray-light hover:text-doom-red focus:outline-none focus:ring-2 focus:ring-doom-red focus:ring-inset p-2 rounded-md cursor-pointer"
                                     onclick={toggle_mobile_menu}>
                                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />

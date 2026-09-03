@@ -12,7 +12,7 @@ pub fn technologies() -> Html {
         <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-6 max-w-6xl mx-auto justify-items-center">
             { for skills.iter().map(|skill| html! {
                 <div
-                    class="relative text-white flex items-center justify-left text-left p-6 hover:scale-105 transition-transform duration-300 aspect-square max-w-35 max-h-35 bg-pixel-panel"
+                    class="relative text-doom-white flex items-center justify-left text-left p-6 hover:scale-105 transition-transform duration-300 aspect-square max-w-35 max-h-35 bg-pixel-panel"
                     style="background-image: url('/static/hud/section/STBAR6_2.webp');"
                 >
                 <div class="w-17 h-17 rounded-lg flex text-center items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300 overflow-hidden">

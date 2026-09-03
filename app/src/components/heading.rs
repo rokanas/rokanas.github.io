@@ -22,7 +22,7 @@ pub fn heading(props: &HeadingProps) -> Html {
                 alt="Divider"
                 class="w-auto h-auto mx-auto mb-4 -mt-6"
             />
-            <p class="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
+            <p class="text-doom-gray-light text-lg max-w-2xl mx-auto leading-relaxed">
                 {Some(props.sub_heading.clone())}
             </p>
         </div>

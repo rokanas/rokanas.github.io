@@ -20,7 +20,7 @@ pub fn navbar_toggle(props: &NavbarToggleProps) -> Html {
         <button
             onclick={on_click}
             class={format!(
-                "fixed z-20 bg-[#2b2b2b] hover:bg-[#444544] text-white p-1 rounded-full shadow-lg border-2 border-red-600
+                "fixed z-20 bg-doom-panel-button hover:bg-[#444544] text-doom-white p-1 rounded-full shadow-lg border-2 border-doom-red
                 transition-all duration-300 cursor-pointer hidden sm:block {}",
                 if props.is_default_navbar {
                     "bottom-4 right-4"  // bottom right when header is at top

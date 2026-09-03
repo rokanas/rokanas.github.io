@@ -2,6 +2,8 @@
 use yew::prelude::*;
 use web_sys::window;
 use crate::components::card_shell::CardShell;
+use crate::components::cta_button::{CtaButton, ButtonVariant, ButtonSize};
+use crate::components::modal_shell::ModalShell;
 use crate::hooks::use_image_carousel;
 
 #[derive(Clone, PartialEq)]
@@ -91,7 +93,7 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
     let header = html! {
         <div class="flex justify-between items-start mb-3 gap-3">
             // title (left)
-            <h3 class="text-xl font-bold text-red-600 font-mono flex-shrink-0">
+            <h3 class="text-xl font-bold text-doom-red font-mono flex-shrink-0">
                 {&props.title}
             </h3>
 
@@ -100,7 +102,7 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
                 { for props.tags.iter().map(|tag| {
                     let tag_classes = format!("px-2 py-1 rounded text-xs font-mono font-bold {} {}",
                         tag.color,
-                        tag.text_color.as_ref().unwrap_or(&"text-white".to_string())
+                        tag.text_color.as_ref().unwrap_or(&"text-doom-white".to_string())
                     );
 
                     html! {
@@ -123,143 +125,124 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
                 header={header}
             >
                 // more info
-                <button
-                    onclick={more_info_click}
-                    class="group w-full bg-[#2b2b2b] hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-2 px-4 rounded transition-all duration-200 cursor-pointer font-mono text-sm">
+                <CtaButton onclick={more_info_click} variant={ButtonVariant::Primary}>
                     <div class="flex items-center justify-center gap-2">
                         <span>{"MORE INFO"}</span>
                         <span class="text-xs group-hover:translate-x-1 transition-transform duration-200">{"→"}</span>
                     </div>
-                </button>
+                </CtaButton>
                 // github
-                <button
-                    onclick={github_click.clone()}
-                    class="group w-full bg-[#2b2b2b] hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-2 px-4 rounded transition-all duration-200 cursor-pointer font-mono text-sm">
+                <CtaButton onclick={github_click.clone()} variant={ButtonVariant::Primary}>
                     <div class="flex items-center justify-center gap-2">
                         <span>{"GITHUB"}</span>
                         <span class="text-xs group-hover:translate-x-1 transition-transform duration-200">{"→"}</span>
                     </div>
-                </button>
+                </CtaButton>
             </CardShell>
 
             // modal
             if *modal_open {
-                <div class="fixed inset-0 backdrop-blur-lg bg-black/60 bg-opacity-75 flex items-center justify-center p-4 z-50" onclick={close_modal.clone()}>
-                    <div 
-                        class="bg-[#1a1a1a] border-3 border-red-600 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-                        onclick={Callback::from(|e: MouseEvent| e.stop_propagation())}
-                    >
-                        // modal header
-                        <div class="flex justify-between items-center p-6 border-b border-gray-400/50">
-                            <h2 class="text-2xl font-bold text-red-600 font-mono">{&props.title}</h2>
-                            <button 
-                                onclick={close_modal}
-                                class="text-gray-400 hover:text-red-600 text-2xl font-bold transition-colors duration-200 cursor-pointer">
-                                {"×"}
-                            </button>
+                <ModalShell
+                    title={props.title.clone()}
+                    onclick_backdrop={close_modal.clone()}
+                    close_button={html! {
+                        <button
+                            onclick={close_modal}
+                            class="text-doom-gray-dark hover:text-doom-red text-2xl font-bold transition-colors duration-200 cursor-pointer">
+                            {"×"}
+                        </button>
+                    }}
+                >
+                    // detailed description
+                    if let Some(detailed_desc) = &props.detailed_description {
+                        <div>
+                            // <h3 class="text-lg font-bold text-doom-red font-mono mb-2">{"DESCRIPTION"}</h3>
+                            <p class="text-doom-gray-light leading-relaxed whitespace-pre-line">{detailed_desc}</p>
+                        </div>
+                    }
+
+                    // project image with navigation
+                    <div class="relative">
+                        <div class="aspect-video bg-doom-panel-button rounded-lg overflow-hidden">
+                            <img
+                                src={current_image_src}
+                                // alt={alt_text.clone()} TODO: FIX
+                                class="w-full h-full object-contain"
+                            />
                         </div>
 
-                        // modal content
-                        <div class="p-6 space-y-6">
-                        
-                            // detailed description
-                            if let Some(detailed_desc) = &props.detailed_description {
-                                <div>
-                                    // <h3 class="text-lg font-bold text-red-600 font-mono mb-2">{"DESCRIPTION"}</h3>
-                                    <p class="text-gray-300 leading-relaxed whitespace-pre-line">{detailed_desc}</p>
-                                </div>
-                            }
-
-                            // project image with navigation
-                            <div class="relative">
-                                <div class="aspect-video bg-[#2b2b2b] rounded-lg overflow-hidden">
-                                    <img 
-                                        src={current_image_src}
-                                        // alt={alt_text.clone()} TODO: FIX
-                                        class="w-full h-full object-contain"
-                                    />
-                                </div>
-                                
-                                // navigation buttons (only show if there are multiple images)
-                                if all_images.len() > 1 {
-                                    <>
-                                        // left arrow
-                                        <button
-                                            onclick={prev_image}
-                                            class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white rounded-full p-2 transition-all duration-200 cursor-pointer z-10"
-                                        >
-                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                                            </svg>
-                                        </button>
-                                        
-                                        // right arrow
-                                        <button
-                                            onclick={next_image}
-                                            class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white rounded-full p-2 transition-all duration-200 cursor-pointer z-10"
-                                        >
-                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                            </svg>
-                                        </button>
-                                        
-                                        // image counter
-                                        <div class="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-mono">
-                                            {format!("{}/{}", current_image_index + 1, all_images.len())}
-                                        </div>
-                                    </>
-                                }
-                            </div>
-
-                            // technologies used
-                            if !props.technologies_used.is_empty() {
-                                <div>
-                                    <h3 class="text-lg font-bold text-red-600 font-mono mb-2">{"TECHNOLOGIES"}</h3>
-                                    <div class="flex flex-wrap gap-2">
-                                        { for props.technologies_used.iter().map(|tech| html! {
-                                            <span class="px-3 py-1 bg-[#2b2b2b] border border-red-600 text-red-600 rounded font-mono text-sm">
-                                                {tech}
-                                            </span>
-                                        })}
-                                    </div>
-                                </div>
-                            }
-
-                            // key features
-                            if !props.key_features.is_empty() {
-                                <div>
-                                    <h3 class="text-lg font-bold text-red-500 font-mono mb-2">{"KEY FEATURES"}</h3>
-                                    <ul class="space-y-2">
-                                        { for props.key_features.iter().map(|feature| html! {
-                                            <li class="text-gray-300 flex items-start">
-                                                <span class="text-red-500 mr-2 font-mono">{"•"}</span>
-                                                <span>{feature}</span>
-                                            </li>
-                                        })}
-                                    </ul>
-                                </div>
-                            }
-
-                            // links / buttons
-                            <div class="flex gap-4 pt-4 border-t border-gray-700">
-                                <button 
-                                    onclick={github_click.clone()}
-                                    class="flex-1 bg-[#2b2b2b] hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-3 px-6 rounded cursor-pointer transition-all duration-200 font-mono"
+                        // navigation buttons (only show if there are multiple images)
+                        if all_images.len() > 1 {
+                            <>
+                                // left arrow
+                                <button
+                                    onclick={prev_image}
+                                    class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/70 hover:bg-black/90 text-doom-white rounded-full p-2 transition-all duration-200 cursor-pointer z-10"
                                 >
-                                    {"GITHUB REPO"}
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                    </svg>
                                 </button>
-                                if props.wiki_url.is_some() {
-                                    <button 
-                                        onclick={wiki_click}
-                                        class="flex-1 bg-[#2b2b2b] hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-3 px-6 rounded cursor-pointer transition-all duration-200 font-mono"
-                                    >
-                                        {"PROJECT WIKI"}
-                                    </button>
-                                }
+
+                                // right arrow
+                                <button
+                                    onclick={next_image}
+                                    class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/70 hover:bg-black/90 text-doom-white rounded-full p-2 transition-all duration-200 cursor-pointer z-10"
+                                >
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </button>
+
+                                // image counter
+                                <div class="absolute bottom-2 right-2 bg-black/70 text-doom-white px-2 py-1 rounded text-sm font-mono">
+                                    {format!("{}/{}", current_image_index + 1, all_images.len())}
+                                </div>
+                            </>
+                        }
+                    </div>
+
+                    // technologies used
+                    if !props.technologies_used.is_empty() {
+                        <div>
+                            <h3 class="text-lg font-bold text-doom-red font-mono mb-2">{"TECHNOLOGIES"}</h3>
+                            <div class="flex flex-wrap gap-2">
+                                { for props.technologies_used.iter().map(|tech| html! {
+                                    <span class="px-3 py-1 bg-doom-panel-button border border-doom-red text-doom-red rounded font-mono text-sm">
+                                        {tech}
+                                    </span>
+                                })}
                             </div>
                         </div>
+                    }
+
+                    // key features
+                    if !props.key_features.is_empty() {
+                        <div>
+                            <h3 class="text-lg font-bold text-doom-red font-mono mb-2">{"KEY FEATURES"}</h3>
+                            <ul class="space-y-2">
+                                { for props.key_features.iter().map(|feature| html! {
+                                    <li class="text-doom-gray-light flex items-start">
+                                        <span class="text-doom-red mr-2 font-mono">{"•"}</span>
+                                        <span>{feature}</span>
+                                    </li>
+                                })}
+                            </ul>
+                        </div>
+                    }
+
+                    // links / buttons
+                    <div class="flex gap-4 pt-4 border-t border-gray-700">
+                        <CtaButton onclick={github_click.clone()} variant={ButtonVariant::Primary} size={ButtonSize::Lg} class="flex-1">
+                            {"GITHUB REPO"}
+                        </CtaButton>
+                        if props.wiki_url.is_some() {
+                            <CtaButton onclick={wiki_click} variant={ButtonVariant::Primary} size={ButtonSize::Lg} class="flex-1">
+                                {"PROJECT WIKI"}
+                            </CtaButton>
+                        }
                     </div>
-                </div>
+                </ModalShell>
             }
         </> // end fragment
     }

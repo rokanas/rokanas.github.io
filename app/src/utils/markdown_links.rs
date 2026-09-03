@@ -48,7 +48,7 @@ pub fn render_inline_links(text: &str) -> Html {
                 href={url.to_string()}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="text-red-600 hover:text-red-400 hover:underline transition-colors duration-200"
+                class="text-doom-red hover:text-doom-red-light hover:underline transition-colors duration-200"
             >
                 {link_text.to_string()}
             </a>

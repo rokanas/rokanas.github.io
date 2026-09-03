@@ -19,7 +19,7 @@ pub fn education_data() -> Vec<ExperienceItem> {
             date: "2015 - 2016".to_string(),
             description: None,
             icon: "/static/about/education/U_LEID.svg".to_string(),
-            icon_bg: "bg-white",
+            icon_bg: "bg-doom-white",
             social_button: None,
         },
         ExperienceItem {
@@ -28,7 +28,7 @@ pub fn education_data() -> Vec<ExperienceItem> {
             date: "2012 - 2015".to_string(),
             description: None,
             icon: "/static/about/education/U_READ.svg".to_string(),
-            icon_bg: "bg-white",
+            icon_bg: "bg-doom-white",
             social_button: None,
         },
     ]

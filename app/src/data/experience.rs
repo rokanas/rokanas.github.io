@@ -40,7 +40,7 @@ pub fn experience_data() -> Vec<ExperienceItem> {
                 "Led training sessions for all regional offices on sensitive areas (personal data protection, cybersecurity, AMLY & anti-bribery).".to_string(),
             ]),
             icon: "/static/about/experience/HUAWEI.svg".to_string(),
-            icon_bg: "bg-white",
+            icon_bg: "bg-doom-white",
             social_button: None,
         },
     ]
