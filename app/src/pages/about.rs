@@ -28,41 +28,41 @@ pub fn about() -> Html {
             <div class="container mx-auto px-4 max-w-7xl">
                 
                 // about section
-                <div class="mb-16">
-                    <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 max-w-6xl mx-auto">
+                <div class="mb-16 max-w-6xl mx-auto">
+                    <div class="flex flex-col lg:flex-row items-start gap-8 lg:gap-16">
 
                         // portrait
-                        <div class="flex-shrink-0 w-full lg:w-auto flex flex-col items-center">
+                        <div class="flex-shrink-0 w-full lg:w-auto lg:mt-10 flex flex-col items-center">
                             <div class="w-64 h-64 lg:w-80 lg:h-80 rounded-full bg-[#1a1a1a] flex items-center justify-center text-6xl lg:text-8xl shadow-2xl border-8 border-[#0b0b0a] hover:scale-105 transition-transform duration-300">
-                                <img 
-                                    src="/static/about/AVATAR.webp" 
-                                    alt="Avatar" 
+                                <img
+                                    src="/static/about/AVATAR.webp"
+                                    alt="Avatar"
                                     class="w-full h-full object-cover rounded-full"
                                 />
                             </div>
 
                             // social media button links
-                            <SocialButtons 
+                            <SocialButtons
                                 button_size={12}
                                 svg_size={8}
                                 tags={vec![SocialButtonTag::General, SocialButtonTag::Professional]}
                             />
                         </div>
-                            
-                // description
-                <div class="flex-1 text-center lg:text-left">
-                    <div class="text-center mb-10 mt-10">
-                        <img 
-                            src="/static/about/KONSTANTINOS_ROKANAS_1.webp" 
-                            alt="Konstantinos Rokanas"
-                            class="w-auto h-auto mx-auto"
-                        />
-                    </div>
+
+                        // description
+                        <div class="flex-1 text-center lg:text-left">
+                            <div class="text-center mb-10 mt-13">
+                                <img
+                                    src="/static/about/KONSTANTINOS_ROKANAS_1.webp"
+                                    alt="Konstantinos Rokanas"
+                                    class="w-auto h-auto mx-auto"
+                                />
+                            </div>
                             { for bio_paragraphs().iter().enumerate().map(|(index, paragraph)| {
                                 let class = if index == 0 {
                                     "text-gray-300 text-lg lg:text-lg leading-relaxed"
                                 } else {
-                                    "text-gray-300 text-lg lg:text-lg leading-relaxed mt-5"
+                                    "text-gray-300 text-lg lg:text-lg leading-relaxed mt-7"
                                 };
                                 match paragraph {
                                     BioParagraph::Plain(text) => html! {
