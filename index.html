@@ -4,13 +4,13 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Konstantinos Rokanas</title>
-        <link rel="stylesheet" href="/output-f6a93d190cf9e76b.css" integrity="sha384-maJqstNiVc4SKX3EWmRsr7tPrCrz1O4L536hUc5S/4UooGzEugMkEudURUbASi0f"/>
+        <link rel="stylesheet" href="/output-5b2d820db5d4d2a0.css" integrity="sha384-HRQN9rptInboYd3Zc8oP3X2AdypvavX1g2pCGfv+4MQGqZ8anszYaL2T/Ijgkx1t"/>
         
         <!-- explicit rust link so `data-wasm-opt` takes effect (implicit auto-detection ignores it) -->
         
 <script type="module">
-import init, * as bindings from '/app-f27ed205ff794bbb.js';
-const wasm = await init({ module_or_path: '/app-f27ed205ff794bbb_bg.wasm' });
+import init, * as bindings from '/app-9cfdcec73d44ac28.js';
+const wasm = await init({ module_or_path: '/app-9cfdcec73d44ac28_bg.wasm' });
 
 
 window.wasmBindings = bindings;
@@ -31,7 +31,7 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
         <!-- three.js + OrbitControls + OBJLoader are no longer loaded here: ModelViewer
              fetches them on demand via loadThreeJsDeps() so they don't block Header/Hud -->
         <script src="/threejs_init-f7093010ab016906.js" defer integrity="sha384-2TRZmWnm3auWi5+bKAljnCvHug9NlCGBKSoHNbdXWbx4GHPWfLs+w8iramTmSNk1"></script>
-    <link rel="modulepreload" href="/app-f27ed205ff794bbb.js" crossorigin="anonymous" integrity="sha384-LtbDKyZQgfA4qIk5TcAxeskJ94bQYOLxlEwwjP/ay17XacenUldMagUoeFZAs05t"><link rel="preload" href="/app-f27ed205ff794bbb_bg.wasm" crossorigin="anonymous" integrity="sha384-qg4VM7a69cIFQdNu7QXo1l2rAsMpASctrBniui1vodMjnq9LONY1bG4Cdu4+8xbu" as="fetch" type="application/wasm"></head>
+    <link rel="modulepreload" href="/app-9cfdcec73d44ac28.js" crossorigin="anonymous" integrity="sha384-zV2fKSeppjPrgYPUSexDPKEQCWDlj6dSNNS0vOkzdxL5ORh803gBjYfhsgvxcALK"><link rel="preload" href="/app-9cfdcec73d44ac28_bg.wasm" crossorigin="anonymous" integrity="sha384-mcdfOTP5YjDfVbtks4peaN79XZzD65kApIrv4Wsitf+trGJDiobKDQ/945NVyzb3" as="fetch" type="application/wasm"></head>
     <body>
         <div id="app"></div>
     </body>
