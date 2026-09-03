@@ -27,7 +27,7 @@ struct FormResponse {
 }
 
 const RECAPTCHA_SITE_KEY: &str = "6LfHdcsrAAAAAA4ndXu6pT_KvO1sdOxdPIRX3q12";
-const FORM_INPUT_CLASSES: &str = "w-full px-4 py-3 bg-[#1a1a1a] border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-red-600 focus:ring-1 focus:ring-red-600 focus:outline-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed";
+const FORM_INPUT_CLASSES: &str = "w-full px-4 py-3 bg-doom-panel-inner border border-gray-600 rounded-lg text-doom-white placeholder-doom-gray-dark focus:border-doom-red focus:ring-1 focus:ring-doom-red focus:outline-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed";
 
 // updates a single field of the form and pushes the new value into state
 fn field_setter(
@@ -205,7 +205,7 @@ pub fn contact() -> Html {
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 
                 // main contact card
-                <div class="rounded-lg border-3 border-red-600 p-8 relative overflow-hidden"
+                <div class="rounded-lg border-3 border-doom-red p-8 relative overflow-hidden"
                     style="background:linear-gradient(135deg,#1a1a1a 0%,#2a2a2a 50%,#1a1a1a 100%);"
                 >
                     <div class="relative z-10">
@@ -221,7 +221,7 @@ pub fn contact() -> Html {
                                 // name and email row
                                 <div class="grid md:grid-cols-2 gap-6">
                                     <div>
-                                        <label for="name" class="block text-sm font-medium text-gray-300 mb-2">
+                                        <label for="name" class="block text-sm font-medium text-doom-gray-light mb-2">
                                             {"Name *"}
                                         </label>
                                         <input
@@ -237,7 +237,7 @@ pub fn contact() -> Html {
                                         />
                                     </div>
                                     <div>
-                                        <label for="email" class="block text-sm font-medium text-gray-300 mb-2">
+                                        <label for="email" class="block text-sm font-medium text-doom-gray-light mb-2">
                                             {"Email *"}
                                         </label>
                                         <input
@@ -256,7 +256,7 @@ pub fn contact() -> Html {
                                 
                                 // subject
                                 <div>
-                                    <label for="subject" class="block text-sm font-medium text-gray-300 mb-2">
+                                    <label for="subject" class="block text-sm font-medium text-doom-gray-light mb-2">
                                         {"Subject"}
                                     </label>
                                     <input
@@ -274,7 +274,7 @@ pub fn contact() -> Html {
                                 
                                 // message
                                 <div>
-                                    <label for="message" class="block text-sm font-medium text-gray-300 mb-2">
+                                    <label for="message" class="block text-sm font-medium text-doom-gray-light mb-2">
                                         {"Message *"}
                                     </label>
                                     <textarea
@@ -304,10 +304,10 @@ pub fn contact() -> Html {
                                     <button
                                         type="submit"
                                         disabled={*is_submitting}
-                                        class="px-8 py-3 bg-red-600 hover:bg-red-700 disabled:bg-gray-600 
-                                               text-white font-semibold rounded-lg transition-colors duration-200
+                                        class="px-8 py-3 bg-doom-red hover:bg-doom-red-dark disabled:bg-gray-600 
+                                               text-doom-white font-semibold rounded-lg transition-colors duration-200
                                                disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer
-                                               focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-gray-900"
+                                               focus:outline-none focus:ring-2 focus:ring-doom-red focus:ring-offset-2 focus:ring-offset-gray-900"
                                     >
                                         {if *is_submitting { "Submitting..." } else { "Submit Message" }}
                                     </button>
@@ -318,7 +318,7 @@ pub fn contact() -> Html {
                                     let (bg_color, text_color, border_color) = if status.contains("successfully") {
                                         ("bg-green-900/20", "text-green-400", "border-green-500")
                                     } else {
-                                        ("bg-red-900/20", "text-red-400", "border-red-600")
+                                        ("bg-red-900/20", "text-doom-red-light", "border-doom-red")
                                     };
                                     
                                     html! {

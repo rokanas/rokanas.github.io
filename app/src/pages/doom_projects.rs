@@ -23,7 +23,7 @@ pub fn doom_projects() -> Html {
     let models = all_models();
 
     html! {
-        <main class="min-h-screen text-white pt-8 pb-10">
+        <main class="min-h-screen text-doom-white pt-8 pb-10">
             <div class="container mx-auto pt-4 px-4 max-w-7xl">
                 
                 // page heading
@@ -76,7 +76,7 @@ pub fn doom_projects() -> Html {
                         <a 
                             href="https://github.com/rokanas" 
                             target="_blank" 
-                            class="text-red-600 hover:text-red-300 underline transition-colors duration-200"
+                            class="text-doom-red hover:text-doom-red-light underline transition-colors duration-200"
                         >
                             {"GitHub profile"}
                         </a>

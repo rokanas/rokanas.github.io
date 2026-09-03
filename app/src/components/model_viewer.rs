@@ -92,8 +92,8 @@ pub fn model_viewer(props: &ModelViewerProps) -> Html {
             />
             if *loading {
                 <div class="absolute inset-0 flex items-center justify-center">
-                    <div class="text-red-600 text-center">
-                        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto mb-2"></div>
+                    <div class="text-doom-red text-center">
+                        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-doom-red mx-auto mb-2"></div>
                         <div class="text-xl">{"Loading 3D Model..."}</div>
                     </div>
                 </div>

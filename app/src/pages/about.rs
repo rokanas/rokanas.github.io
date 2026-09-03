@@ -23,7 +23,7 @@ pub fn about() -> Html {
 
     html! {
         <main 
-            class="min-h-screen text-white pt-4 pb-10" 
+            class="min-h-screen text-doom-white pt-4 pb-10" 
         >
             <div class="container mx-auto px-4 max-w-7xl">
                 
@@ -33,7 +33,7 @@ pub fn about() -> Html {
 
                         // portrait
                         <div class="flex-shrink-0 w-full lg:w-auto lg:mt-10 flex flex-col items-center">
-                            <div class="w-64 h-64 lg:w-80 lg:h-80 rounded-full bg-[#1a1a1a] flex items-center justify-center text-6xl lg:text-8xl shadow-2xl border-8 border-[#0b0b0a] hover:scale-105 transition-transform duration-300">
+                            <div class="w-64 h-64 lg:w-80 lg:h-80 rounded-full bg-doom-panel-inner flex items-center justify-center text-6xl lg:text-8xl shadow-2xl border-8 border-doom-panel-outer hover:scale-105 transition-transform duration-300">
                                 <img
                                     src="/static/about/AVATAR.webp"
                                     alt="Avatar"
@@ -60,9 +60,9 @@ pub fn about() -> Html {
                             </div>
                             { for bio_paragraphs().iter().enumerate().map(|(index, paragraph)| {
                                 let class = if index == 0 {
-                                    "text-gray-300 text-lg lg:text-lg leading-relaxed"
+                                    "text-doom-gray-light text-lg lg:text-lg leading-relaxed"
                                 } else {
-                                    "text-gray-300 text-lg lg:text-lg leading-relaxed mt-7"
+                                    "text-doom-gray-light text-lg lg:text-lg leading-relaxed mt-7"
                                 };
                                 match paragraph {
                                     BioParagraph::Plain(text) => html! {

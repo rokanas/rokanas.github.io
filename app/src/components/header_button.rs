@@ -38,7 +38,7 @@ pub fn header_button(props: &HeaderButtonProps) -> Html {
             // active state - red
             <button 
                 onclick={navigate.reform({let route = props.route.clone(); move |_| route.clone()})}
-                class="relative group px-2 py-1.5 flex items-center justify-center rounded-md cursor-pointer hover:scale-103 transition-all duration-200 bg-black/50 border-2 border-red-600/50">
+                class="relative group px-2 py-1.5 flex items-center justify-center rounded-md cursor-pointer hover:scale-103 transition-all duration-200 bg-black/50 border-2 border-doom-red/50">
                 <img 
                     src={active_img} 
                     alt={props.alt_text.clone()}
@@ -50,7 +50,7 @@ pub fn header_button(props: &HeaderButtonProps) -> Html {
             // normal state - show hover effect
             <button 
                 onclick={navigate.reform({let route = props.route.clone(); move |_| route.clone()})}
-                class="relative group px-2 py-1.5 flex items-center justify-center rounded-md cursor-pointer hover:scale-103 transition-all duration-200 hover:bg-black/30 border-2 border-transparent hover:border-white/30">
+                class="relative group px-2 py-1.5 flex items-center justify-center rounded-md cursor-pointer hover:scale-103 transition-all duration-200 hover:bg-black/30 border-2 border-transparent hover:border-doom-white/30">
                 <img 
                     src={normal_img.clone()} 
                     alt={props.alt_text.clone()}

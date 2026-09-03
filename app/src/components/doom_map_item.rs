@@ -1,6 +1,7 @@
 // components/doom_map_item.rs
 use yew::prelude::*;
 use crate::components::card_shell::CardShell;
+use crate::components::cta_button::{CtaButton, ButtonVariant};
 use crate::hooks::use_image_carousel;
 
 #[derive(Properties, PartialEq)]
@@ -50,7 +51,7 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
     };
 
     let header = html! {
-        <h3 class="text-xl font-bold text-red-600 font-mono mb-3">
+        <h3 class="text-xl font-bold text-doom-red font-mono mb-3">
             {&props.title}
         </h3>
     };
@@ -65,24 +66,20 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
                 header={header}
             >
                 // view gallery
-                <button
-                    onclick={gallery_click}
-                    class="group w-full bg-[#2b2b2b] hover:bg-red-600 border-2 border-red-600 hover:border-red-600 text-red-600 hover:text-white font-bold py-2 px-4 rounded transition-all duration-200 cursor-pointer font-mono text-sm">
+                <CtaButton onclick={gallery_click} variant={ButtonVariant::Primary}>
                     <div class="flex items-center justify-center gap-2">
                         <span>{"VIEW GALLERY"}</span>
                         <span class="text-xs group-hover:translate-x-1 transition-transform duration-200">{"→"}</span>
                     </div>
-                </button>
+                </CtaButton>
                 // download (coming soon)
-                <button
-                    // onclick={download_click.clone()}
-                    class="group w-full bg-[#2b2b2b] hover:bg-gray-600 border-2 border-gray-500 hover:border-gray-400 text-gray-400 hover:text-gray-300 font-bold py-2 px-4 rounded transition-all duration-200 cursor-not-allowed font-mono text-sm">
+                <CtaButton variant={ButtonVariant::Secondary}>
                     <div class="flex items-center justify-center gap-2">
                         <span class="group-hover:hidden">{"DOWNLOAD"}</span>
                         <span class="hidden group-hover:inline">{"COMING SOON"}</span>
                         <span class="text-xs group-hover:translate-x-1 transition-transform duration-200">{"→"}</span>
                     </div>
-                </button>
+                </CtaButton>
             </CardShell>
 
             // lightbox
@@ -94,7 +91,7 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
                     // close button (top-right)
                         <button
                             onclick={close_lightbox.clone()}
-                            class="absolute top-4 right-4 text-white hover:text-red-600 text-4xl font-bold transition-colors duration-200 cursor-pointer z-20 bg-black/50 rounded-full w-12 h-12 flex items-center justify-center leading-none"
+                            class="absolute top-4 right-4 text-doom-white hover:text-doom-red text-4xl font-bold transition-colors duration-200 cursor-pointer z-20 bg-black/50 rounded-full w-12 h-12 flex items-center justify-center leading-none"
                         >
                             // svg 'x'
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -121,7 +118,7 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
                                 // left arrow
                                 <button
                                     onclick={prev_image}
-                                    class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white rounded-full p-3 transition-all duration-200 cursor-pointer z-10"
+                                    class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/70 hover:bg-black/90 text-doom-white rounded-full p-3 transition-all duration-200 cursor-pointer z-10"
                                 >
                                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
@@ -131,7 +128,7 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
                                 // right arrow  
                                 <button
                                     onclick={next_image}
-                                    class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white rounded-full p-3 transition-all duration-200 cursor-pointer z-10"
+                                    class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/70 hover:bg-black/90 text-doom-white rounded-full p-3 transition-all duration-200 cursor-pointer z-10"
                                 >
                                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -142,9 +139,9 @@ pub fn project_item(props: &ProjectItemProps) -> Html {
                         }
 
                         // image counter and title
-                        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-lg">
+                        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-black/70 text-doom-white px-4 py-2 rounded-lg">
                             <div class="text-center font-mono">
-                                <div class="text-lg font-bold text-red-600">{&props.title}</div>
+                                <div class="text-lg font-bold text-doom-red">{&props.title}</div>
                                 <div class="text-sm">{format!("{} / {}", current_image_index + 1, all_images.len())}</div>
                             </div>
                         </div>

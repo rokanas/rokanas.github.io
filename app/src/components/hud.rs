@@ -37,7 +37,7 @@ pub fn hud(props: &HudProps) -> Html {
                 <HudSection 
                     background_image="/static/hud/section/STBAR1.webp"
                     background_width=48
-                    text_color="text-red-600"
+                    text_color="text-doom-red"
                     route={Route::Home}>
                     <HudButton
                         src="/static/hud/button/HOME_SR"
@@ -51,7 +51,7 @@ pub fn hud(props: &HudProps) -> Html {
                 <HudSection
                     background_image="/static/hud/section/STBAR2B.webp"
                     background_width=36
-                    text_color="text-red-600"
+                    text_color="text-doom-red"
                     route={Route::Projects}>
                     <HudButton
                         src="/static/hud/button/ABOUT_SR"
@@ -79,7 +79,7 @@ pub fn hud(props: &HudProps) -> Html {
                 <HudSection
                     background_image="/static/hud/section/STBAR4.webp"
                     background_width=37
-                    text_color="text-white">
+                    text_color="text-doom-white">
                     <HudAvatar />
                 </HudSection>
 
@@ -87,7 +87,7 @@ pub fn hud(props: &HudProps) -> Html {
                 <HudSection
                     background_image="/static/hud/section/STBAR5.webp"
                     background_width=57
-                    text_color="text-red-600"
+                    text_color="text-doom-red"
                     route={Route::DoomProjects}>
                     <HudButton
                         src="/static/hud/button/DOOM_PROJECTS_SR"
@@ -101,7 +101,7 @@ pub fn hud(props: &HudProps) -> Html {
                 <HudSection
                     background_image="/static/hud/section/STBAR6.webp"
                     background_width=13
-                    text_color="text-red-600">
+                    text_color="text-doom-red">
                     <div class="flex flex-col">
                     </div>
                 </HudSection>
