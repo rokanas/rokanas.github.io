@@ -12,6 +12,7 @@ pub fn experience_data() -> Vec<ExperienceItem> {
                 "Full-stack and smart-contract development on Web3 projects.".to_string(),
                 "Maintenance and integration support for the [Stellar Disbursement Platform](https://developers.stellar.org/docs/platforms/stellar-disbursement-platform).".to_string(),
                 "Technical deep-dives, guidance and direct coordination with clients and stakeholders.".to_string(),
+                "CVE / bug bounty triage and remediation.".to_string(),
             ]),
             icon: "/static/about/experience/HYPE.svg".to_string(),
             icon_bg: "bg-black",
